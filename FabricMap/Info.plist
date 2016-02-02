@@ -20,8 +20,31 @@
 	<string>????</string>
 	<key>CFBundleVersion</key>
 	<string>1</string>
+	<key>Fabric</key>
+	<dict>
+		<key>APIKey</key>
+		<string>14188dba134596fd46af8fd4b44689291cbae014</string>
+		<key>Kits</key>
+		<array>
+			<dict>
+				<key>KitInfo</key>
+				<dict>
+					<key>accessToken</key>
+					<string>pk.eyJ1Ijoid2FuZ3gyMyIsImEiOiJjaWpvZm1rcWswMHQwdGhtNWhsN3VidnBxIn0.I0c1-pGScv9eS5aVqUdwpQ</string>
+				</dict>
+				<key>KitName</key>
+				<string>MGLAccountManager</string>
+			</dict>
+		</array>
+	</dict>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>Your location will be shown on the map and your map usage will anonymously improve the map.</string>
+	<key>UIBackgroundModes</key>
+	<array>
+		<string>location</string>
+	</array>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>
