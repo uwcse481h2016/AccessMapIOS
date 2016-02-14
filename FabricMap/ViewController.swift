@@ -48,6 +48,8 @@ class ViewController: UIViewController, MGLMapViewDelegate {
             let jsonPath = NSBundle.mainBundle().pathForResource("example", ofType: "geojson")
             let jsonData = NSData(contentsOfFile: jsonPath!)
             
+            
+            
             //let apiURL = NSURL(string: "http://dssg-db.cloudapp.net/api/data/v1/sidewalks.geojson?bbox=-122.32893347740172%2C47.60685023396842%2C-122.32033967971802%2C47.61254994698394")
             
             let apiPath = NSBundle.mainBundle().pathForResource("sidewalks", ofType: "json")
