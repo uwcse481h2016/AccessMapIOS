@@ -24,36 +24,39 @@ class ViewController: UIViewController, MGLMapViewDelegate {
         
         // new york latitude 40.712791, -73.997848
         map.setCenterCoordinate(CLLocationCoordinate2D(latitude: 47.6062, longitude: -122.332),
-            zoomLevel: 12,
+            zoomLevel: 16,
             animated: false)
         view.addSubview(map)
         map.delegate = self
         map.addGestureRecognizer(UILongPressGestureRecognizer(target: self,
             action: "changeStyle:"))
+        //map.showsUserLocation = true
+        //map.userTrackingMode = MGLUserTrackingModeFollow
         
         UIAlertView(title: "Change Map Styles",
             message: "Press and hold anywhere on the map to change its style. And make your own styles with Mapbox Studio!",
             delegate: nil,
             cancelButtonTitle: "Got it!").show()
         drawPolyline()
-
-
     }
     
     func drawPolyline() {
-        
+        print("Called drawPolyline")
         // Parsing GeoJSON can be CPU intensive, do it on a background thread
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), {
             // Get the path for example.geojson in the app's bundle
-            let jsonPath = NSBundle.mainBundle().pathForResource("example", ofType: "geojson")
-            let jsonData = NSData(contentsOfFile: jsonPath!)
+            //let jsonPath = NSBundle.mainBundle().pathForResource("example", ofType: "geojson")
+            //let jsonData = NSData(contentsOfFile: jsonPath!)
             
-            //let apiURL = NSURL(string: "http://dssg-db.cloudapp.net/api/data/v1/sidewalks.geojson?bbox=-122.32893347740172%2C47.60685023396842%2C-122.32033967971802%2C47.61254994698394")
+            let bounds = self.map.visibleCoordinateBounds
+            var apiURL = "http://accessmap-api.azurewebsites.net/v2/sidewalks.geojson?bbox=" + String(bounds.sw.longitude) + "," + String(bounds.sw.latitude) + "," + String(bounds.ne.longitude) + "," + String(bounds.ne.latitude)
+            print("apiURL = " + apiURL)
+            //let nsURL = NSURL(string: "-122.32893347740172%2C47.60685023396842%2C-122.32033967971802%2C47.61254994698394")
+            let nsURL = NSURL(string: apiURL)
+            //let apiPath = NSBundle.mainBundle().pathForResource("sidewalks", ofType: "json")
             
-            let apiPath = NSBundle.mainBundle().pathForResource("sidewalks", ofType: "json")
-            
-            let sidewalkData = NSData(contentsOfFile: apiPath!)
-            //let sidewalkData = NSData(contentsOfURL: apiURL!)
+            //let sidewalkData = NSData(contentsOfFile: apiPath!)
+            let sidewalkData = NSData(contentsOfURL: nsURL!)
             //print(sidewalkData)
             
             // Gradations (drawn from https://github.com/AccessMap/AccessMap-webapp/blob/master/static/js/elevation.js)
@@ -216,12 +219,17 @@ class ViewController: UIViewController, MGLMapViewDelegate {
         }
     }
     
+    func mapView(mapView: MGLMapView, regionDidChangeAnimated animated: Bool) -> Void {
+        print("Region changed")
+        drawPolyline()
+    }
+    
     func mapView(mapView: MGLMapView, annotationCanShowCallout annotation: MGLAnnotation) -> Bool {
         return true
     }
 
     func mapView(mapView: MGLMapView, lineWidthForPolylineAnnotation annotation: MGLPolyline) -> CGFloat {
-        print("zoomlevel = " + String(mapView.zoomLevel))
+        //print("zoomlevel = " + String(mapView.zoomLevel))
         // Set line width for polyline annotations
         if (mapView.zoomLevel < 12) {
             return 1.0
