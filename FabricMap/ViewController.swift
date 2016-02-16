@@ -10,8 +10,9 @@ import UIKit
 import Mapbox
 
 
-class ViewController: UIViewController, MGLMapViewDelegate {
+class ViewController: UIViewController, UIPopoverPresentationControllerDelegate, MGLMapViewDelegate {
     
+    @IBOutlet weak var HereButton: UIButton!
     var map: MGLMapView!
 
     override func viewDidLoad() {
@@ -32,6 +33,8 @@ class ViewController: UIViewController, MGLMapViewDelegate {
             action: "changeStyle:"))
         //map.showsUserLocation = true
         //map.userTrackingMode = MGLUserTrackingModeFollow
+        showLabel()
+        //map.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "showLabel:"))
         
         UIAlertView(title: "Change Map Styles",
             message: "Press and hold anywhere on the map to change its style. And make your own styles with Mapbox Studio!",
@@ -192,7 +195,79 @@ class ViewController: UIViewController, MGLMapViewDelegate {
 
     }
     
+    func showLabel() {
+        /**let label = UILabel(frame: CGRectMake(0, 0, 200, 21))
+        label.center = CGPointMake(160, 284)
+        label.textAlignment = NSTextAlignment.Center
+        label.text = "I'am a test label"
+        self.view.addSubview(label)
+        */
+        
+        let button = UIButton(type: UIButtonType.DetailDisclosure) as UIButton
+        button.setTitle("Legend", forState: .Normal)
+        //button.backgroundColor = UIColor.whiteColor()
+        button.frame = CGRectMake(0, 0, 200, 100);
+        button.center = CGPointMake(50, 50);
+        button.addTarget(self, action: "showLegend:", forControlEvents: UIControlEvents.TouchUpInside)
+        //button.setTitle(_, title: "Click me!", forState: UIControlState.Normal)
+        self.view.addSubview(button)
+    }
     
+    func prepareForPopoverPresentation(popoverPresentationController: UIPopoverPresentationController) {
+        print("Preparing for popover presentation!")
+    }
+    
+    func showLegend(sender: UIButton) {
+        /**var alertView = UIAlertView(title: "showing legend",
+            message: "start route!",
+            delegate: nil,
+            cancelButtonTitle: "Got it!")
+        
+        var imageView = UIImageView(frame: CGRectMake(10, 10, 40, 40))
+        
+        imageView.image = UIImage(named: "map_legend")
+        alertView.addSubview(imageView)
+        alertView.show()*/
+        
+        
+        let image = UIImage(named: "map_legend.gif")!
+        
+        var imageView = UIImageView(frame: CGRectMake(0, 0, 200, 200))
+        imageView.image = image
+
+        let alert = UIAlertController(title: "Legend", message: "", preferredStyle: .ActionSheet)
+        alert.addAction(UIAlertAction(title: "Exit", style: UIAlertActionStyle.Cancel, handler: {(alertAction: UIAlertAction!) in alert.dismissViewControllerAnimated(true, completion: nil)
+        }))
+        alert.view.addSubview(imageView)
+        //imageView.center = alert.view.center
+        self.presentViewController(alert, animated: true, completion: nil)
+
+        /**
+        let legendViewController = UIAlertController(title: "Legend",
+            message: "show",
+            preferredStyle: .Alert)
+        legendViewController.view.addSubview(imageView)
+        legendViewController.modalPresentationStyle = .Popover
+        legendViewController.preferredContentSize = CGSizeMake(50, 100)
+        
+        presentViewController(
+            legendViewController,
+            animated: true,
+            completion: nil)
+        
+        let popoverMenuViewController = legendViewController.popoverPresentationController
+        popoverMenuViewController?.permittedArrowDirections = .Any
+        popoverMenuViewController?.delegate = self
+        popoverMenuViewController?.sourceView = sender
+        print(sender.center.x)
+        print(sender.center.y)
+        popoverMenuViewController?.sourceRect = CGRect(
+            x: sender.center.x,
+            y: sender.center.y,
+            width: 1,
+            height: 1)
+        */
+    }
     
     func changeStyle(longPress: UILongPressGestureRecognizer) {
         if longPress.state == .Began {
