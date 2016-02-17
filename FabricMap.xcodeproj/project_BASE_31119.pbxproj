@@ -7,12 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		49807CCB1C72DA7B00A321D6 /* map_legend.gif in Resources */ = {isa = PBXBuildFile; fileRef = 49807CCA1C72DA7B00A321D6 /* map_legend.gif */; };
+		4988FCFC1C65CAAB00950DCC /* example.geojson in Resources */ = {isa = PBXBuildFile; fileRef = 4988FCFB1C65CAAB00950DCC /* example.geojson */; };
+		4988FCFE1C65D0E900950DCC /* sidewalks.json in Resources */ = {isa = PBXBuildFile; fileRef = 4988FCFD1C65D0E900950DCC /* sidewalks.json */; };
 		551B6B541C59FD7D000DCDFE /* Fabric.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 551B6B501C59FD7D000DCDFE /* Fabric.framework */; };
 		551B6B551C59FD7D000DCDFE /* Mapbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 551B6B511C59FD7D000DCDFE /* Mapbox.framework */; };
 		551B6B561C59FD7D000DCDFE /* Mapbox.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 551B6B521C59FD7D000DCDFE /* Mapbox.bundle */; };
 		551B6B571C59FD7D000DCDFE /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 551B6B531C59FD7D000DCDFE /* Settings.bundle */; };
-		553414A71C72400A0051C0F7 /* Bluedot.png in Resources */ = {isa = PBXBuildFile; fileRef = 553414A61C72400A0051C0F7 /* Bluedot.png */; };
 		558AC9551C59FBC2001A7ACD /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 558AC9541C59FBC2001A7ACD /* AppDelegate.swift */; };
 		558AC9571C59FBC2001A7ACD /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 558AC9561C59FBC2001A7ACD /* ViewController.swift */; };
 		558AC95A1C59FBC2001A7ACD /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 558AC9581C59FBC2001A7ACD /* Main.storyboard */; };
@@ -40,12 +40,12 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		49807CCA1C72DA7B00A321D6 /* map_legend.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; name = map_legend.gif; path = ../../../Desktop/map_legend.gif; sourceTree = "<group>"; };
+		4988FCFB1C65CAAB00950DCC /* example.geojson */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = example.geojson; path = ../../../Downloads/example.geojson; sourceTree = "<group>"; };
+		4988FCFD1C65D0E900950DCC /* sidewalks.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = sidewalks.json; path = ../../../Documents/sidewalks.json; sourceTree = "<group>"; };
 		551B6B501C59FD7D000DCDFE /* Fabric.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Fabric.framework; sourceTree = SOURCE_ROOT; };
 		551B6B511C59FD7D000DCDFE /* Mapbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Mapbox.framework; sourceTree = SOURCE_ROOT; };
 		551B6B521C59FD7D000DCDFE /* Mapbox.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = Mapbox.bundle; path = Mapbox.framework/Mapbox.bundle; sourceTree = SOURCE_ROOT; };
 		551B6B531C59FD7D000DCDFE /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = Settings.bundle; path = Mapbox.framework/Settings.bundle; sourceTree = SOURCE_ROOT; };
-		553414A61C72400A0051C0F7 /* Bluedot.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Bluedot.png; sourceTree = "<group>"; };
 		558AC9511C59FBC2001A7ACD /* FabricMap.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FabricMap.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		558AC9541C59FBC2001A7ACD /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		558AC9561C59FBC2001A7ACD /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -91,7 +91,6 @@
 		558AC9481C59FBC2001A7ACD = {
 			isa = PBXGroup;
 			children = (
-				553414A61C72400A0051C0F7 /* Bluedot.png */,
 				558AC9531C59FBC2001A7ACD /* FabricMap */,
 				558AC9681C59FBC2001A7ACD /* FabricMapTests */,
 				558AC9731C59FBC2001A7ACD /* FabricMapUITests */,
@@ -112,7 +111,8 @@
 		558AC9531C59FBC2001A7ACD /* FabricMap */ = {
 			isa = PBXGroup;
 			children = (
-				49807CCA1C72DA7B00A321D6 /* map_legend.gif */,
+				4988FCFB1C65CAAB00950DCC /* example.geojson */,
+				4988FCFD1C65D0E900950DCC /* sidewalks.json */,
 				558AC9541C59FBC2001A7ACD /* AppDelegate.swift */,
 				558AC9561C59FBC2001A7ACD /* ViewController.swift */,
 				558AC9581C59FBC2001A7ACD /* Main.storyboard */,
@@ -250,12 +250,12 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				553414A71C72400A0051C0F7 /* Bluedot.png in Resources */,
 				551B6B561C59FD7D000DCDFE /* Mapbox.bundle in Resources */,
-				49807CCB1C72DA7B00A321D6 /* map_legend.gif in Resources */,
+				4988FCFE1C65D0E900950DCC /* sidewalks.json in Resources */,
 				558AC95F1C59FBC2001A7ACD /* LaunchScreen.storyboard in Resources */,
 				551B6B571C59FD7D000DCDFE /* Settings.bundle in Resources */,
 				558AC95C1C59FBC2001A7ACD /* Assets.xcassets in Resources */,
+				4988FCFC1C65CAAB00950DCC /* example.geojson in Resources */,
 				558AC95A1C59FBC2001A7ACD /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
