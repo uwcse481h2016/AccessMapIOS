@@ -205,9 +205,9 @@ class ViewController: UIViewController, UIPopoverPresentationControllerDelegate,
         
         let button = UIButton(type: UIButtonType.DetailDisclosure) as UIButton
         button.setTitle("Legend", forState: .Normal)
-        //button.backgroundColor = UIColor.whiteColor()
-        button.frame = CGRectMake(0, 0, 200, 100);
-        button.center = CGPointMake(50, 50);
+        button.backgroundColor = UIColor.lightGrayColor()
+        button.frame = CGRectMake(0, 620, 100, 50);
+//        button.center = CGPointMake(50, 50);
         button.addTarget(self, action: "showLegend:", forControlEvents: UIControlEvents.TouchUpInside)
         //button.setTitle(_, title: "Click me!", forState: UIControlState.Normal)
         self.view.addSubview(button)
@@ -232,10 +232,10 @@ class ViewController: UIViewController, UIPopoverPresentationControllerDelegate,
         
         let image = UIImage(named: "map_legend.gif")!
         
-        var imageView = UIImageView(frame: CGRectMake(0, 0, 200, 200))
+        var imageView = UIImageView(frame: CGRectMake(80, 0, 200, 180))
         imageView.image = image
 
-        let alert = UIAlertController(title: "Legend", message: "", preferredStyle: .ActionSheet)
+        let alert = UIAlertController(title: "Legend", message: "\n\n\n\n\n\n\n\n", preferredStyle: .ActionSheet)
         alert.addAction(UIAlertAction(title: "Exit", style: UIAlertActionStyle.Cancel, handler: {(alertAction: UIAlertAction!) in alert.dismissViewControllerAnimated(true, completion: nil)
         }))
         alert.view.addSubview(imageView)
