@@ -701,12 +701,12 @@ class ViewController: UIViewController, UISearchBarDelegate, MGLMapViewDelegate,
         alertView.show()*/
         
         
-        let image = UIImage(named: "map_legend.gif")!
+        let image = UIImage(named: "Legend-01.png")!
         
-        var imageView = UIImageView(frame: CGRectMake(80, 0, 200, 180))
+        var imageView = UIImageView(frame: CGRectMake(25, 10, 300, 350))
         imageView.image = image
 
-        let alert = UIAlertController(title: "Legend", message: "\n\n\n\n\n\n\n\n", preferredStyle: .ActionSheet)
+        let alert = UIAlertController(title: "Legend", message: "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", preferredStyle: .ActionSheet)
         alert.addAction(UIAlertAction(title: "Exit", style: UIAlertActionStyle.Cancel, handler: {(alertAction: UIAlertAction!) in alert.dismissViewControllerAnimated(true, completion: nil)
         }))
         alert.view.addSubview(imageView)
@@ -784,7 +784,7 @@ class ViewController: UIViewController, UISearchBarDelegate, MGLMapViewDelegate,
         
 //        drawRouting(start, endCoordinates: end)
         
-        if(mapView.zoomLevel > 15) {
+        if(mapView.zoomLevel > 13) {
             drawPolyline()
             drawCurbramps(mapView.zoomLevel)
         }
