@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		49807D831C740EAF00A321D6 /* map_legend.gif in Resources */ = {isa = PBXBuildFile; fileRef = 49807D821C740EAF00A321D6 /* map_legend.gif */; };
 		49807D871C7591E800A321D6 /* Legend-01.png in Resources */ = {isa = PBXBuildFile; fileRef = 49807D861C7591E800A321D6 /* Legend-01.png */; };
+		49AD64CF1C7C24C400731AC3 /* mapbox-raster-v8.json in Resources */ = {isa = PBXBuildFile; fileRef = 49AD64CE1C7C24C400731AC3 /* mapbox-raster-v8.json */; };
 		551B6B541C59FD7D000DCDFE /* Fabric.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 551B6B501C59FD7D000DCDFE /* Fabric.framework */; };
 		551B6B551C59FD7D000DCDFE /* Mapbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 551B6B511C59FD7D000DCDFE /* Mapbox.framework */; };
 		551B6B561C59FD7D000DCDFE /* Mapbox.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 551B6B521C59FD7D000DCDFE /* Mapbox.bundle */; };
@@ -43,6 +44,7 @@
 /* Begin PBXFileReference section */
 		49807D821C740EAF00A321D6 /* map_legend.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = map_legend.gif; sourceTree = "<group>"; };
 		49807D861C7591E800A321D6 /* Legend-01.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Legend-01.png"; sourceTree = "<group>"; };
+		49AD64CE1C7C24C400731AC3 /* mapbox-raster-v8.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "mapbox-raster-v8.json"; sourceTree = "<group>"; };
 		551B6B501C59FD7D000DCDFE /* Fabric.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Fabric.framework; sourceTree = SOURCE_ROOT; };
 		551B6B511C59FD7D000DCDFE /* Mapbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Mapbox.framework; sourceTree = SOURCE_ROOT; };
 		551B6B521C59FD7D000DCDFE /* Mapbox.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = Mapbox.bundle; path = Mapbox.framework/Mapbox.bundle; sourceTree = SOURCE_ROOT; };
@@ -114,6 +116,7 @@
 		558AC9531C59FBC2001A7ACD /* FabricMap */ = {
 			isa = PBXGroup;
 			children = (
+				49AD64CE1C7C24C400731AC3 /* mapbox-raster-v8.json */,
 				49807D861C7591E800A321D6 /* Legend-01.png */,
 				49807D821C740EAF00A321D6 /* map_legend.gif */,
 				558AC9541C59FBC2001A7ACD /* AppDelegate.swift */,
@@ -256,6 +259,7 @@
 				553414A71C72400A0051C0F7 /* Bluedot.png in Resources */,
 				551B6B561C59FD7D000DCDFE /* Mapbox.bundle in Resources */,
 				49807D831C740EAF00A321D6 /* map_legend.gif in Resources */,
+				49AD64CF1C7C24C400731AC3 /* mapbox-raster-v8.json in Resources */,
 				558AC95F1C59FBC2001A7ACD /* LaunchScreen.storyboard in Resources */,
 				551B6B571C59FD7D000DCDFE /* Settings.bundle in Resources */,
 				49807D871C7591E800A321D6 /* Legend-01.png in Resources */,

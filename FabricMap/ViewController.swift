@@ -30,7 +30,7 @@ class ViewController: UIViewController, UISearchBarDelegate, MGLMapViewDelegate,
     
     var routingLines = [MGLPolyline]()
     
-    
+    var elevationTileStyleURL = NSURL(string: "mapbox-raster-v8.json")
     
     var start : UITextField!
     var end : UITextField!
@@ -41,6 +41,12 @@ class ViewController: UIViewController, UISearchBarDelegate, MGLMapViewDelegate,
         
         map = MGLMapView(frame: view.bounds)
         
+        map.autoresizingMask = UIViewAutoresizing.init()
+        map.autoresizingMask.insert(UIViewAutoresizing.FlexibleHeight)
+        map.autoresizingMask.insert(UIViewAutoresizing.FlexibleWidth)
+        
+        print("UIViewAutoresizing.contains(FlexibleHeight) = " + String(map.autoresizingMask.contains(UIViewAutoresizing.FlexibleHeight)))
+        print("UIViewAutoresizing.contains(FlexibleWidth) = " + String(map.autoresizingMask.contains(UIViewAutoresizing.FlexibleWidth)))
         // seattle 47.6062 -122.332
         
         // new york latitude 40.712791, -73.997848
@@ -784,9 +790,12 @@ class ViewController: UIViewController, UISearchBarDelegate, MGLMapViewDelegate,
         
 //        drawRouting(start, endCoordinates: end)
         
-        if(mapView.zoomLevel > 13) {
+        if(mapView.zoomLevel > 12) {
             drawPolyline()
             drawCurbramps(mapView.zoomLevel)
+            map.styleURL = MGLStyle.streetsStyleURL()
+        } else {
+            map.styleURL = elevationTileStyleURL
         }
 
         
@@ -828,10 +837,7 @@ class ViewController: UIViewController, UISearchBarDelegate, MGLMapViewDelegate,
             return 4;
         }
 
-        if (mapView.zoomLevel < 12) {
-            return 1.0
-        }
-        return 2.0
+        return 3.0
     }
     
     func mapView(mapView: MGLMapView, alphaForShapeAnnotation annotation: MGLShape) -> CGFloat {
