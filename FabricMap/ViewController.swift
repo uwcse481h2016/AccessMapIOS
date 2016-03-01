@@ -23,6 +23,8 @@ class ViewController: UIViewController, UISearchBarDelegate, MGLMapViewDelegate,
     
     var elevationLines = [MGLPolyline]()
     
+    var busStops = [MGLPointAnnotation]()
+    
     var curbLines = [MGLPolyline]()
     
     var startEndMarkers = [MGLPointAnnotation]()
@@ -362,11 +364,6 @@ class ViewController: UIViewController, UISearchBarDelegate, MGLMapViewDelegate,
         })
     }
     
-    
-    
-    
-    
-    
     func drawCurbramps(zoomLevel: Double) {
         
         print("Called drawCrossings")
@@ -389,20 +386,6 @@ class ViewController: UIViewController, UISearchBarDelegate, MGLMapViewDelegate,
                 print("can't get cubramps data ")
                 return;
             }
-            
-
-            for i in 0..<self.curbLines.count {
-                self.map.removeAnnotation(self.curbLines[i])
-            }
-            
-            
-            
-            
-            self.curbLines.removeAll()
-
-            
-            
-            
 
             do {
                 // Load and serialize the GeoJSON into a dictionary filled with properly-typed objects
@@ -499,8 +482,72 @@ class ViewController: UIViewController, UISearchBarDelegate, MGLMapViewDelegate,
     
     
     
-    func drawPolyline() {
-        print("Called drawPolyline")
+    func drawBusStops(zoomLevel: Double) {
+        print("Called drawBusStops")
+
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), {
+            // Get the path for example.geojson in the app's bundle
+            let OBA_KEY = "88c668dd-1d01-42a1-a600-0caa8029df65"
+            let bounds = self.map.visibleCoordinateBounds
+            let center = self.map.centerCoordinate
+            
+            let obaURL = "http://api.pugetsound.onebusaway.org/api/where/stops-for-location.json?key=" + OBA_KEY + "&lat=" + String(center.latitude) + "&lon=" + String(center.longitude) + "&latSpan=" + String(abs(bounds.ne.latitude - bounds.sw.latitude)) + "&lonSpan=" + String(abs(bounds.ne.longitude - bounds.sw.longitude))
+            print("apiURL = " + obaURL)
+
+            let nsURL = NSURL(string: obaURL)
+            let obaData = NSData(contentsOfURL: nsURL!)
+            //print("obaData = " + String(obaData))
+            if(obaData == nil) {
+                print("error: can't get obaData")
+                return;
+            }
+
+            if (zoomLevel > 14) {
+                do {
+                    // Load and serialize the GeoJSON into a dictionary filled with properly-typed objects
+                    if let jsonDict = try NSJSONSerialization.JSONObjectWithData(obaData!, options: []) as? NSDictionary {
+                        //print("jsonDict = " + String(jsonDict))
+                        var numFeatures = 0
+                        // Load the `features` array for iteration
+                        if let data = jsonDict["data"] as? NSDictionary {
+                            //print("jsonData = " + String(data))
+                            if let list = data["list"] as? NSArray {
+                                //print("jsonList = " + String(list))
+                                for row in list {
+                                    let coordinate = CLLocationCoordinate2DMake(row["lat"]!!.doubleValue, row["lon"]!!.doubleValue)
+                                    print("coordinate = " + String(coordinate))
+                                    numFeatures++
+
+                                    let point = MGLPointAnnotation()
+                                    point.title = "OBA"
+                                    point.coordinate = coordinate
+                                    self.busStops.append(point)
+                                    
+                                    // Add the annotation on the main thread
+                                    dispatch_async(dispatch_get_main_queue(), {
+                                        // Unowned reference to self to prevent retain cycle
+                                        [unowned self] in
+                                        self.map.addAnnotation(point)
+                                    })
+                                
+                                }
+
+                            }
+                        }
+                        print("Number of features = " + String(numFeatures))
+                    }
+                }
+                catch
+                {
+                    print("GeoJSON parsing failed")
+                }
+            }
+        })
+        
+    }
+    
+    func drawElevationData() {
+        print("Called drawElevationData")
         // Parsing GeoJSON can be CPU intensive, do it on a background thread
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), {
             // Get the path for example.geojson in the app's bundle
@@ -518,20 +565,14 @@ class ViewController: UIViewController, UISearchBarDelegate, MGLMapViewDelegate,
             
             //let sidewalkData = NSData(contentsOfFile: apiPath!)
             let sidewalkData = NSData(contentsOfURL: nsURL!)
-
             if(sidewalkData == nil) {
-                print("erro: can't get side walk data")
+                print("error: can't get side walk data")
                 return;
             }
             // Gradations (drawn from https://github.com/AccessMap/AccessMap-webapp/blob/master/static/js/elevation.js)
             let high = 0.0833
             let mid = 0.05
-            
-            for i in 0..<self.elevationLines.count {
-                self.map.removeAnnotation(self.elevationLines[i])
-            }
-            
-            self.elevationLines.removeAll()
+
 
             do {
                 // Load and serialize the GeoJSON into a dictionary filled with properly-typed objects
@@ -771,6 +812,36 @@ class ViewController: UIViewController, UISearchBarDelegate, MGLMapViewDelegate,
         }
     }
     
+    func clearAnnotations() {
+        clearElevationLines()
+        clearCurbRamps()
+        clearBusStops()
+    }
+    
+    func clearElevationLines() {
+        for i in 0..<self.elevationLines.count {
+            self.map.removeAnnotation(self.elevationLines[i])
+        }
+        
+        self.elevationLines.removeAll()
+    }
+    
+    func clearCurbRamps() {
+        for i in 0..<self.curbLines.count {
+            self.map.removeAnnotation(self.curbLines[i])
+        }
+        
+        self.curbLines.removeAll()
+    }
+    
+    func clearBusStops() {
+        for i in 0..<self.busStops.count {
+            self.map.removeAnnotation(self.busStops[i])
+        }
+        
+        self.busStops.removeAll()
+    }
+    
     func mapView(mapView: MGLMapView, regionDidChangeAnimated animated: Bool) -> Void {
         print("Region changed")
         
@@ -789,10 +860,14 @@ class ViewController: UIViewController, UISearchBarDelegate, MGLMapViewDelegate,
 //        let end = CLLocationCoordinate2D(latitude: 47.7081095, longitude: -122.3209438)
         
 //        drawRouting(start, endCoordinates: end)
-        
-        if(mapView.zoomLevel > 12) {
-            drawPolyline()
+        clearAnnotations()
+        if (mapView.zoomLevel > 13) {
+            drawElevationData()
             drawCurbramps(mapView.zoomLevel)
+            if (mapView.zoomLevel > 14) {
+                // Prevent bus stop icons from cluttering up map; make bus stop icon smaller?
+                drawBusStops(mapView.zoomLevel)
+            }
             map.styleURL = MGLStyle.streetsStyleURL()
         } else {
             map.styleURL = elevationTileStyleURL
@@ -820,8 +895,22 @@ class ViewController: UIViewController, UISearchBarDelegate, MGLMapViewDelegate,
 //        
 //        return annotationImage
 //    }
-//    
-//    
+   
+    func mapView(mapView: MGLMapView, imageForAnnotation annotation: MGLAnnotation) -> MGLAnnotationImage? {
+        print("Getting image for annotation!")
+        var annotationImage = mapView.dequeueReusableAnnotationImageWithIdentifier("busStop")
+    
+        if annotationImage == nil {
+            // Leaning Tower of Pisa by Stefan Spieler from the Noun Project
+            var image = UIImage(named: "busstop20.png")!
+            //image = image.imageWithAlignmentRectInsets(UIEdgeInsetsMake(0, 0, image.size.height/2, 0))
+            annotationImage = MGLAnnotationImage(image: image, reuseIdentifier: "busStop")
+            print("created new image")
+        }
+        print("Returning image!")
+        return annotationImage
+    }
+    
     
     
 
@@ -855,8 +944,6 @@ class ViewController: UIViewController, UISearchBarDelegate, MGLMapViewDelegate,
             return UIColor.blackColor()
             
         }
-        
-        
         
         if (annotation.title == "Crema to Council Crest" && annotation is MGLPolyline) {
             if (annotation.subtitle == "high") {

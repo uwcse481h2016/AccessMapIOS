@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4903DF061C85430000013932 /* busstop20.png in Resources */ = {isa = PBXBuildFile; fileRef = 4903DF051C85430000013932 /* busstop20.png */; };
 		49807D831C740EAF00A321D6 /* map_legend.gif in Resources */ = {isa = PBXBuildFile; fileRef = 49807D821C740EAF00A321D6 /* map_legend.gif */; };
 		49807D871C7591E800A321D6 /* Legend-01.png in Resources */ = {isa = PBXBuildFile; fileRef = 49807D861C7591E800A321D6 /* Legend-01.png */; };
 		49AD64CF1C7C24C400731AC3 /* mapbox-raster-v8.json in Resources */ = {isa = PBXBuildFile; fileRef = 49AD64CE1C7C24C400731AC3 /* mapbox-raster-v8.json */; };
@@ -42,6 +43,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		4903DF051C85430000013932 /* busstop20.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = busstop20.png; path = ../../../Desktop/busstop20.png; sourceTree = "<group>"; };
 		49807D821C740EAF00A321D6 /* map_legend.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = map_legend.gif; sourceTree = "<group>"; };
 		49807D861C7591E800A321D6 /* Legend-01.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Legend-01.png"; sourceTree = "<group>"; };
 		49AD64CE1C7C24C400731AC3 /* mapbox-raster-v8.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "mapbox-raster-v8.json"; sourceTree = "<group>"; };
@@ -116,6 +118,7 @@
 		558AC9531C59FBC2001A7ACD /* FabricMap */ = {
 			isa = PBXGroup;
 			children = (
+				4903DF051C85430000013932 /* busstop20.png */,
 				49AD64CE1C7C24C400731AC3 /* mapbox-raster-v8.json */,
 				49807D861C7591E800A321D6 /* Legend-01.png */,
 				49807D821C740EAF00A321D6 /* map_legend.gif */,
@@ -264,6 +267,7 @@
 				551B6B571C59FD7D000DCDFE /* Settings.bundle in Resources */,
 				49807D871C7591E800A321D6 /* Legend-01.png in Resources */,
 				558AC95C1C59FBC2001A7ACD /* Assets.xcassets in Resources */,
+				4903DF061C85430000013932 /* busstop20.png in Resources */,
 				558AC95A1C59FBC2001A7ACD /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

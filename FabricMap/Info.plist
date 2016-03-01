@@ -88,6 +88,15 @@
 				<key>NSIncludesSubdomains&gt;</key>
 				<true/>
 			</dict>
+            <key>api.pugetsound.onebusaway.org</key>
+            <dict>
+                <key>NSExceptionAllowsInsecureHTTPLoads</key>
+                <true/>
+                <key>NSExceptionMinimumTLSVersion</key>
+                <string>TLSv1.1</string>
+                <key>NSIncludesSubdomains&gt;</key>
+                <true/>
+            </dict>
 		</dict>
 	</dict>
 </dict>
