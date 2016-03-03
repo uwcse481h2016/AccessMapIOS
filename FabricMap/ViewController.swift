@@ -32,6 +32,8 @@ class ViewController: UIViewController, UISearchBarDelegate, MGLMapViewDelegate,
     
     var elevationTileStyleURL = NSURL(string: "mapbox-raster-v8.json")
     
+    var elevationStyleURL = NSURL(string: "mapbox://styles/wangx23/cilbmjh95000u9jm1jlg1wb26")
+    
     var start : UITextField!
     var end : UITextField!
   
@@ -55,8 +57,8 @@ class ViewController: UIViewController, UISearchBarDelegate, MGLMapViewDelegate,
             animated: false)
         view.addSubview(map)
         map.delegate = self
-        map.addGestureRecognizer(UILongPressGestureRecognizer(target: self,
-            action: "changeStyle:"))
+        map.styleURL = elevationStyleURL
+        //map.addGestureRecognizer(UILongPressGestureRecognizer(target: self, action: "changeStyle:"))
             
         showLabel()
 
@@ -508,7 +510,7 @@ class ViewController: UIViewController, UISearchBarDelegate, MGLMapViewDelegate,
             //let jsonPath = NSBundle.mainBundle().pathForResource("example", ofType: "geojson")
             //let jsonData = NSData(contentsOfFile: jsonPath!)
             
-            
+            // url for data with Washington state as bounding box http://accessmap-api.azurewebsites.net/v2/sidewalks.geojson?bbox=-124.785717,45.548599,-116.915580,49.002431
             let bounds = self.map.visibleCoordinateBounds
             let apiURL = "http://accessmap-api.azurewebsites.net/v2/sidewalks.geojson?bbox=" + String(bounds.sw.longitude) + "," + String(bounds.sw.latitude) + "," + String(bounds.ne.longitude) + "," + String(bounds.ne.latitude)
             print("apiURL = " + apiURL)
@@ -773,7 +775,7 @@ class ViewController: UIViewController, UISearchBarDelegate, MGLMapViewDelegate,
     
     func mapView(mapView: MGLMapView, regionDidChangeAnimated animated: Bool) -> Void {
         print("Region changed")
-        
+        print("Zoom level = " + String(mapView.zoomLevel))
         //self.mapView = mapView
 
 
@@ -789,13 +791,24 @@ class ViewController: UIViewController, UISearchBarDelegate, MGLMapViewDelegate,
 //        let end = CLLocationCoordinate2D(latitude: 47.7081095, longitude: -122.3209438)
         
 //        drawRouting(start, endCoordinates: end)
-        
+
         if(mapView.zoomLevel > 12) {
             drawPolyline()
             drawCurbramps(mapView.zoomLevel)
             map.styleURL = MGLStyle.streetsStyleURL()
+//
+//        clearAnnotations()
+//        if (mapView.zoomLevel > 14) {
+//            drawElevationData()
+//            drawCurbramps(mapView.zoomLevel)
+//            if (mapView.zoomLevel > 15) {
+//                // Prevent bus stop icons from cluttering up map; make bus stop icon smaller?
+//                drawBusStops(mapView.zoomLevel)
+//            }
+//            //map.styleURL = MGLStyle.streetsStyleURL()
+
         } else {
-            map.styleURL = elevationTileStyleURL
+            //map.styleURL = elevationTileStyleURL
         }
 
         
