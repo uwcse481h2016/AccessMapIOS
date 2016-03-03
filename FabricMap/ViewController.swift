@@ -792,10 +792,9 @@ class ViewController: UIViewController, UISearchBarDelegate, MGLMapViewDelegate,
         
 //        drawRouting(start, endCoordinates: end)
 
-        if(mapView.zoomLevel > 12) {
+        if(mapView.zoomLevel > 14) {
             drawPolyline()
             drawCurbramps(mapView.zoomLevel)
-            map.styleURL = MGLStyle.streetsStyleURL()
 //
 //        clearAnnotations()
 //        if (mapView.zoomLevel > 14) {
@@ -807,12 +806,7 @@ class ViewController: UIViewController, UISearchBarDelegate, MGLMapViewDelegate,
 //            }
 //            //map.styleURL = MGLStyle.streetsStyleURL()
 
-        } else {
-            //map.styleURL = elevationTileStyleURL
         }
-
-        
-        
     }
     
     func mapView(mapView: MGLMapView, annotationCanShowCallout annotation: MGLAnnotation) -> Bool {
