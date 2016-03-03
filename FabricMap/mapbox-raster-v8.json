@@ -1,5 +1,5 @@
 {
-  "version": 8,
+  "version": 8,/Users/studentuser/Documents/cse481/FabricMap/mapbox-raster-v8.json
   "sources": {
     "simple-tiles": {
       "type": "raster",

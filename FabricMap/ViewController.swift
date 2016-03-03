@@ -902,7 +902,7 @@ class ViewController: UIViewController, UISearchBarDelegate, MGLMapViewDelegate,
     
         if annotationImage == nil {
             // Leaning Tower of Pisa by Stefan Spieler from the Noun Project
-            var image = UIImage(named: "busstop20.png")!
+            var image = UIImage(named: "busstop5.png")!
             //image = image.imageWithAlignmentRectInsets(UIEdgeInsetsMake(0, 0, image.size.height/2, 0))
             annotationImage = MGLAnnotationImage(image: image, reuseIdentifier: "busStop")
             print("created new image")
