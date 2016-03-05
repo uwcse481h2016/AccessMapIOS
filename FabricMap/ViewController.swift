@@ -49,42 +49,58 @@ class ViewController: UIViewController, UISearchBarDelegate, MGLMapViewDelegate,
     
     @IBOutlet var map: MGLMapView!
     
-    @IBOutlet weak var car: UIButton!
-    
     @IBOutlet weak var legend: UIButton!
-    
     
     @IBOutlet weak var here: UIButton!
     
     @IBOutlet weak var route: UIButton!
     
     
+    @IBOutlet weak var inputAddressTextField: UITextField!
     
-    @IBOutlet weak var destinationButton: UITextField!
+    @IBOutlet weak var startAddressTextField: UITextField!
     
+    @IBOutlet weak var endAddressTextField: UITextField!
+    
+    
+    
+    @IBOutlet weak var fromLabel: UILabel!
+    
+    
+    @IBOutlet weak var toLabel: UILabel!
     
     // MARK: UITextFieldDelegate
 
-    
+
     
     // MARK: Actions
+    
     
   
     @IBAction func routeButtonAction(sender: AnyObject) {
         print("routeCalled")
-        print(destinationButton.text)
-        var locManager = CLLocationManager()
-        locManager.requestWhenInUseAuthorization()
         
         
-        if( CLLocationManager.authorizationStatus() == CLAuthorizationStatus.AuthorizedWhenInUse ||
-            CLLocationManager.authorizationStatus() == CLAuthorizationStatus.Authorized){
-                
-                var currentLocation = locManager.location
-                print("current location")
-                print(currentLocation!.coordinate.longitude)
-                print(currentLocation!.coordinate.latitude)
-        }
+        
+        
+        
+        
+        
+//        print(destinationButton.text)
+        
+        
+//        var locManager = CLLocationManager()
+//        locManager.requestWhenInUseAuthorization()
+//        
+//        
+//        if( CLLocationManager.authorizationStatus() == CLAuthorizationStatus.AuthorizedWhenInUse ||
+//            CLLocationManager.authorizationStatus() == CLAuthorizationStatus.Authorized){
+//                
+//                var currentLocation = locManager.location
+//                print("current location")
+//                print(currentLocation!.coordinate.longitude)
+//                print(currentLocation!.coordinate.latitude)
+//        }
         
         
     }
@@ -93,6 +109,64 @@ class ViewController: UIViewController, UISearchBarDelegate, MGLMapViewDelegate,
     func textFieldShouldReturn(textField: UITextField) -> Bool {
         // Hide the keyboard.
         textField.resignFirstResponder()
+        print("text should return got called")
+        
+        
+//        print(destinationButton.text)
+        
+        let startAddress = inputAddressTextField.text
+//        let endAddress = ""
+        
+        let geocoder = CLGeocoder()
+        
+        // get the coordinates of the input address
+        geocoder.geocodeAddressString(startAddress!, completionHandler: {(placemarks, error) -> Void in
+            if((error) != nil){
+                print("Error", error)
+            }
+        
+            if let placemark = placemarks?.first {
+                let startCoordinates:CLLocationCoordinate2D = placemark.location!.coordinate
+                print(startCoordinates)
+                self.drawMarker(startCoordinates, title: "start")
+
+                
+                
+                
+//                        geocoder.geocodeAddressString(endAddress, completionHandler: {(placemarks, error) -> Void in
+//                            if((error) != nil){
+//                                print("Error", error)
+//                            }
+//        
+//        
+//                            if let placemark = placemarks?.first {
+//                                let endCoordinates:CLLocationCoordinate2D = placemark.location!.coordinate
+//        
+//                                let center = CLLocationCoordinate2DMake((startCoordinates.latitude + endCoordinates.latitude) / 2,
+//                                                                        (startCoordinates.longitude + endCoordinates.longitude) / 2)
+//                                let verticalDifference = 180 / (startCoordinates.latitude - endCoordinates.latitude)
+//        
+//                                let horizontalDifference = 360 / (startCoordinates.longitude - endCoordinates.longitude)
+//        
+//                                let maxC = min(abs(verticalDifference), abs(horizontalDifference))
+//        
+//                                // get the zoom level
+//                                print(log(maxC))
+//                                // set the map position
+//                                self.map.setCenterCoordinate(center, zoomLevel: log(maxC) + 3, animated: true)
+//        
+//                                // draw makers
+//                                self.drawStartEndMarker(startCoordinates, endCoordinates: endCoordinates)
+//                                
+//                                // draw routing
+//                                self.drawRouting(startCoordinates, endCoordinates: endCoordinates)
+//                                
+//                            }
+//                        })
+            }
+        })
+
+        
         return true
     }
 
@@ -151,7 +225,14 @@ class ViewController: UIViewController, UISearchBarDelegate, MGLMapViewDelegate,
 //        drawInputField();
         
         
-        destinationButton.delegate = self
+        inputAddressTextField.delegate = self
+        startAddressTextField.delegate = self
+        endAddressTextField.delegate = self
+        
+        startAddressTextField.hidden = true;
+        endAddressTextField.hidden = true;
+        fromLabel.hidden = true;
+        toLabel.hidden = true;
 
         let point = MGLPointAnnotation()
         point.coordinate = CLLocationCoordinate2D(latitude: 47.6062, longitude: -122.332)
@@ -159,10 +240,6 @@ class ViewController: UIViewController, UISearchBarDelegate, MGLMapViewDelegate,
         point.title = "hello"
         point.subtitle = "world"
         map.addAnnotation(point)
-        
-        
-        
-        
     }
     
     
@@ -362,37 +439,36 @@ class ViewController: UIViewController, UISearchBarDelegate, MGLMapViewDelegate,
 //    
 //    
 //    
-//    //placing marker at the start point and end point to start route
-//    func drawStartEndMarker(startCoordinnates: CLLocationCoordinate2D, endCoordinates:CLLocationCoordinate2D) {
-//        print("draw start and end markers")
-//        
-//        for i in 0..<self.startEndMarkers.count {
-//            map.removeAnnotation(self.startEndMarkers[i])
-//            
-//            
-//        }
+    //placing marker at the start point and end point to start route
+    func drawStartEndMarker(startCoordinnates: CLLocationCoordinate2D, endCoordinates:CLLocationCoordinate2D) {
+        print("draw start and end markers")
+                for i in 0..<self.startEndMarkers.count {
+            map.removeAnnotation(self.startEndMarkers[i])
+            
+            
+        }
+    
+        let start = drawMarker(startCoordinnates, title: "start")
+        let end = drawMarker(endCoordinates, title: "end")
+        self.startEndMarkers.append(start);
+        self.startEndMarkers.append(end);
+        
+        
+    }
+//
 //    
-//        let start = drawMarker(startCoordinnates, title: "start")
-//        let end = drawMarker(endCoordinates, title: "end")
-//        self.startEndMarkers.append(start);
-//        self.startEndMarkers.append(end);
-//        
-//        
-//    }
-//    
-//    
-//    // draw one markers on the map
-//    func drawMarker(coordinate: CLLocationCoordinate2D, title: String) -> MGLPointAnnotation{
-//        let marker = MGLPointAnnotation()
-//        marker.coordinate = coordinate
-//        marker.title = title
-//        marker.subtitle = title
-//        map.addAnnotation(marker)
-//        map.selectAnnotation(marker, animated: true)
-//        return marker
-//        
-//    }
-//    
+    // draw one markers on the map
+    func drawMarker(coordinate: CLLocationCoordinate2D, title: String) -> MGLPointAnnotation{
+        let marker = MGLPointAnnotation()
+        marker.coordinate = coordinate
+        marker.title = title
+        marker.subtitle = title
+        map.addAnnotation(marker)
+        map.selectAnnotation(marker, animated: true)
+        return marker
+        
+    }
+//
 //    
 //    
 //    // draw the routing between the start and end point
