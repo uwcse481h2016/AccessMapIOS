@@ -31,7 +31,9 @@ class ViewController: UIViewController, UISearchBarDelegate, MGLMapViewDelegate,
     // store the elevations lines drawed on the screen
     var elevationLines = [MGLPolyline]()
     
-    // store the curb lines drawed on the screen
+
+    var busStops = [MGLPointAnnotation]()
+    
     var curbLines = [MGLPolyline]()
     
     // store the start and end markers drawed on the screen
@@ -40,14 +42,16 @@ class ViewController: UIViewController, UISearchBarDelegate, MGLMapViewDelegate,
     // store the routing lines drawed on the screen
     var routingLines = [MGLPolyline]()
     
-//    var start : UITextField!
-//    var end : UITextField!
+
     
-//    var here : UIButton!
-//    var route : UIButton!
+//    var isShowInputField = false;
+    var elevationTileStyleURL = NSURL(string: "mapbox-raster-v8.json")
     
-    var isShowInputField = false;
+    var elevationStyleURL = NSURL(string: "mapbox://styles/wangx23/cilbmjh95000u9jm1jlg1wb26")
     
+    var start : UITextField!
+    var end : UITextField!
+  
     
     @IBOutlet var map: MGLMapView!
     
@@ -74,6 +78,62 @@ class ViewController: UIViewController, UISearchBarDelegate, MGLMapViewDelegate,
     @IBOutlet weak var powerWheelChairButton: UIButton!
     
     @IBOutlet weak var pedestrianButton: UIButton!
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        // Do any additional setup after loading the view, typically from a nib.
+        
+//        map = MGLMapView(frame: view.bounds)
+//        
+//        map.autoresizingMask = UIViewAutoresizing.init()
+//        map.autoresizingMask.insert(UIViewAutoresizing.FlexibleHeight)
+//        map.autoresizingMask.insert(UIViewAutoresizing.FlexibleWidth)
+//        
+//        print("UIViewAutoresizing.contains(FlexibleHeight) = " + String(map.autoresizingMask.contains(UIViewAutoresizing.FlexibleHeight)))
+//        print("UIViewAutoresizing.contains(FlexibleWidth) = " + String(map.autoresizingMask.contains(UIViewAutoresizing.FlexibleWidth)))
+//        // seattle 47.6062 -122.332
+        
+        
+        
+        // new york latitude 40.712791, -73.997848
+//        map.setCenterCoordinate(CLLocationCoordinate2D(latitude: 47.6062, longitude: -122.332),
+//            zoomLevel: 16,
+//            animated: false)
+//        view.addSubview(map)
+//        map.delegate = self
+        map.styleURL = elevationStyleURL
+        //map.addGestureRecognizer(UILongPressGestureRecognizer(target: self, action: "changeStyle:"))
+            
+//        showLabel()
+
+
+        
+        
+        
+//        
+        inputAddressTextField.delegate = self
+        startAddressTextField.delegate = self
+        endAddressTextField.delegate = self
+        
+        startAddressTextField.hidden = true;
+        endAddressTextField.hidden = true;
+        
+        backButton.hidden = true;
+        fromLabel.hidden = true;
+        toLabel.hidden = true;
+        
+        wheelChairButton.hidden = true;
+        powerWheelChairButton.hidden = true;
+        pedestrianButton.hidden = true;
+        
+        
+        
+//        
+//        map.addGestureRecognizer(UITapGestureRecognizer(target: self,
+//            action: "showInputField:"))
+    }
+    
+
     
     
     // MARK: UITextFieldDelegate
@@ -239,12 +299,27 @@ class ViewController: UIViewController, UISearchBarDelegate, MGLMapViewDelegate,
     
     @IBAction func showLegend(sender: AnyObject) {
         
-        let image = UIImage(named: "map_legend.gif")!
+//        let image = UIImage(named: "map_legend.gif")!
+//
+//        var imageView = UIImageView(frame: CGRectMake(80, 0, 200, 180))
+//        imageView.image = image
+//        
+//        let alert = UIAlertController(title: "Legend", message: "\n\n\n\n\n\n\n\n", preferredStyle: .ActionSheet)
+//        alert.addAction(UIAlertAction(title: "Exit", style: UIAlertActionStyle.Cancel, handler: {(alertAction: UIAlertAction!) in alert.dismissViewControllerAnimated(true, completion: nil)
+//        }))
+//        alert.view.addSubview(imageView)
+//        //imageView.center = alert.view.center
+//        self.presentViewController(alert, animated: true, completion: nil)
         
-        var imageView = UIImageView(frame: CGRectMake(80, 0, 200, 180))
+        
+        
+        
+        let image = UIImage(named: "Legend-01.png")!
+        
+        var imageView = UIImageView(frame: CGRectMake(25, 10, 300, 350))
         imageView.image = image
         
-        let alert = UIAlertController(title: "Legend", message: "\n\n\n\n\n\n\n\n", preferredStyle: .ActionSheet)
+        let alert = UIAlertController(title: "Legend", message: "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", preferredStyle: .ActionSheet)
         alert.addAction(UIAlertAction(title: "Exit", style: UIAlertActionStyle.Cancel, handler: {(alertAction: UIAlertAction!) in alert.dismissViewControllerAnimated(true, completion: nil)
         }))
         alert.view.addSubview(imageView)
@@ -329,44 +404,44 @@ class ViewController: UIViewController, UISearchBarDelegate, MGLMapViewDelegate,
         onShowMapMode()
     }
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
-        
-//        map = MGLMapView(frame: view.bounds)
+//    override func viewDidLoad() {
+//        super.viewDidLoad()
+//        // Do any additional setup after loading the view, typically from a nib.
 //        
-//        // seattle 47.6062 -122.332
+////        map = MGLMapView(frame: view.bounds)
+////        
+////        // seattle 47.6062 -122.332
+////        
+////        map.setCenterCoordinate(CLLocationCoordinate2D(latitude: 47.6062, longitude: -122.332),
+////            zoomLevel: 16,
+////            animated: false)
+////        view.addSubview(map)
+////        map.delegate = self
+////        
+////        
+//        // hold to show change the map style
+////        map.addGestureRecognizer(UILongPressGestureRecognizer(target: self,
+////            action: "changeStyle:"))
+////
+////        // show the label
+////        showLabel()
+////
+////        drawInputField();
+//        inputAddressTextField.delegate = self
+//        startAddressTextField.delegate = self
+//        endAddressTextField.delegate = self
 //        
-//        map.setCenterCoordinate(CLLocationCoordinate2D(latitude: 47.6062, longitude: -122.332),
-//            zoomLevel: 16,
-//            animated: false)
-//        view.addSubview(map)
-//        map.delegate = self
+//        startAddressTextField.hidden = true;
+//        endAddressTextField.hidden = true;
 //        
+//        backButton.hidden = true;
+//        fromLabel.hidden = true;
+//        toLabel.hidden = true;
 //        
-        // hold to show change the map style
-//        map.addGestureRecognizer(UILongPressGestureRecognizer(target: self,
-//            action: "changeStyle:"))
-//
-//        // show the label
-//        showLabel()
-//
-//        drawInputField();
-        inputAddressTextField.delegate = self
-        startAddressTextField.delegate = self
-        endAddressTextField.delegate = self
-        
-        startAddressTextField.hidden = true;
-        endAddressTextField.hidden = true;
-        
-        backButton.hidden = true;
-        fromLabel.hidden = true;
-        toLabel.hidden = true;
-        
-        wheelChairButton.hidden = true;
-        powerWheelChairButton.hidden = true;
-        pedestrianButton.hidden = true;
-    }
+//        wheelChairButton.hidden = true;
+//        powerWheelChairButton.hidden = true;
+//        pedestrianButton.hidden = true;
+//    }
     
     
     func reverseTextFieldHideAndShow() {
@@ -694,12 +769,7 @@ class ViewController: UIViewController, UISearchBarDelegate, MGLMapViewDelegate,
             }
         })
     }
-    
-    
 
-    
-    
-    
     func drawCurbramps(zoomLevel: Double) {
         
         print("Called drawCrossings")
@@ -731,6 +801,7 @@ class ViewController: UIViewController, UISearchBarDelegate, MGLMapViewDelegate,
         
             
             self.curbLines.removeAll()
+
 
             do {
                 // Load and serialize the GeoJSON into a dictionary filled with properly-typed objects
@@ -792,10 +863,74 @@ class ViewController: UIViewController, UISearchBarDelegate, MGLMapViewDelegate,
         
     }
     
+
     
-    // draw the elevation liness
-    func drawPolyline() {
-        print("Called drawPolyline")
+    func drawBusStops(zoomLevel: Double) {
+        print("Called drawBusStops")
+
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), {
+            // Get the path for example.geojson in the app's bundle
+            let OBA_KEY = "88c668dd-1d01-42a1-a600-0caa8029df65"
+            let bounds = self.map.visibleCoordinateBounds
+            let center = self.map.centerCoordinate
+            
+            let obaURL = "http://api.pugetsound.onebusaway.org/api/where/stops-for-location.json?key=" + OBA_KEY + "&lat=" + String(center.latitude) + "&lon=" + String(center.longitude) + "&latSpan=" + String(abs(bounds.ne.latitude - bounds.sw.latitude)) + "&lonSpan=" + String(abs(bounds.ne.longitude - bounds.sw.longitude))
+            print("apiURL = " + obaURL)
+
+            let nsURL = NSURL(string: obaURL)
+            let obaData = NSData(contentsOfURL: nsURL!)
+            //print("obaData = " + String(obaData))
+            if(obaData == nil) {
+                print("error: can't get obaData")
+                return;
+            }
+
+            if (zoomLevel > 14) {
+                do {
+                    // Load and serialize the GeoJSON into a dictionary filled with properly-typed objects
+                    if let jsonDict = try NSJSONSerialization.JSONObjectWithData(obaData!, options: []) as? NSDictionary {
+                        //print("jsonDict = " + String(jsonDict))
+                        var numFeatures = 0
+                        // Load the `features` array for iteration
+                        if let data = jsonDict["data"] as? NSDictionary {
+                            //print("jsonData = " + String(data))
+                            if let list = data["list"] as? NSArray {
+                                //print("jsonList = " + String(list))
+                                for row in list {
+                                    let coordinate = CLLocationCoordinate2DMake(row["lat"]!!.doubleValue, row["lon"]!!.doubleValue)
+                                    print("coordinate = " + String(coordinate))
+                                    numFeatures++
+
+                                    let point = MGLPointAnnotation()
+                                    point.title = "busstop"
+                                    point.coordinate = coordinate
+                                    self.busStops.append(point)
+                                    
+                                    // Add the annotation on the main thread
+                                    dispatch_async(dispatch_get_main_queue(), {
+                                        // Unowned reference to self to prevent retain cycle
+                                        [unowned self] in
+                                        self.map.addAnnotation(point)
+                                    })
+                                
+                                }
+
+                            }
+                        }
+                        print("Number of features = " + String(numFeatures))
+                    }
+                }
+                catch
+                {
+                    print("GeoJSON parsing failed")
+                }
+            }
+        })
+        
+    }
+    
+    func drawElevationData() {
+        print("Called drawElevationData")
         // Parsing GeoJSON can be CPU intensive, do it on a background thread
         
         
@@ -811,7 +946,7 @@ class ViewController: UIViewController, UISearchBarDelegate, MGLMapViewDelegate,
             //let jsonPath = NSBundle.mainBundle().pathForResource("example", ofType: "geojson")
             //let jsonData = NSData(contentsOfFile: jsonPath!)
             
-            
+            // url for data with Washington state as bounding box http://accessmap-api.azurewebsites.net/v2/sidewalks.geojson?bbox=-124.785717,45.548599,-116.915580,49.002431
             let bounds = self.map.visibleCoordinateBounds
             let apiURL = "http://accessmap-api.azurewebsites.net/v2/sidewalks.geojson?bbox=" + String(bounds.sw.longitude) + "," + String(bounds.sw.latitude) + "," + String(bounds.ne.longitude) + "," + String(bounds.ne.latitude)
             print("apiURL = " + apiURL)
@@ -821,15 +956,13 @@ class ViewController: UIViewController, UISearchBarDelegate, MGLMapViewDelegate,
             
             //let sidewalkData = NSData(contentsOfFile: apiPath!)
             let sidewalkData = NSData(contentsOfURL: nsURL!)
-
             if(sidewalkData == nil) {
-                print("erro: can't get side walk data")
+                print("error: can't get side walk data")
                 return;
             }
             // Gradations (drawn from https://github.com/AccessMap/AccessMap-webapp/blob/master/static/js/elevation.js)
             let high = 0.0833
             let mid = 0.05
-        
 
             do {
                 // Load and serialize the GeoJSON into a dictionary filled with properly-typed objects
@@ -985,6 +1118,59 @@ class ViewController: UIViewController, UISearchBarDelegate, MGLMapViewDelegate,
 //        */
 //    }
     
+    
+//    func showLegend(sender: UIButton) {
+//        /**var alertView = UIAlertView(title: "showing legend",
+//            message: "start route!",
+//            delegate: nil,
+//            cancelButtonTitle: "Got it!")
+//        
+//        var imageView = UIImageView(frame: CGRectMake(10, 10, 40, 40))
+//        
+//        imageView.image = UIImage(named: "map_legend")
+//        alertView.addSubview(imageView)
+//        alertView.show()*/
+//        
+//        
+//        let image = UIImage(named: "Legend-01.png")!
+//        
+//        var imageView = UIImageView(frame: CGRectMake(25, 10, 300, 350))
+//        imageView.image = image
+//
+//        let alert = UIAlertController(title: "Legend", message: "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", preferredStyle: .ActionSheet)
+//        alert.addAction(UIAlertAction(title: "Exit", style: UIAlertActionStyle.Cancel, handler: {(alertAction: UIAlertAction!) in alert.dismissViewControllerAnimated(true, completion: nil)
+//        }))
+//        alert.view.addSubview(imageView)
+//        //imageView.center = alert.view.center
+//        self.presentViewController(alert, animated: true, completion: nil)
+//
+//        /**
+//        let legendViewController = UIAlertController(title: "Legend",
+//            message: "show",
+//            preferredStyle: .Alert)
+//        legendViewController.view.addSubview(imageView)
+//        legendViewController.modalPresentationStyle = .Popover
+//        legendViewController.preferredContentSize = CGSizeMake(50, 100)
+//        
+//        presentViewController(
+//            legendViewController,
+//            animated: true,
+//            completion: nil)
+//        
+//        let popoverMenuViewController = legendViewController.popoverPresentationController
+//        popoverMenuViewController?.permittedArrowDirections = .Any
+//        popoverMenuViewController?.delegate = self
+//        popoverMenuViewController?.sourceView = sender
+//        print(sender.center.x)
+//        print(sender.center.y)
+//        popoverMenuViewController?.sourceRect = CGRect(
+//            x: sender.center.x,
+//            y: sender.center.y,
+//            width: 1,
+//            height: 1)
+//        */
+//    }
+    
     func changeStyle(longPress: UILongPressGestureRecognizer) {
         if longPress.state == .Began {
             let styleURLs = [
@@ -1010,8 +1196,40 @@ class ViewController: UIViewController, UISearchBarDelegate, MGLMapViewDelegate,
         }
     }
     
+    func clearAnnotations() {
+        clearElevationLines()
+        clearCurbRamps()
+        clearBusStops()
+    }
+    
+    func clearElevationLines() {
+        for i in 0..<self.elevationLines.count {
+            self.map.removeAnnotation(self.elevationLines[i])
+        }
+        
+        self.elevationLines.removeAll()
+    }
+    
+    func clearCurbRamps() {
+        for i in 0..<self.curbLines.count {
+            self.map.removeAnnotation(self.curbLines[i])
+        }
+        
+        self.curbLines.removeAll()
+    }
+    
+    func clearBusStops() {
+        for i in 0..<self.busStops.count {
+            self.map.removeAnnotation(self.busStops[i])
+        }
+        
+        self.busStops.removeAll()
+    }
+    
     func mapView(mapView: MGLMapView, regionDidChangeAnimated animated: Bool) -> Void {
         print("Region changed")
+
+        print("Zoom level = " + String(mapView.zoomLevel))
         //self.mapView = mapView
         if( firstTime ){
 //            mapView.userTrackingMode = .Follow
@@ -1025,11 +1243,18 @@ class ViewController: UIViewController, UISearchBarDelegate, MGLMapViewDelegate,
 //        let end = CLLocationCoordinate2D(latitude: 47.7081095, longitude: -122.3209438)
         
 //        drawRouting(start, endCoordinates: end)
-        
-        if(mapView.zoomLevel > 15) {
-            drawPolyline()
+        clearAnnotations()
+        if (mapView.zoomLevel > 14) {
+            drawElevationData()
             drawCurbramps(mapView.zoomLevel)
-            print("finished")
+
+            if (mapView.zoomLevel > 15) {
+                // Prevent bus stop icons from cluttering up map; make bus stop icon smaller?
+                drawBusStops(mapView.zoomLevel)
+            }
+            //map.styleURL = MGLStyle.streetsStyleURL()
+        } else {
+            //map.styleURL = elevationTileStyleURL
         }
     }
     
@@ -1051,8 +1276,27 @@ class ViewController: UIViewController, UISearchBarDelegate, MGLMapViewDelegate,
 //        
 //        return annotationImage
 //    }
-//    
-//    
+   
+    func mapView(mapView: MGLMapView, imageForAnnotation annotation: MGLAnnotation) -> MGLAnnotationImage? {
+        print("Getting image for annotation!")
+        if (annotation.title! == "busstop") {
+            var annotationImage = mapView.dequeueReusableAnnotationImageWithIdentifier("busStop")
+        
+            if annotationImage == nil {
+                // Leaning Tower of Pisa by Stefan Spieler from the Noun Project
+                var image = UIImage(named: "busstop5.png")!
+                //image = image.imageWithAlignmentRectInsets(UIEdgeInsetsMake(0, 0, image.size.height/2, 0))
+                annotationImage = MGLAnnotationImage(image: image, reuseIdentifier: "busStop")
+                print("created new image")
+            }
+            print("Returning image!")
+            return annotationImage
+        } else {
+            return nil
+        }
+    
+    }
+    
     
     
 
@@ -1068,10 +1312,7 @@ class ViewController: UIViewController, UISearchBarDelegate, MGLMapViewDelegate,
             return 4;
         }
 
-        if (mapView.zoomLevel < 12) {
-            return 1.0
-        }
-        return 2.0
+        return 3.0
     }
     
     func mapView(mapView: MGLMapView, alphaForShapeAnnotation annotation: MGLShape) -> CGFloat {
@@ -1089,8 +1330,6 @@ class ViewController: UIViewController, UISearchBarDelegate, MGLMapViewDelegate,
             return UIColor.blackColor()
             
         }
-        
-        
         
         if (annotation.title == "Crema to Council Crest" && annotation is MGLPolyline) {
             if (annotation.subtitle == "high") {
