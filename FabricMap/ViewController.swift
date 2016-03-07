@@ -11,7 +11,7 @@ import Mapbox
 
 
 //class ViewController: UIViewController, UIPopoverPresentationControllerDelegate, MGLMapViewDelegate {
-class ViewController: UIViewController, UISearchBarDelegate, MGLMapViewDelegate, UITextFieldDelegate, UIPopoverPresentationControllerDelegate {
+class ViewController: UIViewController, UISearchBarDelegate, MGLMapViewDelegate, UITextFieldDelegate, UIPopoverPresentationControllerDelegate, UITableViewDelegate, UITableViewDataSource {
     
     var manager:CLLocationManager!
     
@@ -198,7 +198,66 @@ class ViewController: UIViewController, UISearchBarDelegate, MGLMapViewDelegate,
        
     }
 
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 0
+    }
     
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        return UITableViewCell()
+    }
+    
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        
+    }
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if segue.identifier == "optionsSegue" {
+            let popoverViewController = segue.destinationViewController as! UIViewController
+            popoverViewController.modalPresentationStyle = UIModalPresentationStyle.Popover
+            popoverViewController.popoverPresentationController!.delegate = self
+        }
+    }
+    
+    func adaptivePresentationStyleForPresentationController(controller: UIPresentationController) -> UIModalPresentationStyle {
+        return UIModalPresentationStyle.None
+    }
+    
+    @IBAction func showOptionsMenu(sender: UIBarButtonItem) {
+        
+    }
+    
+    @IBAction func returnToMapMode(sender: UIBarButtonItem) {
+        onShowMapMode()
+    }
+    
+    @IBAction func enterRoutingMode(sender: UIButton) {
+        onShowRoutingMode()
+    }
+    
+    func onShowMapMode() {
+        self.navigationItem.title = "Map"
+        hideAndDisableBackButton()
+
+    }
+
+    func hideAndDisableBackButton (){
+        self.navigationItem.leftBarButtonItem?.enabled = false
+        self.navigationItem.leftBarButtonItem?.tintColor = UIColor.clearColor()
+    }
+    
+    func showAndEnableBackButton(){
+        self.navigationItem.leftBarButtonItem?.enabled = true
+        self.navigationItem.leftBarButtonItem?.tintColor = nil
+    }
+    func onShowRoutingMode() {
+        var nav = self.navigationController?.navigationBar
+        nav?.topItem!.title = "Routing"
+        showAndEnableBackButton()
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        onShowMapMode()
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
