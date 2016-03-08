@@ -10,7 +10,7 @@ import UIKit
 import Mapbox
 
 //class ViewController: UIViewController, UIPopoverPresentationControllerDelegate, MGLMapViewDelegate {
-class ViewController: UIViewController, UISearchBarDelegate, MGLMapViewDelegate, UITextFieldDelegate, UIPopoverPresentationControllerDelegate, UITableViewDelegate, UITableViewDataSource, RoutingDelegate {
+class ViewController: UIViewController, UISearchBarDelegate, MGLMapViewDelegate, UITextFieldDelegate, UIPopoverPresentationControllerDelegate, UITableViewDelegate, UITableViewDataSource, RoutingDelegate, OptionsDelegate {
     
     var manager:CLLocationManager!
     
@@ -23,6 +23,10 @@ class ViewController: UIViewController, UISearchBarDelegate, MGLMapViewDelegate,
     
     // store whether it is the first time to open the appliaciton
     var firstTime = true;
+    
+    var showCurbRamps = true;
+    var showElevationData = true;
+    var showBusStops = true;
     
     var currentCoordinates: CLLocationCoordinate2D!
     
@@ -149,6 +153,33 @@ class ViewController: UIViewController, UISearchBarDelegate, MGLMapViewDelegate,
         print("onChooseOtherMobilityAidOption() called")
         reverseChoiceButtonHidden()
         routeByAddress()
+    }
+    
+    func toggleCurbRamps() {
+        showCurbRamps = !showCurbRamps
+        if !showCurbRamps {
+            clearCurbRamps()
+        } else {
+            drawCurbramps()
+        }
+    }
+    
+    func toggleElevationData() {
+        showElevationData = !showElevationData
+        if !showElevationData {
+            clearElevationLines()
+        } else {
+            drawElevationData()
+        }
+    }
+    
+    func toggleBusStops() {
+        showBusStops = !showBusStops
+        if !showBusStops {
+            clearBusStops()
+        } else {
+            drawBusStops()
+        }
     }
     
     func formatBaseButton(button: UIButton) {
@@ -382,10 +413,6 @@ class ViewController: UIViewController, UISearchBarDelegate, MGLMapViewDelegate,
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         switch segue.identifier {
-        case "optionsSegue"?:
-            let popoverViewController = segue.destinationViewController as! UIViewController
-            popoverViewController.modalPresentationStyle = UIModalPresentationStyle.Popover
-            popoverViewController.popoverPresentationController!.delegate = self
         case "legendSegue"?:
             let popoverViewController = segue.destinationViewController as! UIViewController
             popoverViewController.modalPresentationStyle = UIModalPresentationStyle.Popover
@@ -397,6 +424,12 @@ class ViewController: UIViewController, UISearchBarDelegate, MGLMapViewDelegate,
             popoverViewController.modalPresentationStyle = UIModalPresentationStyle.Popover
             popoverViewController.popoverPresentationController!.delegate = self
             segue.destinationViewController.popoverPresentationController?.sourceRect = sender!.bounds
+        case "optionsSegue"?:
+            let popoverViewController = segue.destinationViewController as! OptionsViewController
+            popoverViewController.delegate = self
+            popoverViewController.modalPresentationStyle = UIModalPresentationStyle.Popover
+            popoverViewController.popoverPresentationController!.delegate = self
+            //segue.destinationViewController.popoverPresentationController?.sourceRect = sender!.bounds
         default:
             break
         }
@@ -815,7 +848,10 @@ class ViewController: UIViewController, UISearchBarDelegate, MGLMapViewDelegate,
         })
     }
 
-    func drawCurbramps(zoomLevel: Double) {
+    func drawCurbramps() {
+        if !showCurbRamps {
+            return
+        }
         
         print("Called drawCrossings")
         
@@ -910,9 +946,13 @@ class ViewController: UIViewController, UISearchBarDelegate, MGLMapViewDelegate,
     
 
     
-    func drawBusStops(zoomLevel: Double) {
+    func drawBusStops() {
         print("Called drawBusStops")
 
+        if !showBusStops {
+            return
+        }
+        
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), {
             // Get the path for example.geojson in the app's bundle
             let OBA_KEY = "88c668dd-1d01-42a1-a600-0caa8029df65"
@@ -930,55 +970,54 @@ class ViewController: UIViewController, UISearchBarDelegate, MGLMapViewDelegate,
                 return;
             }
 
-            if (zoomLevel > 14) {
-                do {
-                    // Load and serialize the GeoJSON into a dictionary filled with properly-typed objects
-                    if let jsonDict = try NSJSONSerialization.JSONObjectWithData(obaData!, options: []) as? NSDictionary {
-                        //print("jsonDict = " + String(jsonDict))
-                        var numFeatures = 0
-                        // Load the `features` array for iteration
-                        if let data = jsonDict["data"] as? NSDictionary {
-                            //print("jsonData = " + String(data))
-                            if let list = data["list"] as? NSArray {
-                                //print("jsonList = " + String(list))
-                                for row in list {
-                                    let coordinate = CLLocationCoordinate2DMake(row["lat"]!!.doubleValue, row["lon"]!!.doubleValue)
-                                    print("coordinate = " + String(coordinate))
-                                    numFeatures++
+            do {
+                // Load and serialize the GeoJSON into a dictionary filled with properly-typed objects
+                if let jsonDict = try NSJSONSerialization.JSONObjectWithData(obaData!, options: []) as? NSDictionary {
+                    //print("jsonDict = " + String(jsonDict))
+                    var numFeatures = 0
+                    // Load the `features` array for iteration
+                    if let data = jsonDict["data"] as? NSDictionary {
+                        //print("jsonData = " + String(data))
+                        if let list = data["list"] as? NSArray {
+                            //print("jsonList = " + String(list))
+                            for row in list {
+                                let coordinate = CLLocationCoordinate2DMake(row["lat"]!!.doubleValue, row["lon"]!!.doubleValue)
+                                print("coordinate = " + String(coordinate))
+                                numFeatures++
 
-                                    let point = MGLPointAnnotation()
-                                    point.title = "busstop"
-                                    point.coordinate = coordinate
-                                    self.busStops.append(point)
-                                    
-                                    // Add the annotation on the main thread
-                                    dispatch_async(dispatch_get_main_queue(), {
-                                        // Unowned reference to self to prevent retain cycle
-                                        [unowned self] in
-                                        self.map.addAnnotation(point)
-                                    })
+                                let point = MGLPointAnnotation()
+                                point.title = "busstop"
+                                point.coordinate = coordinate
+                                self.busStops.append(point)
                                 
-                                }
-
+                                // Add the annotation on the main thread
+                                dispatch_async(dispatch_get_main_queue(), {
+                                    // Unowned reference to self to prevent retain cycle
+                                    [unowned self] in
+                                    self.map.addAnnotation(point)
+                                })
+                            
                             }
+
                         }
-                        print("Number of features = " + String(numFeatures))
                     }
-                }
-                catch
-                {
-                    print("GeoJSON parsing failed")
+                    print("Number of features = " + String(numFeatures))
                 }
             }
+            catch
+            {
+                print("GeoJSON parsing failed")
+            }
+            
         })
-        
     }
     
     func drawElevationData() {
         print("Called drawElevationData")
         // Parsing GeoJSON can be CPU intensive, do it on a background thread
-        
-        
+        if !showElevationData {
+            return
+        }
         
         for i in 0..<self.elevationLines.count {
             self.map.removeAnnotation(self.elevationLines[i])
@@ -1289,13 +1328,13 @@ class ViewController: UIViewController, UISearchBarDelegate, MGLMapViewDelegate,
         
 //        drawRouting(start, endCoordinates: end)
         clearAnnotations()
-        if (mapView.zoomLevel > 14) {
+        if (mapView.zoomLevel >= 14) {
             drawElevationData()
-            drawCurbramps(mapView.zoomLevel)
+            drawCurbramps()
 
             if (mapView.zoomLevel > 15) {
                 // Prevent bus stop icons from cluttering up map; make bus stop icon smaller?
-                drawBusStops(mapView.zoomLevel)
+                drawBusStops()
             }
             //map.styleURL = MGLStyle.streetsStyleURL()
         } else {
