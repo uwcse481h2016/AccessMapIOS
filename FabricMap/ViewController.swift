@@ -107,10 +107,28 @@ class ViewController: UIViewController, UISearchBarDelegate, MGLMapViewDelegate,
 //        showLabel()
 
 
-        
-        
-        
+//        //here.backgroundColor = UIColor.clearColor()
+//        here.layer.cornerRadius = 5
+//        //here.titleEdgeInsets = UIEdgeInsets(top: 0.0, left: 5.0, bottom: 0.0, right: 0.0)
+//        here.layer.borderWidth = 1
+//        here.layer.borderColor = UIColor.blueColor().CGColor
 //        
+//        //here.backgroundColor = UIColor.clearColor()
+//        legend.layer.cornerRadius = 5
+//        //here.titleEdgeInsets = UIEdgeInsets(top: 0.0, left: 5.0, bottom: 0.0, right: 0.0)
+//        legend.layer.borderWidth = 1
+//        legend.layer.borderColor = UIColor.blueColor().CGColor
+//        
+//        //here.backgroundColor = UIColor.clearColor()
+//        route.layer.cornerRadius = 5
+//        //here.titleEdgeInsets = UIEdgeInsets(top: 0.0, left: 5.0, bottom: 0.0, right: 0.0)
+//        route.layer.borderWidth = 1
+//        route.layer.borderColor = UIColor.blueColor().CGColor
+        formatBaseButton(here)
+        formatBaseButton(legend)
+        formatBaseButton(route)
+        
+//
         inputAddressTextField.delegate = self
         startAddressTextField.delegate = self
         endAddressTextField.delegate = self
@@ -134,7 +152,13 @@ class ViewController: UIViewController, UISearchBarDelegate, MGLMapViewDelegate,
     }
     
 
-    
+    func formatBaseButton(button: UIButton) {
+        button.backgroundColor = UIColor.whiteColor()
+        button.layer.cornerRadius = 5
+        //button.titleEdgeInsets = UIEdgeInsets(top: 0.0, left: 5.0, bottom: 0.0, right: 0.0)
+        button.layer.borderWidth = 1
+        button.layer.borderColor = UIColor.whiteColor().CGColor
+    }
     
     // MARK: UITextFieldDelegate
 

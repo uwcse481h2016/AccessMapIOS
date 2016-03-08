@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9532" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="ggd-6D-IPC">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9532" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="ggd-6D-IPC">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
@@ -56,11 +56,11 @@
                         </variation>
                     </view>
                     <toolbarItems/>
-                    <value key="contentSizeForViewInPopover" type="size" width="150" height="150"/>
+                    <value key="contentSizeForViewInPopover" type="size" width="150" height="120"/>
                     <nil key="simulatedStatusBarMetrics"/>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
-                    <size key="freeformSize" width="150" height="150"/>
+                    <size key="freeformSize" width="150" height="120"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="1Nn-4D-w8g" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -87,21 +87,11 @@
                                     <rect key="frame" x="63" y="20" width="0.0" height="0.0"/>
                                 </variation>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="834-f0-dlj">
-                                <rect key="frame" x="-23" y="-15" width="46" height="30"/>
-                                <state key="normal" title="Legend"/>
-                                <variation key="heightClass=regular" fixedFrame="YES">
-                                    <rect key="frame" x="109" y="583" width="125" height="30"/>
-                                </variation>
-                                <connections>
-                                    <action selector="showLegend:" destination="BYZ-38-t0r" eventType="touchUpInside" id="GMc-eu-s9f"/>
-                                </connections>
-                            </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7T6-g8-4zD">
                                 <rect key="frame" x="-23" y="-15" width="46" height="30"/>
-                                <state key="normal" title="route"/>
+                                <state key="normal" title="Route"/>
                                 <variation key="heightClass=regular" fixedFrame="YES">
-                                    <rect key="frame" x="305" y="583" width="50" height="30"/>
+                                    <rect key="frame" x="295" y="583" width="60" height="30"/>
                                 </variation>
                                 <connections>
                                     <action selector="routeButtonAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="x1c-pW-FHU"/>
@@ -117,9 +107,10 @@
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6YZ-2k-hcb">
                                 <rect key="frame" x="-23" y="-15" width="46" height="30"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <state key="normal" title="Here"/>
                                 <variation key="heightClass=regular" fixedFrame="YES">
-                                    <rect key="frame" x="16" y="583" width="33" height="30"/>
+                                    <rect key="frame" x="16" y="583" width="60" height="30"/>
                                 </variation>
                                 <connections>
                                     <action selector="showHere:" destination="BYZ-38-t0r" eventType="touchUpInside" id="bvz-yb-58g"/>
@@ -144,7 +135,7 @@
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="from" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="J4E-xB-VaM">
                                 <rect key="frame" x="-42" y="-21" width="42" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                                 <variation key="heightClass=regular" fixedFrame="YES">
                                     <rect key="frame" x="19" y="75" width="36" height="21"/>
@@ -153,7 +144,7 @@
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="to" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="w8B-H7-sBE">
                                 <rect key="frame" x="-42" y="-21" width="42" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                                 <variation key="heightClass=regular" fixedFrame="YES">
                                     <rect key="frame" x="24" y="112" width="16" height="21"/>
@@ -163,7 +154,7 @@
                                 <rect key="frame" x="-23" y="-15" width="46" height="30"/>
                                 <color key="backgroundColor" red="0.23176548069174607" green="0.46990767769370123" blue="0.79163885416265312" alpha="1" colorSpace="calibratedRGB"/>
                                 <state key="normal" title="back">
-                                    <color key="titleColor" cocoaTouchSystemColor="tableCellGroupedBackgroundColor"/>
+                                    <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                     <color key="titleShadowColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <variation key="heightClass=regular" fixedFrame="YES">
@@ -206,6 +197,16 @@
                                     <action selector="pedestrianButtonAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="kv7-IG-eOz"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="834-f0-dlj">
+                                <rect key="frame" x="-23" y="-15" width="46" height="30"/>
+                                <state key="normal" title="Legend"/>
+                                <variation key="heightClass=regular" fixedFrame="YES">
+                                    <rect key="frame" x="150" y="583" width="75" height="30"/>
+                                </variation>
+                                <connections>
+                                    <action selector="showLegend:" destination="BYZ-38-t0r" eventType="touchUpInside" id="GMc-eu-s9f"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <userDefinedRuntimeAttributes>
@@ -221,7 +222,6 @@
                         </userDefinedRuntimeAttributes>
                         <variation key="default">
                             <mask key="subviews">
-                                <exclude reference="834-f0-dlj"/>
                                 <exclude reference="7T6-g8-4zD"/>
                                 <exclude reference="lc4-WQ-fOt"/>
                                 <exclude reference="6YZ-2k-hcb"/>
@@ -233,11 +233,11 @@
                                 <exclude reference="2Hc-pj-6X6"/>
                                 <exclude reference="qQa-u5-qlY"/>
                                 <exclude reference="QpJ-Xs-ok7"/>
+                                <exclude reference="834-f0-dlj"/>
                             </mask>
                         </variation>
                         <variation key="heightClass=regular">
                             <mask key="subviews">
-                                <include reference="834-f0-dlj"/>
                                 <include reference="7T6-g8-4zD"/>
                                 <include reference="lc4-WQ-fOt"/>
                                 <include reference="6YZ-2k-hcb"/>
@@ -249,6 +249,7 @@
                                 <include reference="2Hc-pj-6X6"/>
                                 <include reference="qQa-u5-qlY"/>
                                 <include reference="QpJ-Xs-ok7"/>
+                                <include reference="834-f0-dlj"/>
                             </mask>
                         </variation>
                         <connections>
@@ -261,7 +262,7 @@
                                 <action selector="returnToMapMode:" destination="BYZ-38-t0r" id="3eh-ti-pEP"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" title=". . ." id="Omq-5Y-zQa">
+                        <barButtonItem key="rightBarButtonItem" title="More" id="Omq-5Y-zQa">
                             <connections>
                                 <action selector="showOptionsMenu:" destination="BYZ-38-t0r" id="cDE-e0-L8T"/>
                                 <segue destination="vt7-05-Vng" kind="popoverPresentation" identifier="optionsSegue" popoverAnchorBarButtonItem="Omq-5Y-zQa" id="dQT-Ag-GJV">
