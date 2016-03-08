@@ -31,13 +31,13 @@
                                     <rect key="frame" x="75" y="256" width="150" height="30"/>
                                 </variation>
                             </button>
-                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="0U8-7d-1zv">
+                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="j58-uW-Uk7">
                                 <rect key="frame" x="-25" y="-15" width="51" height="31"/>
                                 <variation key="heightClass=regular" fixedFrame="YES">
-                                    <rect key="frame" x="49" y="67" width="51" height="31"/>
+                                    <rect key="frame" x="49" y="115" width="51" height="31"/>
                                 </variation>
                                 <connections>
-                                    <action selector="sendToggleCurbRampsAction:" destination="vt7-05-Vng" eventType="valueChanged" id="tsD-SP-w65"/>
+                                    <action selector="sendToggleElevationData:" destination="vt7-05-Vng" eventType="valueChanged" id="rMY-nN-XpZ"/>
                                 </connections>
                             </switch>
                             <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Twz-du-0Id">
@@ -46,7 +46,7 @@
                                     <rect key="frame" x="49" y="167" width="51" height="31"/>
                                 </variation>
                                 <connections>
-                                    <action selector="sendToggleBusStops:" destination="vt7-05-Vng" eventType="valueChanged" id="Zi1-RP-Bza"/>
+                                    <action selector="sendToggleBusStops:" destination="vt7-05-Vng" eventType="valueChanged" id="jJe-oh-EwG"/>
                                 </connections>
                             </switch>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Curb ramps" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hqp-sO-euR">
@@ -85,13 +85,13 @@
                                     <rect key="frame" x="135" y="172" width="76" height="21"/>
                                 </variation>
                             </label>
-                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="j58-uW-Uk7">
+                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="0U8-7d-1zv">
                                 <rect key="frame" x="-25" y="-15" width="51" height="31"/>
                                 <variation key="heightClass=regular" fixedFrame="YES">
-                                    <rect key="frame" x="49" y="115" width="51" height="31"/>
+                                    <rect key="frame" x="49" y="67" width="51" height="31"/>
                                 </variation>
                                 <connections>
-                                    <action selector="sendToggleElevationData:" destination="vt7-05-Vng" eventType="valueChanged" id="Moj-sH-9jM"/>
+                                    <action selector="sendToggleCurbRampsAction:" destination="vt7-05-Vng" eventType="valueChanged" id="UeX-Xm-Bw7"/>
                                 </connections>
                             </switch>
                         </subviews>
@@ -100,26 +100,26 @@
                             <mask key="subviews">
                                 <exclude reference="wVn-RH-ZPX"/>
                                 <exclude reference="H0f-oL-XBF"/>
-                                <exclude reference="0U8-7d-1zv"/>
+                                <exclude reference="j58-uW-Uk7"/>
                                 <exclude reference="Twz-du-0Id"/>
                                 <exclude reference="hqp-sO-euR"/>
                                 <exclude reference="D6k-K1-TxG"/>
                                 <exclude reference="9ah-d8-JOl"/>
                                 <exclude reference="MIp-7M-ULX"/>
-                                <exclude reference="j58-uW-Uk7"/>
+                                <exclude reference="0U8-7d-1zv"/>
                             </mask>
                         </variation>
                         <variation key="heightClass=regular">
                             <mask key="subviews">
                                 <include reference="wVn-RH-ZPX"/>
                                 <include reference="H0f-oL-XBF"/>
-                                <include reference="0U8-7d-1zv"/>
+                                <include reference="j58-uW-Uk7"/>
                                 <include reference="Twz-du-0Id"/>
                                 <include reference="hqp-sO-euR"/>
                                 <include reference="D6k-K1-TxG"/>
                                 <include reference="9ah-d8-JOl"/>
                                 <include reference="MIp-7M-ULX"/>
-                                <include reference="j58-uW-Uk7"/>
+                                <include reference="0U8-7d-1zv"/>
                             </mask>
                         </variation>
                     </view>
@@ -129,6 +129,11 @@
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
                     <size key="freeformSize" width="300" height="330"/>
+                    <connections>
+                        <outlet property="busStopSwitch" destination="Twz-du-0Id" id="izq-2W-zf2"/>
+                        <outlet property="curbrampSwitch" destination="0U8-7d-1zv" id="bDr-1N-R0B"/>
+                        <outlet property="elevationSwitch" destination="j58-uW-Uk7" id="tHO-U1-r9V"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="1Nn-4D-w8g" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
