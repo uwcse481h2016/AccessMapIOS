@@ -16,6 +16,7 @@ protocol OptionsDelegate: class {
     func toggleCurbRamps()
     func toggleElevationData()
     func toggleBusStops()
+    func enterReportMode()
 }
 
 class OptionsViewController: UIViewController {
@@ -23,7 +24,6 @@ class OptionsViewController: UIViewController {
     weak var delegate: OptionsDelegate? = nil
 
     // MARK: Properties
-    
 
     @IBOutlet weak var curbrampSwitch: UISwitch!
     @IBOutlet weak var elevationSwitch: UISwitch!
@@ -50,23 +50,7 @@ class OptionsViewController: UIViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-//    
-//    @IBAction func sendToggleCurbRamps(sender: UISwitch) {
-//        print("toggled curb ramps!")
-//        delegate?.toggleCurbRamps()
-//        //self.dismissViewControllerAnimated(true, completion: {});
-//        
-//    }
-//
-//    @IBAction func sendToggleElevationData(sender: UISwitch) {
-//        print("toggled elevation data!")
-//        delegate?.toggleElevationData()
-//    }
-    
-    //    @IBAction func sendToggleBusStops(sender: UISwitch) {
-    //        print("toggled bus stops!")
-    //        delegate?.toggleBusStops()
-    //    }
+
     @IBAction func sendToggleCurbRampsAction(sender: UISwitch) {
         showCurbramps = !showCurbramps
         print("toggled curb ramps!")
@@ -85,6 +69,12 @@ class OptionsViewController: UIViewController {
         delegate?.toggleBusStops()
     }
 
+    @IBAction func sendReportMode(sender: UIButton) {
+        print("sendReportMode()")
+        delegate?.enterReportMode()
+        self.dismissViewControllerAnimated(true, completion: {});
+    }
+    
     /*
     // MARK: - Navigation
 

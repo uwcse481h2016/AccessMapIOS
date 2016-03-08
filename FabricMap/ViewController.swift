@@ -10,7 +10,7 @@ import UIKit
 import Mapbox
 
 //class ViewController: UIViewController, UIPopoverPresentationControllerDelegate, MGLMapViewDelegate {
-class ViewController: UIViewController, UISearchBarDelegate, MGLMapViewDelegate, UITextFieldDelegate, UIPopoverPresentationControllerDelegate, UITableViewDelegate, UITableViewDataSource, RoutingDelegate, OptionsDelegate {
+class ViewController: UIViewController, UISearchBarDelegate, MGLMapViewDelegate, UITextFieldDelegate, UIPopoverPresentationControllerDelegate, UITableViewDelegate, UITableViewDataSource, RoutingDelegate, OptionsDelegate, ReportingDelegate {
     
     var manager:CLLocationManager!
     
@@ -27,6 +27,8 @@ class ViewController: UIViewController, UISearchBarDelegate, MGLMapViewDelegate,
     var showCurbRamps = true;
     var showElevationData = true;
     var showBusStops = true;
+    
+    var inReportMode = false;
     
     var currentCoordinates: CLLocationCoordinate2D!
     
@@ -104,7 +106,7 @@ class ViewController: UIViewController, UISearchBarDelegate, MGLMapViewDelegate,
 //            zoomLevel: 16,
 //            animated: false)
 //        view.addSubview(map)
-//        map.delegate = self
+       map.delegate = self
         map.styleURL = elevationStyleURL
         //map.addGestureRecognizer(UILongPressGestureRecognizer(target: self, action: "changeStyle:"))
             
@@ -130,11 +132,24 @@ class ViewController: UIViewController, UISearchBarDelegate, MGLMapViewDelegate,
         powerWheelChairButton.hidden = true;
         pedestrianButton.hidden = true;
         
+        // hold to show change the map style
+        map.addGestureRecognizer(UILongPressGestureRecognizer(target: self,
+            action: "changeStyle:"))
+
+        map.addGestureRecognizer(UITapGestureRecognizer(target: self,
+            action: "startReport:"))
         
         
-//        
-//        map.addGestureRecognizer(UITapGestureRecognizer(target: self,
-//            action: "showInputField:"))
+        //map.addGestureRecognizer(UITapGestureRecognizer(target: self,
+        //    action: "showInputField:"))
+    }
+    
+    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
+        print("called touchesBegan")
+        if let touch = touches.first {
+            let position = touch.locationInView(view)
+            print(position)
+        }
     }
     
     func onChooseManualWheelchairOption() {
@@ -180,6 +195,15 @@ class ViewController: UIViewController, UISearchBarDelegate, MGLMapViewDelegate,
         } else {
             drawBusStops()
         }
+    }
+    
+    func sendReport(message: String) {
+        print("message is " + message)
+    }
+    
+    func enterReportMode() {
+        print("entered Report mode")
+        inReportMode = true
     }
     
     func formatBaseButton(button: UIButton) {
@@ -741,8 +765,10 @@ class ViewController: UIViewController, UISearchBarDelegate, MGLMapViewDelegate,
     func drawMarker(coordinate: CLLocationCoordinate2D, title: String) -> MGLPointAnnotation{
         let marker = MGLPointAnnotation()
         marker.coordinate = coordinate
-        marker.title = title
-        marker.subtitle = title
+        if title != "" {
+            marker.title = title
+            marker.subtitle = title
+        }
         map.addAnnotation(marker)
         map.selectAnnotation(marker, animated: true)
         return marker
@@ -1279,6 +1305,48 @@ class ViewController: UIViewController, UISearchBarDelegate, MGLMapViewDelegate,
             map.styleURL = styleURLs[index]
         }
     }
+    
+    func startReport(sender: UITapGestureRecognizer) {
+        if !inReportMode {
+            return
+        }
+        print("Entered startReport()")
+        if sender.state == .Ended {
+            var location1 = sender.locationInView(map)
+            print("location in View = " + String(location1))
+            // handling code
+            let location: CLLocationCoordinate2D = map.convertPoint(sender.locationInView(map), toCoordinateFromView: map)
+            print("You tapped at: \(location.latitude), \(location.longitude)")
+            drawMarker(location, title:"")
+            
+            
+            let storyboard = self.storyboard
+            let reportPopupController = storyboard!.instantiateViewControllerWithIdentifier("reportPopup") as! ReportViewController
+            reportPopupController.modalPresentationStyle = .Popover
+            reportPopupController.delegate = self
+            
+            let reportPresentationController = reportPopupController.popoverPresentationController
+            reportPresentationController?.permittedArrowDirections = .Any
+            reportPresentationController?.delegate = self
+            reportPresentationController?.sourceView = map
+            reportPresentationController?.sourceRect = CGRect(
+                x: location1.x,
+                y: location1.y - 20,
+                width: 1,
+                height: 1)
+            self.presentViewController(
+                reportPopupController,
+                animated: true,
+                completion: nil)
+            
+            //self.presentViewController(reportPopupController, animated: true, completion: nil)
+            
+            
+            inReportMode = false
+        }
+    }
+    
+    
     
     func clearAnnotations() {
         clearElevationLines()

@@ -11,6 +11,7 @@
 		495C09551C87CFFE00954F31 /* busstop5.png in Resources */ = {isa = PBXBuildFile; fileRef = 495C09541C87CFFE00954F31 /* busstop5.png */; };
 		495C09571C8EA94500954F31 /* RoutingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 495C09561C8EA94500954F31 /* RoutingViewController.swift */; };
 		495C09591C8EDCA200954F31 /* OptionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 495C09581C8EDCA200954F31 /* OptionsViewController.swift */; };
+		495C095B1C8F165F00954F31 /* ReportViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 495C095A1C8F165F00954F31 /* ReportViewController.swift */; };
 		49807D831C740EAF00A321D6 /* map_legend.gif in Resources */ = {isa = PBXBuildFile; fileRef = 49807D821C740EAF00A321D6 /* map_legend.gif */; };
 		49807D871C7591E800A321D6 /* Legend-01.png in Resources */ = {isa = PBXBuildFile; fileRef = 49807D861C7591E800A321D6 /* Legend-01.png */; };
 		49AD64CF1C7C24C400731AC3 /* mapbox-raster-v8.json in Resources */ = {isa = PBXBuildFile; fileRef = 49AD64CE1C7C24C400731AC3 /* mapbox-raster-v8.json */; };
@@ -50,6 +51,7 @@
 		495C09541C87CFFE00954F31 /* busstop5.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = busstop5.png; sourceTree = "<group>"; };
 		495C09561C8EA94500954F31 /* RoutingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RoutingViewController.swift; sourceTree = "<group>"; };
 		495C09581C8EDCA200954F31 /* OptionsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OptionsViewController.swift; sourceTree = "<group>"; };
+		495C095A1C8F165F00954F31 /* ReportViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReportViewController.swift; sourceTree = "<group>"; };
 		49807D821C740EAF00A321D6 /* map_legend.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = map_legend.gif; sourceTree = "<group>"; };
 		49807D861C7591E800A321D6 /* Legend-01.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Legend-01.png"; sourceTree = "<group>"; };
 		49AD64CE1C7C24C400731AC3 /* mapbox-raster-v8.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "mapbox-raster-v8.json"; sourceTree = "<group>"; };
@@ -133,6 +135,7 @@
 				558AC9561C59FBC2001A7ACD /* ViewController.swift */,
 				495C09561C8EA94500954F31 /* RoutingViewController.swift */,
 				495C09581C8EDCA200954F31 /* OptionsViewController.swift */,
+				495C095A1C8F165F00954F31 /* ReportViewController.swift */,
 				558AC9581C59FBC2001A7ACD /* Main.storyboard */,
 				558AC95B1C59FBC2001A7ACD /* Assets.xcassets */,
 				558AC95D1C59FBC2001A7ACD /* LaunchScreen.storyboard */,
@@ -322,6 +325,7 @@
 				558AC9571C59FBC2001A7ACD /* ViewController.swift in Sources */,
 				495C09591C8EDCA200954F31 /* OptionsViewController.swift in Sources */,
 				495C09571C8EA94500954F31 /* RoutingViewController.swift in Sources */,
+				495C095B1C8F165F00954F31 /* ReportViewController.swift in Sources */,
 				558AC9551C59FBC2001A7ACD /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

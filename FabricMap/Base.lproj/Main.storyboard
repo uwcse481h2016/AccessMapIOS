@@ -23,6 +23,9 @@
                                 <variation key="heightClass=regular" fixedFrame="YES">
                                     <rect key="frame" x="75" y="214" width="150" height="34"/>
                                 </variation>
+                                <connections>
+                                    <action selector="sendReportMode:" destination="vt7-05-Vng" eventType="touchUpInside" id="kNf-ZN-PQ9"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="H0f-oL-XBF">
                                 <rect key="frame" x="-23" y="-15" width="46" height="30"/>
@@ -137,7 +140,77 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="1Nn-4D-w8g" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1070" y="120"/>
+            <point key="canvasLocation" x="1061" y="52.5"/>
+        </scene>
+        <!--Report View Controller-->
+        <scene sceneID="nc9-uw-p9P">
+            <objects>
+                <viewController storyboardIdentifier="reportPopup" id="YH1-JI-OhC" customClass="ReportViewController" customModule="FabricMap" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="bjf-vT-W7l"/>
+                        <viewControllerLayoutGuide type="bottom" id="zi7-go-1Y1"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="od9-89-yx1">
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Please enter a brief description: " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dfO-8e-44a">
+                                <rect key="frame" x="-42" y="-21" width="42" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                                <variation key="heightClass=regular" fixedFrame="YES">
+                                    <rect key="frame" x="20" y="8" width="300" height="32"/>
+                                </variation>
+                            </label>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="v1K-11-46i">
+                                <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                <variation key="heightClass=regular" fixedFrame="YES">
+                                    <rect key="frame" x="20" y="48" width="260" height="111"/>
+                                </variation>
+                            </textView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="54E-0b-Ma4">
+                                <rect key="frame" x="-23" y="-15" width="46" height="30"/>
+                                <state key="normal" title="Send">
+                                    <color key="titleColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
+                                <variation key="heightClass=regular" fixedFrame="YES">
+                                    <rect key="frame" x="217" y="162" width="36" height="30"/>
+                                </variation>
+                                <connections>
+                                    <action selector="dispatchSendReport:" destination="YH1-JI-OhC" eventType="touchUpInside" id="mEw-uT-fMb"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <variation key="default">
+                            <mask key="subviews">
+                                <exclude reference="dfO-8e-44a"/>
+                                <exclude reference="v1K-11-46i"/>
+                                <exclude reference="54E-0b-Ma4"/>
+                            </mask>
+                        </variation>
+                        <variation key="heightClass=regular">
+                            <mask key="subviews">
+                                <include reference="dfO-8e-44a"/>
+                                <include reference="v1K-11-46i"/>
+                                <include reference="54E-0b-Ma4"/>
+                            </mask>
+                        </variation>
+                    </view>
+                    <value key="contentSizeForViewInPopover" type="size" width="300" height="200"/>
+                    <nil key="simulatedStatusBarMetrics"/>
+                    <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+                    <size key="freeformSize" width="300" height="200"/>
+                    <connections>
+                        <outlet property="textField" destination="v1K-11-46i" id="dUW-fy-hFa"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="hio-kU-Q4y" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1070" y="282.75"/>
         </scene>
         <!--Delegate-->
         <scene sceneID="tne-QT-ifu">
@@ -377,7 +450,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="678.5" y="146.625"/>
+            <point key="canvasLocation" x="634.5" y="119.625"/>
         </scene>
         <!--View Controller-->
         <scene sceneID="3P1-FV-IW6">
@@ -417,7 +490,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Oce-Yg-s8c" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="775" y="609"/>
+            <point key="canvasLocation" x="479" y="649.5"/>
         </scene>
         <!--Table View Controller-->
         <scene sceneID="PdG-Ym-5pT">
@@ -481,7 +554,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="N18-mb-38d" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1210" y="359.25"/>
+            <point key="canvasLocation" x="1380" y="101.25"/>
         </scene>
         <!--Routing View Controller-->
         <scene sceneID="jex-Ru-Zwg">
@@ -558,7 +631,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="lyY-Gx-Ekj" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1173" y="513.75"/>
+            <point key="canvasLocation" x="1111" y="602.25"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="AyI-tT-t4k">

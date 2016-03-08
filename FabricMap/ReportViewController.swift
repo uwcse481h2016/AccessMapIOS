@@ -8,8 +8,16 @@
 
 import UIKit
 
+protocol ReportingDelegate: class {
+    func sendReport(message: String)
+}
+
 class ReportViewController: UIViewController {
 
+    @IBOutlet weak var textField: UITextView!
+    
+    weak var delegate: ReportingDelegate? = nil
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -21,6 +29,10 @@ class ReportViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
+    @IBAction func dispatchSendReport(sender: UIButton) {
+        delegate!.sendReport(textField.text)
+        self.dismissViewControllerAnimated(true, completion: {});
+    }
 
     /*
     // MARK: - Navigation
