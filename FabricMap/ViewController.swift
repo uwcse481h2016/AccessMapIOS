@@ -10,7 +10,7 @@ import UIKit
 import Mapbox
 
 //class ViewController: UIViewController, UIPopoverPresentationControllerDelegate, MGLMapViewDelegate {
-class ViewController: UIViewController, UISearchBarDelegate, MGLMapViewDelegate, UITextFieldDelegate, UIPopoverPresentationControllerDelegate, UITableViewDelegate, UITableViewDataSource {
+class ViewController: UIViewController, UISearchBarDelegate, MGLMapViewDelegate, UITextFieldDelegate, UIPopoverPresentationControllerDelegate, UITableViewDelegate, UITableViewDataSource, RoutingDelegate {
     
     var manager:CLLocationManager!
     
@@ -106,24 +106,6 @@ class ViewController: UIViewController, UISearchBarDelegate, MGLMapViewDelegate,
             
 //        showLabel()
 
-
-//        //here.backgroundColor = UIColor.clearColor()
-//        here.layer.cornerRadius = 5
-//        //here.titleEdgeInsets = UIEdgeInsets(top: 0.0, left: 5.0, bottom: 0.0, right: 0.0)
-//        here.layer.borderWidth = 1
-//        here.layer.borderColor = UIColor.blueColor().CGColor
-//        
-//        //here.backgroundColor = UIColor.clearColor()
-//        legend.layer.cornerRadius = 5
-//        //here.titleEdgeInsets = UIEdgeInsets(top: 0.0, left: 5.0, bottom: 0.0, right: 0.0)
-//        legend.layer.borderWidth = 1
-//        legend.layer.borderColor = UIColor.blueColor().CGColor
-//        
-//        //here.backgroundColor = UIColor.clearColor()
-//        route.layer.cornerRadius = 5
-//        //here.titleEdgeInsets = UIEdgeInsets(top: 0.0, left: 5.0, bottom: 0.0, right: 0.0)
-//        route.layer.borderWidth = 1
-//        route.layer.borderColor = UIColor.blueColor().CGColor
         formatBaseButton(here)
         formatBaseButton(legend)
         formatBaseButton(route)
@@ -151,7 +133,24 @@ class ViewController: UIViewController, UISearchBarDelegate, MGLMapViewDelegate,
 //            action: "showInputField:"))
     }
     
+    func onChooseManualWheelchairOption() {
+        print("onChooseManualWheelchairOption() called")
+        reverseChoiceButtonHidden()
+        routeByAddress()
+    }
 
+    func onChoosePowerWheelchairOption() {
+        print("onChoosePowerWheelchairOption() called")
+        reverseChoiceButtonHidden()
+        routeByAddress()
+    }
+    
+    func onChooseOtherMobilityAidOption() {
+        print("onChooseOtherMobilityAidOption() called")
+        reverseChoiceButtonHidden()
+        routeByAddress()
+    }
+    
     func formatBaseButton(button: UIButton) {
         button.backgroundColor = UIColor.whiteColor()
         button.layer.cornerRadius = 5
@@ -172,9 +171,9 @@ class ViewController: UIViewController, UISearchBarDelegate, MGLMapViewDelegate,
     
     
     func reverseChoiceButtonHidden() {
-        wheelChairButton.hidden = !wheelChairButton.hidden
-        powerWheelChairButton.hidden = !powerWheelChairButton.hidden
-        pedestrianButton.hidden = !pedestrianButton.hidden
+        //wheelChairButton.hidden = !wheelChairButton.hidden
+        //powerWheelChairButton.hidden = !powerWheelChairButton.hidden
+        //pedestrianButton.hidden = !pedestrianButton.hidden
     }
     
     func routeByAddress() {
@@ -216,6 +215,14 @@ class ViewController: UIViewController, UISearchBarDelegate, MGLMapViewDelegate,
         routeByAddress()
     }
 
+    @IBAction func manualWheelchairButtonAction(sender: UIButton) {
+        print("manualWheelchairButton called")
+        reverseChoiceButtonHidden()
+        routeByAddress()
+    }
+    @IBOutlet weak var otherUserButton: UIButton!
+    @IBOutlet weak var powerWheelchairButton: UIButton!
+    @IBOutlet weak var manualWheelchairButton: UIButton!
     @IBAction func pedestrianButtonAction(sender: AnyObject) {
         print("pedestrian button called")
         reverseChoiceButtonHidden()
@@ -374,10 +381,24 @@ class ViewController: UIViewController, UISearchBarDelegate, MGLMapViewDelegate,
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        if segue.identifier == "optionsSegue" {
+        switch segue.identifier {
+        case "optionsSegue"?:
             let popoverViewController = segue.destinationViewController as! UIViewController
             popoverViewController.modalPresentationStyle = UIModalPresentationStyle.Popover
             popoverViewController.popoverPresentationController!.delegate = self
+        case "legendSegue"?:
+            let popoverViewController = segue.destinationViewController as! UIViewController
+            popoverViewController.modalPresentationStyle = UIModalPresentationStyle.Popover
+            popoverViewController.popoverPresentationController!.delegate = self
+            segue.destinationViewController.popoverPresentationController?.sourceRect = sender!.bounds
+        case "routeSegue"?:
+            let popoverViewController = segue.destinationViewController as! RoutingViewController
+            popoverViewController.delegate = self
+            popoverViewController.modalPresentationStyle = UIModalPresentationStyle.Popover
+            popoverViewController.popoverPresentationController!.delegate = self
+            segue.destinationViewController.popoverPresentationController?.sourceRect = sender!.bounds
+        default:
+            break
         }
     }
     
