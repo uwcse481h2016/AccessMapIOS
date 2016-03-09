@@ -896,7 +896,21 @@ class ViewController: UIViewController, UISearchBarDelegate, MGLMapViewDelegate,
 
             let bounds = self.map.visibleCoordinateBounds
 
-            let apiURL = "http://accessmap-api.azurewebsites.net/v1/curbramps.geojson?bbox=" + String(bounds.sw.longitude) + "," + String(bounds.sw.latitude) + "," + String(bounds.ne.longitude) + "," + String(bounds.ne.latitude)
+            
+            
+            
+            
+            //http://dssg-db.cloudapp.net/api/data/v2/crossings.geojson?bbox=-122.32893347740172%2C47.60685023396842%2C-122.32033967971802%2C47.61254994698394
+//            let apiURL = "http://accessmap-api.azurewebsites.net/v1/curbramps.geojson?bbox=" + String(bounds.sw.longitude) + "," + String(bounds.sw.latitude) + "," + String(bounds.ne.longitude) + "," + String(bounds.ne.latitude)
+            
+//            http://accessmap-api.azurewebsites.net/v2/sidewalks.geojson?bbox=-124.785717,45.548599,-116.915580,49.002431
+            
+            
+            let apiURL = "http://accessmap-api.azurewebsites.net/v2/crossings.geojson?bbox=" + String(bounds.sw.longitude) + "," + String(bounds.sw.latitude) + "," + String(bounds.ne.longitude) + "," + String(bounds.ne.latitude)
+            
+            
+            
+            
             let nsURL = NSURL(string: apiURL)
 
             let curbrampsData = NSData(contentsOfURL: nsURL!)
@@ -906,7 +920,8 @@ class ViewController: UIViewController, UISearchBarDelegate, MGLMapViewDelegate,
                 return;
             }
         
-            
+//            print(curbrampsData);
+//            return;
             self.curbLines.removeAll()
 
 
@@ -919,39 +934,40 @@ class ViewController: UIViewController, UISearchBarDelegate, MGLMapViewDelegate,
                         for feature in features {
                             if let feature = feature as? NSDictionary {
                                 if let geometry = feature["geometry"] as? NSDictionary {
-                                    if geometry["type"] as? String == "Point" {
+
+                                    
+                                    if geometry["type"] as? String == "LineString" {
                                         // Create an array to hold the formatted coordinates for our line
                                         var coordinates: [CLLocationCoordinate2D] = []
                                         
-                                        if let location = geometry["coordinates"] as? NSArray {
+                                        if let locations = geometry["coordinates"] as? NSArray {
                                             // Iterate over line coordinates, stored in GeoJSON as many lng, lat arrays
-                                            // Make a CLLocationCoordinate2D with the lat, lng
-                                            let coordinate = CLLocationCoordinate2DMake(location[1].doubleValue, location[0].doubleValue)
-
-                                            coordinates.append(coordinate)
-
-                                            let coordinate2 = CLLocationCoordinate2DMake(location[1].doubleValue + 0.00001 , location[0].doubleValue + 0.00001)
-                                            coordinates.append(coordinate2)
-                                            
-
-                                            let line = MGLPolyline(coordinates: &coordinates, count: UInt(coordinates.count))
-                                            
-                                            line.title = "curbcut"
-
-                                            line.subtitle = "curbcut"
-                                            numFeatures++
-                                            self.curbLines.append(line)
-
-                                            // Add the annotation on the main thread
-                                            dispatch_async(dispatch_get_main_queue(), {
-                                                // Unowned reference to self to prevent retain cycle
-                                                [unowned self] in
-                                                self.map.addAnnotation(line)
-                                            })
-                                        
-                                        
+                                            for location in locations {
+                                                // Make a CLLocationCoordinate2D with the lat, lng
+                                                let coordinate = CLLocationCoordinate2DMake(location[1].doubleValue, location[0].doubleValue)
+                                                
+                                                // Add coordinate to coordinates array
+                                                coordinates.append(coordinate)
+                                            }
                                         }
+                                        numFeatures++
+                                        let line = MGLPolyline(coordinates: &coordinates, count: UInt(coordinates.count))
+                                        
+                                        line.title = "curbcut"
+
+                                        self.curbLines.append(line)
+                                        
+                                        // Add the annotation on the main thread
+                                        dispatch_async(dispatch_get_main_queue(), {
+                                            // Unowned reference to self to prevent retain cycle
+                                            [unowned self] in
+                                            self.map.addAnnotation(line)
+                                        })
                                     }
+                                    
+                                    
+                                    
+                                    
                                 }
                             }
                         }
@@ -1457,7 +1473,7 @@ class ViewController: UIViewController, UISearchBarDelegate, MGLMapViewDelegate,
         // Set line width for polyline annotations
         
         if(annotation.title == "curbcut" && annotation is MGLPolyline) {
-            return 12;
+            return 4;
         }
         
         if(annotation.title == "route" && annotation is MGLPolyline) {
