@@ -204,6 +204,7 @@
         <!--Delegate-->
         <scene sceneID="tne-QT-ifu">
             <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
                 <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="FabricMap" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
@@ -347,6 +348,16 @@
                                     </segue>
                                 </connections>
                             </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tap at the location you would like to report." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0Kg-ud-QA0">
+                                <rect key="frame" x="-42" y="-21" width="42" height="21"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                                <variation key="heightClass=regular" fixedFrame="YES">
+                                    <rect key="frame" x="-51" y="146" width="479" height="21"/>
+                                </variation>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <userDefinedRuntimeAttributes>
@@ -374,6 +385,7 @@
                                 <exclude reference="qQa-u5-qlY"/>
                                 <exclude reference="QpJ-Xs-ok7"/>
                                 <exclude reference="7T6-g8-4zD"/>
+                                <exclude reference="0Kg-ud-QA0"/>
                             </mask>
                         </variation>
                         <variation key="heightClass=regular">
@@ -390,6 +402,7 @@
                                 <include reference="qQa-u5-qlY"/>
                                 <include reference="QpJ-Xs-ok7"/>
                                 <include reference="7T6-g8-4zD"/>
+                                <include reference="0Kg-ud-QA0"/>
                             </mask>
                         </variation>
                         <connections>
@@ -431,13 +444,13 @@
                         <outlet property="pedestrianButton" destination="QpJ-Xs-ok7" id="TDT-66-qLm"/>
                         <outlet property="powerWheelChairButton" destination="qQa-u5-qlY" id="cyS-eY-Khl"/>
                         <outlet property="powerWheelchairButton" destination="G5Z-b6-Wsk" id="cxE-Ca-8Hu"/>
+                        <outlet property="reportInstruction" destination="0Kg-ud-QA0" id="obf-Ur-6TS"/>
                         <outlet property="route" destination="7T6-g8-4zD" id="OCE-1A-lad"/>
                         <outlet property="startAddressTextField" destination="lc4-WQ-fOt" id="xft-WT-NFG"/>
                         <outlet property="toLabel" destination="w8B-H7-sBE" id="eHi-iG-kAa"/>
                         <outlet property="wheelChairButton" destination="2Hc-pj-6X6" id="6Mk-Yb-o5b"/>
                     </connections>
                 </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="634.5" y="119.625"/>
         </scene>

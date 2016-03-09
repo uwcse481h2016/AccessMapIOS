@@ -61,6 +61,8 @@ class ViewController: UIViewController, UISearchBarDelegate, MGLMapViewDelegate,
     
     @IBOutlet var map: MGLMapView!
     
+    @IBOutlet weak var reportInstruction: UILabel!
+    
     @IBOutlet weak var legend: UIButton!
     
     @IBOutlet weak var here: UIButton!
@@ -116,6 +118,7 @@ class ViewController: UIViewController, UISearchBarDelegate, MGLMapViewDelegate,
         formatBaseButton(legend)
         formatBaseButton(route)
         
+        reportInstruction.hidden = true;
 //
         inputAddressTextField.delegate = self
         startAddressTextField.delegate = self
@@ -183,8 +186,10 @@ class ViewController: UIViewController, UISearchBarDelegate, MGLMapViewDelegate,
         showElevationData = !showElevationData
         if !showElevationData {
             clearElevationLines()
+            //map.styleURL = MGLStyle.streetsStyleURL()
         } else {
             drawElevationData()
+            //map.styleURL = elevationStyleURL
         }
     }
     
@@ -204,6 +209,7 @@ class ViewController: UIViewController, UISearchBarDelegate, MGLMapViewDelegate,
     func enterReportMode() {
         print("entered Report mode")
         inReportMode = true
+        reportInstruction.hidden = false
     }
     
     func formatBaseButton(button: UIButton) {
@@ -1341,7 +1347,7 @@ class ViewController: UIViewController, UISearchBarDelegate, MGLMapViewDelegate,
             
             //self.presentViewController(reportPopupController, animated: true, completion: nil)
             
-            
+            reportInstruction.hidden = true
             inReportMode = false
         }
     }
