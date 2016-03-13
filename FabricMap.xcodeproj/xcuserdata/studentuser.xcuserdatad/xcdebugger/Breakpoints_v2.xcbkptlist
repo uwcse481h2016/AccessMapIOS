@@ -120,12 +120,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "FabricMap/ViewController.swift"
-            timestampString = "479140602.573349"
+            timestampString = "479528874.842205"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1455"
-            endingLineNumber = "1455"
-            landmarkName = "mapView(_:lineWidthForPolylineAnnotation:)"
+            startingLineNumber = "1477"
+            endingLineNumber = "1477"
+            landmarkName = "mapView(_:imageForAnnotation:)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -136,11 +136,13 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "FabricMap/ViewController.swift"
-            timestampString = "479140602.573349"
+            timestampString = "479528874.842205"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1510"
-            endingLineNumber = "1510">
+            startingLineNumber = "1532"
+            endingLineNumber = "1532"
+            landmarkName = "mapView(_:strokeColorForShapeAnnotation:)"
+            landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -150,11 +152,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "FabricMap/ViewController.swift"
-            timestampString = "479140342.861061"
+            timestampString = "479528874.842205"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "601"
-            endingLineNumber = "601"
+            startingLineNumber = "623"
+            endingLineNumber = "623"
             landmarkName = "ViewController"
             landmarkType = "3">
          </BreakpointContent>
@@ -166,12 +168,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "FabricMap/ViewController.swift"
-            timestampString = "479140602.573349"
+            timestampString = "479528874.842205"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1316"
-            endingLineNumber = "1316"
-            landmarkName = "startReport(_:)"
+            startingLineNumber = "1338"
+            endingLineNumber = "1338"
+            landmarkName = "changeStyle(_:)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -182,11 +184,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "FabricMap/ViewController.swift"
-            timestampString = "479140602.573349"
+            timestampString = "479528874.842205"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1333"
-            endingLineNumber = "1333"
+            startingLineNumber = "1355"
+            endingLineNumber = "1355"
             landmarkName = "startReport(_:)"
             landmarkType = "5">
          </BreakpointContent>

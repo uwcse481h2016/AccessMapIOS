@@ -115,11 +115,28 @@ class ViewController: UIViewController, UISearchBarDelegate, MGLMapViewDelegate,
         formatBaseButton(here)
         formatBaseButton(legend)
         formatBaseButton(route)
+        var lightBlueColor = UIColor.init(red: 89,
+            green: 171,
+            blue: 227,
+            alpha: 1)
+        route.layer.borderColor = UIColor.clearColor().CGColor
         
+        //here.layer.borderColor = lightBlueColor.CGColor
+        //legend.layer.borderColor = lightBlueColor.CGColor
+        // Since we want to set the height of the text field larger than the default, we have to use a different border style in the storyboard and set it here
+        inputAddressTextField.borderStyle = UITextBorderStyle.RoundedRect
+        startAddressTextField.borderStyle = UITextBorderStyle.RoundedRect
+        endAddressTextField.borderStyle = UITextBorderStyle.RoundedRect
 //
         inputAddressTextField.delegate = self
         startAddressTextField.delegate = self
         endAddressTextField.delegate = self
+        
+        startAddressTextField.leftViewMode = UITextFieldViewMode.Always
+        startAddressTextField.leftView = fromLabel
+        
+        endAddressTextField.leftViewMode = UITextFieldViewMode.Always
+        endAddressTextField.leftView = toLabel
         
         startAddressTextField.hidden = true;
         endAddressTextField.hidden = true;
@@ -207,11 +224,16 @@ class ViewController: UIViewController, UISearchBarDelegate, MGLMapViewDelegate,
     }
     
     func formatBaseButton(button: UIButton) {
-        button.backgroundColor = UIColor.whiteColor()
+        //button.backgroundColor = UIColor.whiteColor()
         button.layer.cornerRadius = 5
         //button.titleEdgeInsets = UIEdgeInsets(top: 0.0, left: 5.0, bottom: 0.0, right: 0.0)
         button.layer.borderWidth = 1
         button.layer.borderColor = UIColor.whiteColor().CGColor
+        
+        button.layer.shadowColor = UIColor.grayColor().CGColor;
+        button.layer.shadowOpacity = 0.8;
+        button.layer.shadowRadius = 5;
+        button.layer.shadowOffset = CGSizeMake(5, 5);
     }
     
     // MARK: UITextFieldDelegate
