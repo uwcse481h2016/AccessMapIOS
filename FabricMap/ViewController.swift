@@ -329,6 +329,8 @@ class ViewController: UIViewController, UISearchBarDelegate, MGLMapViewDelegate,
         for i in 0..<self.routingLines.count {
             self.map.removeAnnotation(self.routingLines[i])
         }
+    
+
         self.routingLines.removeAll()
         reverseTextFieldHideAndShow()
     }
@@ -344,6 +346,20 @@ class ViewController: UIViewController, UISearchBarDelegate, MGLMapViewDelegate,
             geocoder.geocodeAddressString(endAddress!, completionHandler: {(placemarks, error) -> Void in
                 if((error) != nil){
                     print("Error", error)
+                    
+                    
+                    var alertView = UIAlertView(title: "Not found",
+                                message: "Please enter a valid address",
+                                delegate: nil,
+                                cancelButtonTitle: "Ok")
+                    
+                    
+
+                    alertView.show()
+                
+                    return;
+                    
+                    
                 }
                 
                 if let placemark = placemarks?.first {
@@ -353,7 +369,7 @@ class ViewController: UIViewController, UISearchBarDelegate, MGLMapViewDelegate,
                     for i in 0..<self.startEndMarkers.count {
                         self.map.removeAnnotation(self.startEndMarkers[i])
                     }
-                    var endMarkers = self.drawMarker(self.endCoordinates, title: "start")
+                    var endMarkers = self.drawMarker(self.endCoordinates, title: "end")
                     self.startEndMarkers.append(endMarkers);
                     self.map.setCenterCoordinate(self.endCoordinates, zoomLevel:15, animated: true)
                 }
@@ -369,10 +385,22 @@ class ViewController: UIViewController, UISearchBarDelegate, MGLMapViewDelegate,
             
             // get the coordinates of the input address
             geocoder.geocodeAddressString(startAddress!, completionHandler: {(placemarks, error) -> Void in
-                if((error) != nil){
-                    print("Error", error)
+                if(startAddress != "current location") {
+                    if((error) != nil){
+                        print("Error", error)
+                        var alertView = UIAlertView(title: "Not found",
+                            message: "Please enter a valid address",
+                            delegate: nil,
+                            cancelButtonTitle: "Ok")
+                        
+                        
+                        alertView.show()
+                        return;
+                    }
+                
                 }
                 
+     
                 if let placemark = placemarks?.first {
                     print("commint in")
                     startCoordinates = placemark.location!.coordinate
@@ -382,7 +410,19 @@ class ViewController: UIViewController, UISearchBarDelegate, MGLMapViewDelegate,
                     geocoder.geocodeAddressString(endAddress!, completionHandler: {(placemarks, error) -> Void in
                         if((error) != nil){
                             print("Error", error)
+                            
+                            
+                            print("Error", error)
+                            var alertView = UIAlertView(title: "Not found",
+                                message: "Please enter a valid address",
+                                delegate: nil,
+                                cancelButtonTitle: "Ok")
+                            
+                            
+                            alertView.show()
+                            return;
                         }
+                        
                         if let placemark = placemarks?.first {
                             let endCoordinates:CLLocationCoordinate2D = placemark.location!.coordinate
                             
@@ -508,6 +548,9 @@ class ViewController: UIViewController, UISearchBarDelegate, MGLMapViewDelegate,
         for i in 0..<self.routingLines.count {
             self.map.removeAnnotation(self.routingLines[i])
         }
+        
+        print("set map to destination location")
+        self.map.setCenterCoordinate(self.endCoordinates, zoomLevel:15, animated: true)
         self.routingLines.removeAll()
         reverseTextFieldHideAndShow()
     }
@@ -816,9 +859,10 @@ class ViewController: UIViewController, UISearchBarDelegate, MGLMapViewDelegate,
         print("call draw routing")
         print(startCoordingnates)
         print(endCoordinates)
-  
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), {
-            
+        
+        
+
+        
             let apiURL = "http://dssg-db.cloudapp.net/api/routing/route.json?waypoints=[" + String(startCoordingnates.latitude) + ",%20" + String(startCoordingnates.longitude) + ",%20" + String(endCoordinates.latitude) + ",%20" + String(endCoordinates.longitude) + "]"
             
             let nsURL = NSURL(string: apiURL)
@@ -830,9 +874,23 @@ class ViewController: UIViewController, UISearchBarDelegate, MGLMapViewDelegate,
             
             if(routingData == nil) {
                 print("error: can't get routing data")
+
+                var alertView = UIAlertView(title: "Not found",
+                    message: "no route founds",
+                    delegate: nil,
+                    cancelButtonTitle: "Ok")
+                
+                
+                alertView.show()
+                
+                
                 return;
+                
             }
-            
+        
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), {
+
+
             
             for i in 0..<self.routingLines.count {
                 self.map.removeAnnotation(self.routingLines[i])
@@ -840,7 +898,7 @@ class ViewController: UIViewController, UISearchBarDelegate, MGLMapViewDelegate,
             
             self.routingLines.removeAll()
             
-            
+
             
             do {
                 // Load and serialize the GeoJSON into a dictionary filled with properly-typed objects
