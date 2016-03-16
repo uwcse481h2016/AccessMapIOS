@@ -67,7 +67,7 @@ class ViewController: UIViewController, UISearchBarDelegate, MGLMapViewDelegate,
     
     @IBOutlet weak var route: UIButton!
     
-    @IBOutlet weak var backButton: UIButton!
+    //@IBOutlet weak var backButton: UIButton!
     
     @IBOutlet weak var inputAddressTextField: UITextField!
     
@@ -141,7 +141,7 @@ class ViewController: UIViewController, UISearchBarDelegate, MGLMapViewDelegate,
         startAddressTextField.hidden = true;
         endAddressTextField.hidden = true;
         
-        backButton.hidden = true;
+        //backButton.hidden = true;
         fromLabel.hidden = true;
         toLabel.hidden = true;
         
@@ -587,7 +587,7 @@ class ViewController: UIViewController, UISearchBarDelegate, MGLMapViewDelegate,
         endAddressTextField.hidden = !endAddressTextField.hidden
         fromLabel.hidden = !fromLabel.hidden
         toLabel.hidden = !toLabel.hidden
-        backButton.hidden = !backButton.hidden
+        //backButton.hidden = !backButton.hidden
         route.hidden = !route.hidden
         
     }

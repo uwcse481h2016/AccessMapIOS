@@ -306,20 +306,6 @@
                                     <rect key="frame" x="26" y="79" width="42" height="21"/>
                                 </variation>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pjO-9q-1jA">
-                                <rect key="frame" x="-23" y="-15" width="46" height="30"/>
-                                <color key="backgroundColor" red="0.23176548069174607" green="0.46990767769370123" blue="0.79163885416265312" alpha="1" colorSpace="calibratedRGB"/>
-                                <state key="normal" title="back">
-                                    <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                    <color key="titleShadowColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <variation key="heightClass=regular" fixedFrame="YES">
-                                    <rect key="frame" x="21" y="5" width="34" height="30"/>
-                                </variation>
-                                <connections>
-                                    <action selector="backButtonAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="GEU-OD-SXg"/>
-                                </connections>
-                            </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2Hc-pj-6X6">
                                 <rect key="frame" x="-23" y="-15" width="46" height="30"/>
                                 <color key="backgroundColor" red="0.7102272658459835" green="0.68844796194430435" blue="0.80000001192092896" alpha="1" colorSpace="calibratedRGB"/>
@@ -399,7 +385,6 @@
                                 <exclude reference="mi9-GS-60l"/>
                                 <exclude reference="saa-G8-neb"/>
                                 <exclude reference="J4E-xB-VaM"/>
-                                <exclude reference="pjO-9q-1jA"/>
                                 <exclude reference="2Hc-pj-6X6"/>
                                 <exclude reference="qQa-u5-qlY"/>
                                 <exclude reference="QpJ-Xs-ok7"/>
@@ -415,7 +400,6 @@
                                 <include reference="mi9-GS-60l"/>
                                 <include reference="saa-G8-neb"/>
                                 <include reference="J4E-xB-VaM"/>
-                                <include reference="pjO-9q-1jA"/>
                                 <include reference="2Hc-pj-6X6"/>
                                 <include reference="qQa-u5-qlY"/>
                                 <include reference="QpJ-Xs-ok7"/>
@@ -452,7 +436,6 @@
                     <connections>
                         <outlet property="Here" destination="6YZ-2k-hcb" id="q22-bU-V7g"/>
                         <outlet property="Legend" destination="834-f0-dlj" id="FzZ-cu-QBV"/>
-                        <outlet property="backButton" destination="pjO-9q-1jA" id="ycQ-yr-3fm"/>
                         <outlet property="endAddressTextField" destination="mi9-GS-60l" id="QyH-uL-Omz"/>
                         <outlet property="fromLabel" destination="J4E-xB-VaM" id="dl0-dc-TtH"/>
                         <outlet property="here" destination="6YZ-2k-hcb" id="M2a-mT-qD5"/>
