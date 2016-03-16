@@ -19,6 +19,7 @@ protocol OptionsDelegate: class {
     func enterReportMode()
 }
 
+// 
 class OptionsViewController: UIViewController {
 
     weak var delegate: OptionsDelegate? = nil
