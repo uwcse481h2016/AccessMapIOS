@@ -152,6 +152,7 @@ class ViewController: UIViewController, UISearchBarDelegate, MGLMapViewDelegate,
         wheelChairButton.hidden = true;
         powerWheelChairButton.hidden = true;
         pedestrianButton.hidden = true;
+        route.hidden = true;
         
         // hold to show change the map style
         map.addGestureRecognizer(UILongPressGestureRecognizer(target: self,
@@ -298,8 +299,11 @@ class ViewController: UIViewController, UISearchBarDelegate, MGLMapViewDelegate,
                 print(log(maxC))
                 //                        // set the map position
                 self.map.setCenterCoordinate(center, zoomLevel: log(maxC) + 3, animated: true)
-                
                 self.drawRouting(currentCoordinates, endCoordinates: self.endCoordinates)
+                clearAnnotations()
+                
+                print("annotation cleared!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
+
         }
     }
     
@@ -341,11 +345,17 @@ class ViewController: UIViewController, UISearchBarDelegate, MGLMapViewDelegate,
     }
     
     func textFieldShouldReturn(textField: UITextField) -> Bool {
+        
+        
         // Hide the keyboard.
         textField.resignFirstResponder()
         if(!inputAddressTextField.hidden) {
             print("text should return got called")
             let endAddress = inputAddressTextField.text
+            if(inputAddressTextField.text == "") {
+                return false;
+            }
+            
             let geocoder = CLGeocoder()
             // get the coordinates of the input address
             geocoder.geocodeAddressString(endAddress!, completionHandler: {(placemarks, error) -> Void in
@@ -354,7 +364,7 @@ class ViewController: UIViewController, UISearchBarDelegate, MGLMapViewDelegate,
                     
                     
                     var alertView = UIAlertView(title: "Not found",
-                                message: "Please enter a valid address",
+                                message: "Please enter a valid address.",
                                 delegate: nil,
                                 cancelButtonTitle: "Ok")
                     
@@ -364,8 +374,11 @@ class ViewController: UIViewController, UISearchBarDelegate, MGLMapViewDelegate,
                 
                     return;
                     
-                    
                 }
+                
+                
+                self.route.hidden = false
+                
                 
                 if let placemark = placemarks?.first {
                     self.endCoordinates = placemark.location!.coordinate
@@ -442,13 +455,20 @@ class ViewController: UIViewController, UISearchBarDelegate, MGLMapViewDelegate,
                             // get the zoom level
                             print(log(maxC))
                             // set the map position
+                            
+
                             self.map.setCenterCoordinate(center, zoomLevel: log(maxC) + 3, animated: true)
                             
+
                             // draw makers
                             self.drawStartEndMarker(startCoordinates, endCoordinates: endCoordinates)
                             
                             // draw routing
                             self.drawRouting(startCoordinates, endCoordinates: endCoordinates)
+                            
+                            
+                            self.clearAnnotations()
+                            print("cleared annotations")
                             
                         }
                     })
@@ -848,8 +868,8 @@ class ViewController: UIViewController, UISearchBarDelegate, MGLMapViewDelegate,
         let marker = MGLPointAnnotation()
         marker.coordinate = coordinate
         if title != "" {
-            marker.title = title
-            marker.subtitle = title
+//            marker.title = title
+//            marker.subtitle = title
         }
         map.addAnnotation(marker)
         map.selectAnnotation(marker, animated: true)
@@ -880,8 +900,8 @@ class ViewController: UIViewController, UISearchBarDelegate, MGLMapViewDelegate,
             if(routingData == nil) {
                 print("error: can't get routing data")
 
-                var alertView = UIAlertView(title: "Not found",
-                    message: "no route founds",
+                var alertView = UIAlertView(title: "No Route",
+                    message: "No accessible route from start to end location.",
                     delegate: nil,
                     cancelButtonTitle: "Ok")
                 
