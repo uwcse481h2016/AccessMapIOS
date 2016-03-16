@@ -156,6 +156,15 @@
                         <rect key="frame" x="0.0" y="0.0" width="250" height="150"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="v1K-11-46i">
+                                <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                <variation key="heightClass=regular" fixedFrame="YES">
+                                    <rect key="frame" x="20" y="36" width="210" height="77"/>
+                                </variation>
+                            </textView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="54E-0b-Ma4">
                                 <rect key="frame" x="-23" y="-15" width="46" height="30"/>
                                 <state key="normal" title="Send">
@@ -177,29 +186,32 @@
                                     <rect key="frame" x="26" y="14" width="131" height="21"/>
                                 </variation>
                             </label>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="v1K-11-46i">
-                                <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fTL-aa-j8y">
+                                <rect key="frame" x="-23" y="-15" width="46" height="30"/>
+                                <state key="normal" title="Cancel"/>
                                 <variation key="heightClass=regular" fixedFrame="YES">
-                                    <rect key="frame" x="20" y="36" width="210" height="77"/>
+                                    <rect key="frame" x="26" y="112" width="56" height="30"/>
                                 </variation>
-                            </textView>
+                                <connections>
+                                    <action selector="cancelReport:" destination="YH1-JI-OhC" eventType="touchUpInside" id="UlI-LP-P0W"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <variation key="default">
                             <mask key="subviews">
+                                <exclude reference="v1K-11-46i"/>
                                 <exclude reference="54E-0b-Ma4"/>
                                 <exclude reference="hNT-Gc-IVM"/>
-                                <exclude reference="v1K-11-46i"/>
+                                <exclude reference="fTL-aa-j8y"/>
                             </mask>
                         </variation>
                         <variation key="heightClass=regular">
                             <mask key="subviews">
+                                <include reference="v1K-11-46i"/>
                                 <include reference="54E-0b-Ma4"/>
                                 <include reference="hNT-Gc-IVM"/>
-                                <include reference="v1K-11-46i"/>
+                                <include reference="fTL-aa-j8y"/>
                             </mask>
                         </variation>
                     </view>
@@ -208,6 +220,7 @@
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
                     <size key="freeformSize" width="250" height="150"/>
                     <connections>
+                        <outlet property="cancelButton" destination="fTL-aa-j8y" id="G2A-ZP-66j"/>
                         <outlet property="textField" destination="v1K-11-46i" id="dUW-fy-hFa"/>
                     </connections>
                 </viewController>
@@ -499,70 +512,6 @@
             </objects>
             <point key="canvasLocation" x="435" y="728"/>
         </scene>
-        <!--Table View Controller-->
-        <scene sceneID="PdG-Ym-5pT">
-            <objects>
-                <tableViewController id="Q17-TB-WgU" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="18" sectionFooterHeight="18" id="dVS-EJ-nAF">
-                        <rect key="frame" x="0.0" y="0.0" width="150" height="100"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
-                        <sections>
-                            <tableViewSection headerTitle="User Type" id="qe0-gJ-6lu">
-                                <cells>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" textLabel="lp3-Yt-kKv" style="IBUITableViewCellStyleDefault" id="Xu5-wp-ByM">
-                                        <rect key="frame" x="0.0" y="50" width="150" height="44"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Xu5-wp-ByM" id="tgc-A2-iA4">
-                                            <rect key="frame" x="0.0" y="0.0" width="150" height="43"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="lp3-Yt-kKv">
-                                                    <rect key="frame" x="15" y="0.0" width="120" height="43"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <nil key="highlightedColor"/>
-                                                    <variation key="heightClass=regular">
-                                                        <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                                    </variation>
-                                                </label>
-                                            </subviews>
-                                        </tableViewCellContentView>
-                                    </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="sLF-wB-EZ5">
-                                        <rect key="frame" x="0.0" y="94" width="150" height="44"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="sLF-wB-EZ5" id="AeV-VL-vZs">
-                                            <rect key="frame" x="0.0" y="0.0" width="150" height="43"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                        </tableViewCellContentView>
-                                    </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="YcS-4m-oSv">
-                                        <rect key="frame" x="0.0" y="138" width="150" height="44"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="YcS-4m-oSv" id="SCm-T1-Cgw">
-                                            <rect key="frame" x="0.0" y="0.0" width="150" height="43"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                        </tableViewCellContentView>
-                                    </tableViewCell>
-                                </cells>
-                            </tableViewSection>
-                        </sections>
-                        <connections>
-                            <outlet property="dataSource" destination="Q17-TB-WgU" id="P2L-wp-i2q"/>
-                            <outlet property="delegate" destination="Q17-TB-WgU" id="2cE-nR-Xnq"/>
-                        </connections>
-                    </tableView>
-                    <value key="contentSizeForViewInPopover" type="size" width="150" height="100"/>
-                    <nil key="simulatedStatusBarMetrics"/>
-                    <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
-                    <size key="freeformSize" width="150" height="100"/>
-                </tableViewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="N18-mb-38d" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1380" y="101.25"/>
-        </scene>
         <!--Routing View Controller-->
         <scene sceneID="jex-Ru-Zwg">
             <objects>
@@ -646,7 +595,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="OQ4-Cn-nPF" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="55.5" y="240.375"/>
+            <point key="canvasLocation" x="79.5" y="220.875"/>
         </scene>
     </scenes>
     <resources>

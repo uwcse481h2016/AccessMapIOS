@@ -48,7 +48,7 @@ class ViewController: UIViewController, UISearchBarDelegate, MGLMapViewDelegate,
     // store the routing lines drawed on the screen
     var routingLines = [MGLPolyline]()
     
-
+    var reportMarker : MGLPointAnnotation!
     
 //    var isShowInputField = false;
     var elevationTileStyleURL = NSURL(string: "mapbox-raster-v8.json")
@@ -216,6 +216,18 @@ class ViewController: UIViewController, UISearchBarDelegate, MGLMapViewDelegate,
     
     func sendReport(message: String) {
         print("message is " + message)
+        // Add code for sending message to a developer's email
+        
+        let alertView = UIAlertController(title: "Sent!", message: "Your ressage:\n" + message + "\n\n has been sent to the AccessMap team for review. Thanks for contributing to our database!", preferredStyle: .Alert)
+        alertView.addAction(UIAlertAction(title: "Ok", style: .Default, handler: nil))
+        self.presentViewController(alertView, animated: true, completion: self.removeReportAnnotation)
+    }
+    
+    func removeReportAnnotation() {
+        self.map.removeAnnotation(reportMarker)
+    }
+    func cancelReport() {
+        self.map.removeAnnotation(reportMarker)
     }
     
     func enterReportMode() {
@@ -1355,8 +1367,12 @@ class ViewController: UIViewController, UISearchBarDelegate, MGLMapViewDelegate,
             // handling code
             let location: CLLocationCoordinate2D = map.convertPoint(sender.locationInView(map), toCoordinateFromView: map)
             print("You tapped at: \(location.latitude), \(location.longitude)")
-            drawMarker(location, title:"")
             
+            reportMarker = MGLPointAnnotation()
+            reportMarker.coordinate = location
+
+            map.addAnnotation(reportMarker)
+            map.selectAnnotation(reportMarker, animated: true)
             
             let storyboard = self.storyboard
             let reportPopupController = storyboard!.instantiateViewControllerWithIdentifier("reportPopup") as! ReportViewController
@@ -1473,13 +1489,12 @@ class ViewController: UIViewController, UISearchBarDelegate, MGLMapViewDelegate,
             var annotationImage = mapView.dequeueReusableAnnotationImageWithIdentifier("busStop")
         
             if annotationImage == nil {
-                // Leaning Tower of Pisa by Stefan Spieler from the Noun Project
+                // bus stop image
                 var image = UIImage(named: "busstop5.png")!
                 //image = image.imageWithAlignmentRectInsets(UIEdgeInsetsMake(0, 0, image.size.height/2, 0))
                 annotationImage = MGLAnnotationImage(image: image, reuseIdentifier: "busStop")
-                print("created new image")
             }
-            print("Returning image!")
+
             return annotationImage
         } else {
             return nil
@@ -1491,9 +1506,7 @@ class ViewController: UIViewController, UISearchBarDelegate, MGLMapViewDelegate,
     
 
     func mapView(mapView: MGLMapView, lineWidthForPolylineAnnotation annotation: MGLPolyline) -> CGFloat {
-        //print("zoomlevel = " + String(mapView.zoomLevel))
         // Set line width for polyline annotations
-        
         if(annotation.title == "curbcut" && annotation is MGLPolyline) {
             return 4;
         }
