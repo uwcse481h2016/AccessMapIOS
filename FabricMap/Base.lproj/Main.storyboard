@@ -294,7 +294,7 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocorrectionType="no"/>
                                 <variation key="heightClass=regular" fixedFrame="YES">
-                                    <rect key="frame" x="45" y="91" width="285" height="35"/>
+                                    <rect key="frame" x="45" y="94" width="285" height="35"/>
                                 </variation>
                             </textField>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="from" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="J4E-xB-VaM">
@@ -364,6 +364,16 @@
                                     <rect key="frame" x="28" y="119" width="20" height="21"/>
                                 </variation>
                             </label>
+                            <label opaque="NO" userInteractionEnabled="NO" alpha="0.80000000000000004" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tap location on map to report" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LG9-dc-iCK">
+                                <rect key="frame" x="-42" y="-21" width="42" height="21"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                                <variation key="heightClass=regular" fixedFrame="YES">
+                                    <rect key="frame" x="45" y="155" width="285" height="30"/>
+                                </variation>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <userDefinedRuntimeAttributes>
@@ -390,6 +400,7 @@
                                 <exclude reference="QpJ-Xs-ok7"/>
                                 <exclude reference="7T6-g8-4zD"/>
                                 <exclude reference="w8B-H7-sBE"/>
+                                <exclude reference="LG9-dc-iCK"/>
                             </mask>
                         </variation>
                         <variation key="heightClass=regular">
@@ -405,6 +416,7 @@
                                 <include reference="QpJ-Xs-ok7"/>
                                 <include reference="7T6-g8-4zD"/>
                                 <include reference="w8B-H7-sBE"/>
+                                <include reference="LG9-dc-iCK"/>
                             </mask>
                         </variation>
                         <connections>
@@ -445,6 +457,7 @@
                         <outlet property="pedestrianButton" destination="QpJ-Xs-ok7" id="TDT-66-qLm"/>
                         <outlet property="powerWheelChairButton" destination="qQa-u5-qlY" id="cyS-eY-Khl"/>
                         <outlet property="powerWheelchairButton" destination="G5Z-b6-Wsk" id="cxE-Ca-8Hu"/>
+                        <outlet property="reportInstructionLabel" destination="LG9-dc-iCK" id="5aD-7p-erb"/>
                         <outlet property="route" destination="7T6-g8-4zD" id="OCE-1A-lad"/>
                         <outlet property="startAddressTextField" destination="lc4-WQ-fOt" id="xft-WT-NFG"/>
                         <outlet property="toLabel" destination="w8B-H7-sBE" id="eHi-iG-kAa"/>

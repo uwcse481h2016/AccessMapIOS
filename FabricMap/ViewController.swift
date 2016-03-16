@@ -67,6 +67,8 @@ class ViewController: UIViewController, UISearchBarDelegate, MGLMapViewDelegate,
     
     @IBOutlet weak var route: UIButton!
     
+    @IBOutlet weak var reportInstructionLabel: UILabel!
+    
     //@IBOutlet weak var backButton: UIButton!
     
     @IBOutlet weak var inputAddressTextField: UITextField!
@@ -144,6 +146,8 @@ class ViewController: UIViewController, UISearchBarDelegate, MGLMapViewDelegate,
         //backButton.hidden = true;
         fromLabel.hidden = true;
         toLabel.hidden = true;
+        
+        reportInstructionLabel.hidden = true;
         
         wheelChairButton.hidden = true;
         powerWheelChairButton.hidden = true;
@@ -233,6 +237,7 @@ class ViewController: UIViewController, UISearchBarDelegate, MGLMapViewDelegate,
     func enterReportMode() {
         print("entered Report mode")
         inReportMode = true
+        reportInstructionLabel.hidden = false
     }
     
     func formatBaseButton(button: UIButton) {
@@ -283,10 +288,10 @@ class ViewController: UIViewController, UISearchBarDelegate, MGLMapViewDelegate,
                 print(currentLocation!.coordinate.latitude)
                 self.currentCoordinates = currentLocation!.coordinate
                 
-                let center = CLLocationCoordinate2DMake((currentLocation!.coordinate.latitude + endCoordinates.latitude) / 2, (currentLocation!.coordinate.longitude + self.endCoordinates.longitude) / 2)
-                let verticalDifference = 180 / (currentLocation!.coordinate.latitude - self.endCoordinates.latitude)
+                let center = CLLocationCoordinate2DMake((currentCoordinates.latitude + endCoordinates.latitude) / 2, (currentCoordinates.longitude + self.endCoordinates.longitude) / 2)
+                let verticalDifference = 180 / (currentCoordinates.latitude - self.endCoordinates.latitude)
                 
-                let horizontalDifference = 360 / (currentLocation!.coordinate.longitude - endCoordinates.longitude)
+                let horizontalDifference = 360 / (currentCoordinates.longitude - endCoordinates.longitude)
                 let maxC = min(abs(verticalDifference), abs(horizontalDifference))
                 //
                 //                        // get the zoom level
@@ -294,7 +299,7 @@ class ViewController: UIViewController, UISearchBarDelegate, MGLMapViewDelegate,
                 //                        // set the map position
                 self.map.setCenterCoordinate(center, zoomLevel: log(maxC) + 3, animated: true)
                 
-                self.drawRouting(currentLocation!.coordinate, endCoordinates: self.endCoordinates)
+                self.drawRouting(currentCoordinates, endCoordinates: self.endCoordinates)
         }
     }
     
@@ -1418,6 +1423,7 @@ class ViewController: UIViewController, UISearchBarDelegate, MGLMapViewDelegate,
         if !inReportMode {
             return
         }
+        reportInstructionLabel.hidden = true
         print("Entered startReport()")
         if sender.state == .Ended {
             var location1 = sender.locationInView(map)
