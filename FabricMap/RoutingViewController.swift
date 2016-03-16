@@ -14,14 +14,15 @@ protocol RoutingDelegate: class {
     func onChooseOtherMobilityAidOption()
 }
 
+// Manages the routing options pop-up that allows the user to choose between several 
+// route types (manual wheelchair, power wheelchair, and other mobility aid).
 class RoutingViewController: UIViewController {
     
+    // delegate will be set to main ViewController in ViewController.swift
     weak var delegate: RoutingDelegate? = nil
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        print("viewDidLoad in RoutingViewController!")
         // Do any additional setup after loading the view.
     }
 
@@ -30,25 +31,25 @@ class RoutingViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
 
+    // Dispatch manual wheelchair action to delegate and dismiss this ViewController
     @IBAction func sendManualWheelchairAction(sender: UIButton) {
-        print("chose manual wheelchair!")
         delegate?.onChooseManualWheelchairOption()
         self.dismissViewControllerAnimated(true, completion: {});
     }
 
+    // Dispatch power wheelchair action to delegate and dismiss this ViewController
     @IBAction func sendPowerWheelChairAction(sender: UIButton) {
-        print("chose power wheelchair!")
         delegate?.onChoosePowerWheelchairOption()
         self.dismissViewControllerAnimated(true, completion: {});
     }
 
+    // Dispatch other action (for other mobility aid) to delegate and dismiss this
+    // ViewController
     @IBAction func sendOtherAction(sender: UIButton) {
-        print("chose other mobility aid!")
         delegate?.onChooseOtherMobilityAidOption()
         self.dismissViewControllerAnimated(true, completion: {});
 
     }
-    
     
     /*
     // MARK: - Navigation

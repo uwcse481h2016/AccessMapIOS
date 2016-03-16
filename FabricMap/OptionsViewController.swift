@@ -7,7 +7,8 @@
 //
 
 import UIKit
-
+// Global variables to maintain the data toggle states between opening and closing
+// options menu
 var showCurbramps = true
 var showElevation = true
 var showBusStops = true
@@ -19,19 +20,20 @@ protocol OptionsDelegate: class {
     func enterReportMode()
 }
 
+// Manages the options pop-up (accessed by clicking "More" in the navigation bar) 
+// that allows the user to toggle data displayed and send reports (as well as 
+// log in, eventually).
 class OptionsViewController: UIViewController {
-
+    // delegate will be set to main ViewController in ViewController.swift
     weak var delegate: OptionsDelegate? = nil
 
     // MARK: Properties
-
     @IBOutlet weak var curbrampSwitch: UISwitch!
     @IBOutlet weak var elevationSwitch: UISwitch!
     @IBOutlet weak var busStopSwitch: UISwitch!
     
     
     // MARK: Types
-    
     struct PropertyKey {
         static let curbKey = "curbramps"
         static let elevationKey = "elevation"
@@ -40,10 +42,10 @@ class OptionsViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        // use global variables to set toggle switches to their previous states
         curbrampSwitch.setOn(showCurbramps, animated:false)
         elevationSwitch.setOn(showElevation, animated:false)
         busStopSwitch.setOn(showBusStops, animated:false)
-        // Do any additional setup after loading the view.
     }
 
     override func didReceiveMemoryWarning() {
@@ -51,26 +53,26 @@ class OptionsViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
 
+    // Notify main ViewController to toggle curb ramps
     @IBAction func sendToggleCurbRampsAction(sender: UISwitch) {
         showCurbramps = !showCurbramps
-        print("toggled curb ramps!")
         delegate?.toggleCurbRamps()
     }
     
+    // Notify main ViewController to toggle elevation data
     @IBAction func sendToggleElevationData(sender: UISwitch) {
         showElevation = !showElevation
-        print("toggled elevation data!")
         delegate?.toggleElevationData()
     }
     
+    // Notify main ViewController to toggle bus stops
     @IBAction func sendToggleBusStops(sender: UISwitch) {
         showBusStops = !showBusStops
-        print("toggled bus stops!")
         delegate?.toggleBusStops()
     }
 
+    // Notify main ViewController to enter report mode, and dismiss this ViewController
     @IBAction func sendReportMode(sender: UIButton) {
-        print("sendReportMode()")
         delegate?.enterReportMode()
         self.dismissViewControllerAnimated(true, completion: {});
     }
