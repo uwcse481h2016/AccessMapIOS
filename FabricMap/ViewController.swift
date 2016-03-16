@@ -16,11 +16,7 @@ class ViewController: UIViewController, UISearchBarDelegate, MGLMapViewDelegate,
     
     // Mark: properties
     @IBOutlet weak var HereButton: UIButton!
-//    var map: MGLMapView!
 
-    // store the map object
-//    var mapView: MGLMapView!
-    
     // store whether it is the first time to open the appliaciton
     var firstTime = true;
     
@@ -30,6 +26,7 @@ class ViewController: UIViewController, UISearchBarDelegate, MGLMapViewDelegate,
     
     var inReportMode = false;
     
+    // store the current location coordintes
     var currentCoordinates: CLLocationCoordinate2D!
     
     var endCoordinates : CLLocationCoordinate2D!
@@ -37,9 +34,10 @@ class ViewController: UIViewController, UISearchBarDelegate, MGLMapViewDelegate,
     // store the elevations lines drawed on the screen
     var elevationLines = [MGLPolyline]()
     
-
+    // store the bus stops anotation
     var busStops = [MGLPointAnnotation]()
     
+    // store the curblines annotation
     var curbLines = [MGLPolyline]()
     
     // store the start and end markers drawed on the screen
@@ -50,7 +48,6 @@ class ViewController: UIViewController, UISearchBarDelegate, MGLMapViewDelegate,
     
     var reportMarker : MGLPointAnnotation!
     
-//    var isShowInputField = false;
     var elevationTileStyleURL = NSURL(string: "mapbox-raster-v8.json")
     
     var elevationStyleURL = NSURL(string: "mapbox://styles/wangx23/cilbmjh95000u9jm1jlg1wb26")
@@ -89,47 +86,24 @@ class ViewController: UIViewController, UISearchBarDelegate, MGLMapViewDelegate,
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
-        
-//        map = MGLMapView(frame: view.bounds)
-//        
-//        map.autoresizingMask = UIViewAutoresizing.init()
-//        map.autoresizingMask.insert(UIViewAutoresizing.FlexibleHeight)
-//        map.autoresizingMask.insert(UIViewAutoresizing.FlexibleWidth)
-//        
-//        print("UIViewAutoresizing.contains(FlexibleHeight) = " + String(map.autoresizingMask.contains(UIViewAutoresizing.FlexibleHeight)))
-//        print("UIViewAutoresizing.contains(FlexibleWidth) = " + String(map.autoresizingMask.contains(UIViewAutoresizing.FlexibleWidth)))
-//        // seattle 47.6062 -122.332
-        
-        
-        
-        // new york latitude 40.712791, -73.997848
-//        map.setCenterCoordinate(CLLocationCoordinate2D(latitude: 47.6062, longitude: -122.332),
-//            zoomLevel: 16,
-//            animated: false)
-//        view.addSubview(map)
-       map.delegate = self
-        map.styleURL = elevationStyleURL
-        //map.addGestureRecognizer(UILongPressGestureRecognizer(target: self, action: "changeStyle:"))
-            
-//        showLabel()
 
+        map.delegate = self
+        map.styleURL = elevationStyleURL
+        
         formatBaseButton(here)
         formatBaseButton(legend)
         formatBaseButton(route)
-        var lightBlueColor = UIColor.init(red: 89,
+        
+        let lightBlueColor = UIColor.init(red: 89,
             green: 171,
             blue: 227,
             alpha: 1)
         route.layer.borderColor = UIColor.clearColor().CGColor
         
-        //here.layer.borderColor = lightBlueColor.CGColor
-        //legend.layer.borderColor = lightBlueColor.CGColor
-        // Since we want to set the height of the text field larger than the default, we have to use a different border style in the storyboard and set it here
+
         inputAddressTextField.borderStyle = UITextBorderStyle.RoundedRect
         startAddressTextField.borderStyle = UITextBorderStyle.RoundedRect
         endAddressTextField.borderStyle = UITextBorderStyle.RoundedRect
-//
         inputAddressTextField.delegate = self
         startAddressTextField.delegate = self
         endAddressTextField.delegate = self
@@ -148,7 +122,6 @@ class ViewController: UIViewController, UISearchBarDelegate, MGLMapViewDelegate,
         toLabel.hidden = true;
         
         reportInstructionLabel.hidden = true;
-        
         wheelChairButton.hidden = true;
         powerWheelChairButton.hidden = true;
         pedestrianButton.hidden = true;
@@ -161,10 +134,8 @@ class ViewController: UIViewController, UISearchBarDelegate, MGLMapViewDelegate,
         map.addGestureRecognizer(UITapGestureRecognizer(target: self,
             action: "startReport:"))
         
-        
-        //map.addGestureRecognizer(UITapGestureRecognizer(target: self,
-        //    action: "showInputField:"))
     }
+    
     
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
         print("called touchesBegan")
@@ -247,18 +218,15 @@ class ViewController: UIViewController, UISearchBarDelegate, MGLMapViewDelegate,
         //button.titleEdgeInsets = UIEdgeInsets(top: 0.0, left: 5.0, bottom: 0.0, right: 0.0)
         button.layer.borderWidth = 1
         button.layer.borderColor = UIColor.whiteColor().CGColor
-        
+
         button.layer.shadowColor = UIColor.grayColor().CGColor;
         button.layer.shadowOpacity = 0.8;
         button.layer.shadowRadius = 5;
         button.layer.shadowOffset = CGSizeMake(5, 5);
     }
     
-    // MARK: UITextFieldDelegate
-
-    // MARK: Actions
     
-  
+    // MARK: Actions
     @IBAction func routeButtonAction(sender: AnyObject) {
         print("routeCalled")
         reverseChoiceButtonHidden()
@@ -277,13 +245,13 @@ class ViewController: UIViewController, UISearchBarDelegate, MGLMapViewDelegate,
         map.userTrackingMode = .Follow
         startAddressTextField.text = "current location"
         endAddressTextField.text = inputAddressTextField.text
-        var locManager = CLLocationManager()
+        let locManager = CLLocationManager()
         locManager.requestWhenInUseAuthorization()
         
         if( CLLocationManager.authorizationStatus() == CLAuthorizationStatus.AuthorizedWhenInUse ||
             CLLocationManager.authorizationStatus() == CLAuthorizationStatus.Authorized){
                 
-                var currentLocation = locManager.location
+                let currentLocation = locManager.location
                 print("current location")
                 print(currentLocation!.coordinate.longitude)
                 print(currentLocation!.coordinate.latitude)
@@ -344,15 +312,20 @@ class ViewController: UIViewController, UISearchBarDelegate, MGLMapViewDelegate,
         reverseTextFieldHideAndShow()
     }
     
+    
+    /** Callback function when the text finished edit. 
+     * It grab the address from the user and try to place marker or find route for the user
+     */
     func textFieldShouldReturn(textField: UITextField) -> Bool {
-        
-        
+        print("textFieldShouldReturn is on called")
         // Hide the keyboard.
         textField.resignFirstResponder()
+
         if(!inputAddressTextField.hidden) {
-            print("text should return got called")
+            // when the destination address text field is showed
             let endAddress = inputAddressTextField.text
             if(inputAddressTextField.text == "") {
+                // when input text field is called
                 return false;
             }
             
@@ -360,39 +333,37 @@ class ViewController: UIViewController, UISearchBarDelegate, MGLMapViewDelegate,
             // get the coordinates of the input address
             geocoder.geocodeAddressString(endAddress!, completionHandler: {(placemarks, error) -> Void in
                 if((error) != nil){
+                    // when address is wrong, can't find the route;
                     print("Error", error)
-                    
-                    
-                    var alertView = UIAlertView(title: "Not found",
+                    let alertView = UIAlertView(title: "Not found",
                                 message: "Please enter a valid address.",
                                 delegate: nil,
                                 cancelButtonTitle: "Ok")
-                    
-                    
-
                     alertView.show()
-                
                     return;
                     
                 }
                 
-                
+                // show up the route button
                 self.route.hidden = false
-                
-                
                 if let placemark = placemarks?.first {
+                    // when maker is valid
                     self.endCoordinates = placemark.location!.coordinate
-                    print(self.endCoordinates)
-                    print("draw start and end markers")
+                    
+                    // remove the markers for start and end;
                     for i in 0..<self.startEndMarkers.count {
                         self.map.removeAnnotation(self.startEndMarkers[i])
                     }
-                    var endMarkers = self.drawMarker(self.endCoordinates, title: "end")
+                    // make the new end makers
+                    let endMarkers = self.drawMarker(self.endCoordinates, title: "end")
+                    // append to the startEndMarkers
                     self.startEndMarkers.append(endMarkers);
+                    // set the center of the map to be the markers
                     self.map.setCenterCoordinate(self.endCoordinates, zoomLevel:15, animated: true)
                 }
             })
         } else {
+            // when it shows the from and to input text field
             let startAddress = startAddressTextField.text
             let endAddress = endAddressTextField.text
             let geocoder = CLGeocoder()
@@ -401,75 +372,61 @@ class ViewController: UIViewController, UISearchBarDelegate, MGLMapViewDelegate,
                 startCoordinates = self.currentCoordinates
             }
             
-            // get the coordinates of the input address
+            // get the coordinates of the start address
             geocoder.geocodeAddressString(startAddress!, completionHandler: {(placemarks, error) -> Void in
                 if(startAddress != "current location") {
+                    //show alert when address is invaled
                     if((error) != nil){
                         print("Error", error)
-                        var alertView = UIAlertView(title: "Not found",
+                        let alertView = UIAlertView(title: "Not found",
                             message: "Please enter a valid address",
                             delegate: nil,
                             cancelButtonTitle: "Ok")
-                        
-                        
                         alertView.show()
                         return;
                     }
-                
                 }
                 
-     
+                // set the startCoodrinates
                 if let placemark = placemarks?.first {
-                    print("commint in")
                     startCoordinates = placemark.location!.coordinate
                 }
                 
+                // try to get the destination coordinates
                 if(startCoordinates != nil) {
                     geocoder.geocodeAddressString(endAddress!, completionHandler: {(placemarks, error) -> Void in
+                        // pop up alert if the end coordintes is not valid
                         if((error) != nil){
                             print("Error", error)
-                            
-                            
-                            print("Error", error)
-                            var alertView = UIAlertView(title: "Not found",
+                            let alertView = UIAlertView(title: "Not found",
                                 message: "Please enter a valid address",
                                 delegate: nil,
                                 cancelButtonTitle: "Ok")
-                            
-                            
                             alertView.show()
                             return;
                         }
                         
+                        // when both start and end coordinates are valid
                         if let placemark = placemarks?.first {
                             let endCoordinates:CLLocationCoordinate2D = placemark.location!.coordinate
                             
+                            // try to get the center of the start and end coordinates
                             let center = CLLocationCoordinate2DMake((startCoordinates.latitude + endCoordinates.latitude) / 2,
                                 (startCoordinates.longitude + endCoordinates.longitude) / 2)
+                            
+                            // calculate for the zoom in levels;
                             let verticalDifference = 180 / (startCoordinates.latitude - endCoordinates.latitude)
-                            
                             let horizontalDifference = 360 / (startCoordinates.longitude - endCoordinates.longitude)
-                            
                             let maxC = min(abs(verticalDifference), abs(horizontalDifference))
                             
-                            // get the zoom level
-                            print(log(maxC))
                             // set the map position
-                            
-
                             self.map.setCenterCoordinate(center, zoomLevel: log(maxC) + 3, animated: true)
                             
-
                             // draw makers
                             self.drawStartEndMarker(startCoordinates, endCoordinates: endCoordinates)
                             
                             // draw routing
                             self.drawRouting(startCoordinates, endCoordinates: endCoordinates)
-                            
-                            
-                            self.clearAnnotations()
-                            print("cleared annotations")
-                            
                         }
                     })
                     
@@ -484,24 +441,9 @@ class ViewController: UIViewController, UISearchBarDelegate, MGLMapViewDelegate,
     
     @IBAction func showLegend(sender: AnyObject) {
         
-//        let image = UIImage(named: "map_legend.gif")!
-//
-//        var imageView = UIImageView(frame: CGRectMake(80, 0, 200, 180))
-//        imageView.image = image
-//        
-//        let alert = UIAlertController(title: "Legend", message: "\n\n\n\n\n\n\n\n", preferredStyle: .ActionSheet)
-//        alert.addAction(UIAlertAction(title: "Exit", style: UIAlertActionStyle.Cancel, handler: {(alertAction: UIAlertAction!) in alert.dismissViewControllerAnimated(true, completion: nil)
-//        }))
-//        alert.view.addSubview(imageView)
-//        //imageView.center = alert.view.center
-//        self.presentViewController(alert, animated: true, completion: nil)
-        
-        
-        
-        
         let image = UIImage(named: "Legend-01.png")!
         
-        var imageView = UIImageView(frame: CGRectMake(25, 10, 300, 350))
+        let imageView = UIImageView(frame: CGRectMake(25, 10, 300, 350))
         imageView.image = image
         
         let alert = UIAlertController(title: "Legend", message: "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", preferredStyle: .ActionSheet)
@@ -514,10 +456,9 @@ class ViewController: UIViewController, UISearchBarDelegate, MGLMapViewDelegate,
     }
     
     
-    
-    
+    /** get the current location of the user
+     */
     @IBAction func showHere(sender: AnyObject) {
-        print("call show Here")
         map.userTrackingMode = .Follow
        
     }
@@ -608,46 +549,9 @@ class ViewController: UIViewController, UISearchBarDelegate, MGLMapViewDelegate,
         onShowMapMode()
     }
     
-//    override func viewDidLoad() {
-//        super.viewDidLoad()
-//        // Do any additional setup after loading the view, typically from a nib.
-//        
-////        map = MGLMapView(frame: view.bounds)
-////        
-////        // seattle 47.6062 -122.332
-////        
-////        map.setCenterCoordinate(CLLocationCoordinate2D(latitude: 47.6062, longitude: -122.332),
-////            zoomLevel: 16,
-////            animated: false)
-////        view.addSubview(map)
-////        map.delegate = self
-////        
-////        
-//        // hold to show change the map style
-////        map.addGestureRecognizer(UILongPressGestureRecognizer(target: self,
-////            action: "changeStyle:"))
-////
-////        // show the label
-////        showLabel()
-////
-////        drawInputField();
-//        inputAddressTextField.delegate = self
-//        startAddressTextField.delegate = self
-//        endAddressTextField.delegate = self
-//        
-//        startAddressTextField.hidden = true;
-//        endAddressTextField.hidden = true;
-//        
-//        backButton.hidden = true;
-//        fromLabel.hidden = true;
-//        toLabel.hidden = true;
-//        
-//        wheelChairButton.hidden = true;
-//        powerWheelChairButton.hidden = true;
-//        pedestrianButton.hidden = true;
-//    }
-    
-    
+
+    /** reverse the text field to shown up on the map
+     */
     func reverseTextFieldHideAndShow() {
         
         inputAddressTextField.hidden = !inputAddressTextField.hidden
@@ -655,276 +559,73 @@ class ViewController: UIViewController, UISearchBarDelegate, MGLMapViewDelegate,
         endAddressTextField.hidden = !endAddressTextField.hidden
         fromLabel.hidden = !fromLabel.hidden
         toLabel.hidden = !toLabel.hidden
-        //backButton.hidden = !backButton.hidden
         route.hidden = !route.hidden
-        
     }
     
-//    
-//    
-//    func textFieldShouldReturn(textField: UITextField) -> Bool {
-//        // Hide the keyboard.
-//        textField.resignFirstResponder()
-//        return true
-//    }
-//
-    
-//    func drawInputField() {
-////        start = drawTextField(30, y:22, width:300, height:40)
-////        end = drawTextField(30, y:65, width:300, height:40)
-//        route = drawButton(275, y: 620, width: 100, height: 50, title: "route", actionSelector : "routeAction:")
-//        here = drawButton(140, y: 620, width: 100, height: 50, title: "here", actionSelector : "locationAction:")
-//        
-//        route.hidden = true
-//        here.hidden = true
-//        
-//        // tap to show the input filed
-//        map.addGestureRecognizer(UITapGestureRecognizer(target: self,
-//            action: "hideAndShow:"))
-//        drawTop()
-//
-//    }
-//
-//    
-//    func hideAndShow(tap: UITapGestureRecognizer) {
-//        route.hidden = !route.hidden
-//        here.hidden = !here.hidden
-//    }
-//    
-//    
-//    // draw the top bar on the app
-//    @IBOutlet weak var abc: UIButton!
-//    
-//    
-//    func drawTop() {
-//        
-//        
-//        
-//        let button   = UIButton(type: UIButtonType.System) as UIButton
-//        button.frame = CGRectMake(0, 0, 400, 20)
-//        button.backgroundColor = UIColor.whiteColor()
-//        self.view.addSubview(button)
-//    }
-//    
-//
-//    
-//    // draw the start route button base on the position and size
-//    func drawButton(x:CGFloat, y:CGFloat, width:CGFloat, height:CGFloat, title:String, actionSelector:Selector)->UIButton {
-//        let button   = UIButton(type: UIButtonType.System) as UIButton
-//        button.frame = CGRectMake(x, y, width, height)
-//        button.layer.cornerRadius = 5
-//        button.layer.borderWidth = 1
-//        button.layer.borderColor = UIColor.blueColor().CGColor
-//        
-//        button.backgroundColor = UIColor.whiteColor()
-//        button.setTitle(title, forState: UIControlState.Normal)
-//        
-//        button.addTarget(self, action: actionSelector, forControlEvents: UIControlEvents.TouchUpInside)
-//        
-//        
-////        button.setTitleColor(UIColor.blueColor(), forState: UIControlState.Normal)
-//        self.view.addSubview(button)
-//        return button
-//    }
-//    
-//    @IBAction func testCarButton(sender: AnyObject) {
-//        
-////        alert("abcd")
-//
-//
-//    }
-//
-//
-////    // let the map get the user's current location
-////    func locationAction(sender:UIButton!) {
-////        
-////        map.userTrackingMode = .Follow
-////    }
-//
-//    
-//    
-//    // draw the textField based on the position and size
-//    func drawTextField(x:CGFloat, y:CGFloat, width:CGFloat, height:CGFloat) -> UITextField {
-//        let sampleTextField = UITextField(frame: CGRectMake(x, y, width, height))
-//        sampleTextField.placeholder = "enter address"
-//        sampleTextField.font = UIFont.systemFontOfSize(15)
-//        sampleTextField.borderStyle = UITextBorderStyle.RoundedRect
-//        sampleTextField.autocorrectionType = UITextAutocorrectionType.No
-//        sampleTextField.keyboardType = UIKeyboardType.Default
-//        sampleTextField.returnKeyType = UIReturnKeyType.Done
-//        sampleTextField.clearButtonMode = UITextFieldViewMode.WhileEditing;
-//        sampleTextField.contentVerticalAlignment = UIControlContentVerticalAlignment.Center
-//        sampleTextField.delegate = self
-//        sampleTextField.resignFirstResponder()
-//        self.view.addSubview(sampleTextField)
-//        return sampleTextField
-//        
-//    }
-//    
-//    // MARK: UITextFieldDelegate
-//
-//
-//    // listenr when editing the text
-//    func textFieldShouldBeginEditing(textField: UITextField) -> Bool {
-//        print("TextField should begin editing method called")
-//        return true;
-//    }
-//    
-//    // listener when the textFiled is clear
-//    func textFieldShouldClear(textField: UITextField) -> Bool {
-//        print("TextField should clear method called")
-//
-//
-//        return true;
-//    }
-//    
-//    
-//
-//    
-//
-//    func textFieldShouldReturn(textField: UITextField) -> Bool {
-//        print("TextField should return method called")
-//        
-//        textField.resignFirstResponder()
-//
-//        return true;
-//    }
-//    
-//    // listener when button pressed start the route
-//    func routeAction(sender:UIButton!) {
-//        // make keyboards disappear;
-////        start.resignFirstResponder()
-////        end.resignFirstResponder()
-////        
-//        let startAddress = ""
-//        let endAddress = ""
-//        
-//        let geocoder = CLGeocoder()
-//        
-//        // get the coordinates of the input address
-//        geocoder.geocodeAddressString(startAddress, completionHandler: {(placemarks, error) -> Void in
-//            if((error) != nil){
-//                print("Error", error)
-//            }
-//            
-//            if let placemark = placemarks?.first {
-//                let startCoordinates:CLLocationCoordinate2D = placemark.location!.coordinate
-//                
-//                
-//                geocoder.geocodeAddressString(endAddress, completionHandler: {(placemarks, error) -> Void in
-//                    if((error) != nil){
-//                        print("Error", error)
-//                    }
-//                    
-//                    
-//                    if let placemark = placemarks?.first {
-//                        let endCoordinates:CLLocationCoordinate2D = placemark.location!.coordinate
-//
-//                        let center = CLLocationCoordinate2DMake((startCoordinates.latitude + endCoordinates.latitude) / 2,
-//                                                                (startCoordinates.longitude + endCoordinates.longitude) / 2)
-//                        let verticalDifference = 180 / (startCoordinates.latitude - endCoordinates.latitude)
-//                        
-//                        let horizontalDifference = 360 / (startCoordinates.longitude - endCoordinates.longitude)
-//                        
-//                        let maxC = min(abs(verticalDifference), abs(horizontalDifference))
-//                        
-//                        // get the zoom level
-//                        print(log(maxC))
-//                        // set the map position
-//                        self.map.setCenterCoordinate(center, zoomLevel: log(maxC) + 3, animated: true)
-//                        
-//                        // draw makers
-//                        self.drawStartEndMarker(startCoordinates, endCoordinates: endCoordinates)
-//                        
-//                        // draw routing
-//                        self.drawRouting(startCoordinates, endCoordinates: endCoordinates)
-//                        
-//                    }
-//                })
-//            }
-//        })
-//    }
-//    
-//    
-//    
-    //placing marker at the start point and end point to start route
+    /** draw the start and end markers of the routes
+     * @param: startCoordinnates: start coordinates, endCoordinates: end coordinates
+     */
     func drawStartEndMarker(startCoordinnates: CLLocationCoordinate2D, endCoordinates:CLLocationCoordinate2D) {
         print("draw start and end markers")
                 for i in 0..<self.startEndMarkers.count {
             map.removeAnnotation(self.startEndMarkers[i])
         }
     
-        let start = drawMarker(startCoordinnates, title: "start")
-        let end = drawMarker(endCoordinates, title: "end")
+        let start = drawMarker(startCoordinnates, title: "")
+        let end = drawMarker(endCoordinates, title: "")
         self.startEndMarkers.append(start);
         self.startEndMarkers.append(end);
         
-        
     }
-//
-//    
-    // draw one markers on the map
+    
+    /** draw the marker on the map
+     * @param: coordinate: for what coordinates the marker should be put. Title: the tittle for the markers
+     */
     func drawMarker(coordinate: CLLocationCoordinate2D, title: String) -> MGLPointAnnotation{
         let marker = MGLPointAnnotation()
         marker.coordinate = coordinate
         if title != "" {
-//            marker.title = title
-//            marker.subtitle = title
+            marker.title = title
+            marker.subtitle = title
         }
         map.addAnnotation(marker)
         map.selectAnnotation(marker, animated: true)
         return marker
         
     }
-//
-//    
-//    
-    // draw the routing between the start and end point
-    func drawRouting (startCoordingnates: CLLocationCoordinate2D, endCoordinates:CLLocationCoordinate2D) {
-        print("call draw routing")
-        print(startCoordingnates)
-        print(endCoordinates)
+   
+    /**draw the routing between the start and end point
+     * @param: startCordinates: the start of the route. endCoordinates: the end of the route
+     *
+     */
+    func drawRouting (startCoordinates: CLLocationCoordinate2D, endCoordinates:CLLocationCoordinate2D) {
+        // set up the route api
+        let apiURL = "http://dssg-db.cloudapp.net/api/routing/route.json?waypoints=[" + String(startCoordinates.latitude) + ",%20" + String(startCoordinates.longitude) + ",%20" + String(endCoordinates.latitude) + ",%20" + String(endCoordinates.longitude) + "]"
         
-        
+        let nsURL = NSURL(string: apiURL)
 
+        //let sidewalkData = NSData(contentsOfFile: apiPath!)
+        let routingData = NSData(contentsOfURL: nsURL!)
         
-            let apiURL = "http://dssg-db.cloudapp.net/api/routing/route.json?waypoints=[" + String(startCoordingnates.latitude) + ",%20" + String(startCoordingnates.longitude) + ",%20" + String(endCoordinates.latitude) + ",%20" + String(endCoordinates.longitude) + "]"
-            
-            let nsURL = NSURL(string: apiURL)
-            
-            print("nsURL")
-            print(nsURL)
-            //let sidewalkData = NSData(contentsOfFile: apiPath!)
-            let routingData = NSData(contentsOfURL: nsURL!)
-            
-            if(routingData == nil) {
-                print("error: can't get routing data")
-
-                var alertView = UIAlertView(title: "No Route",
-                    message: "No accessible route from start to end location.",
-                    delegate: nil,
-                    cancelButtonTitle: "Ok")
-                
-                
-                alertView.show()
-                
-                
-                return;
-                
-            }
+        //show alert when handdle there's no route
+        if(routingData == nil) {
+            print("error: can't get routing data")
+            let alertView = UIAlertView(title: "No Route",
+                message: "No accessible route from start to end location.",
+                delegate: nil,
+                cancelButtonTitle: "Ok")
+            alertView.show()
+            return;
+        }
+    
         
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), {
-
-
-            
+            // clean the previous route data drawn on the map
             for i in 0..<self.routingLines.count {
                 self.map.removeAnnotation(self.routingLines[i])
             }
-            
+            // clean the previous route data store in the lines
             self.routingLines.removeAll()
-            
-
-            
             do {
                 // Load and serialize the GeoJSON into a dictionary filled with properly-typed objects
                 if let jsonDict = try NSJSONSerialization.JSONObjectWithData(routingData!, options: []) as? NSDictionary {
@@ -945,33 +646,25 @@ class ViewController: UIViewController, UISearchBarDelegate, MGLMapViewDelegate,
                                             if let points1 = locations[i - 1] as? NSArray {
                                                 let coordinate = CLLocationCoordinate2DMake(points1[1].doubleValue, points1[0].doubleValue)
                                                 coordinates.append(coordinate)
-
                                             }
                                             
                                             if let points2 = locations[i] as? NSArray {
                                                 let coordinate2 = CLLocationCoordinate2DMake(points2[1].doubleValue, points2[0].doubleValue)
                                                 coordinates.append(coordinate2)
-
                                             }
                                             
-            
                                             // Make a CLLocationCoordinate2D with the lat, lng
                                             // Add coordinate to coordinates array
                                             let line = MGLPolyline(coordinates: &coordinates, count: UInt(coordinates.count))
-
                                             self.routingLines.append(line)
-                                            
                                             line.title = "route"
                                             line.subtitle = "route"
                                             numFeatures++
-                                            
                                             // Add the annotation on the main thread
                                             dispatch_async(dispatch_get_main_queue(), {
                                                 // Unowned reference to self to prevent retain cycle
                                                 [unowned self] in
                                                 self.map.addAnnotation(line)
-
-                                                
                                             })
 
                                         }
@@ -980,8 +673,6 @@ class ViewController: UIViewController, UISearchBarDelegate, MGLMapViewDelegate,
                             }
                         }
                     }
-                    
-                    print("Number of features = " + String(numFeatures))
                 }
             }
             catch
@@ -991,57 +682,28 @@ class ViewController: UIViewController, UISearchBarDelegate, MGLMapViewDelegate,
         })
     }
 
+    /** draw the curbramps data for the map
+     */
     func drawCurbramps() {
         if !showCurbRamps {
             return
         }
         
-        print("Called drawCrossings")
-        
-        print("count")
-        print(self.curbLines.count)
-        for i in 0..<self.curbLines.count {
-            print("length" + String(self.curbLines.count))
-            print("index" + String(i))
-            
-            self.map.removeAnnotation(self.curbLines[i])
-        }
-        
+        clearCurbRamps()
+
         
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), {
-
-
+            // try to get data for curb ramps
             let bounds = self.map.visibleCoordinateBounds
-
-            
-            
-            
-            
-            //http://dssg-db.cloudapp.net/api/data/v2/crossings.geojson?bbox=-122.32893347740172%2C47.60685023396842%2C-122.32033967971802%2C47.61254994698394
-//            let apiURL = "http://accessmap-api.azurewebsites.net/v1/curbramps.geojson?bbox=" + String(bounds.sw.longitude) + "," + String(bounds.sw.latitude) + "," + String(bounds.ne.longitude) + "," + String(bounds.ne.latitude)
-            
-//            http://accessmap-api.azurewebsites.net/v2/sidewalks.geojson?bbox=-124.785717,45.548599,-116.915580,49.002431
-            
-            
             let apiURL = "http://accessmap-api.azurewebsites.net/v2/crossings.geojson?bbox=" + String(bounds.sw.longitude) + "," + String(bounds.sw.latitude) + "," + String(bounds.ne.longitude) + "," + String(bounds.ne.latitude)
-            
-            
-            
-            
             let nsURL = NSURL(string: apiURL)
-
             let curbrampsData = NSData(contentsOfURL: nsURL!)
-            
+            // can't get curbramsData
             if(curbrampsData == nil) {
                 print("can't get cubramps data ")
                 return;
             }
-        
-//            print(curbrampsData);
-//            return;
-            self.curbLines.removeAll()
-
-
+            
             do {
                 // Load and serialize the GeoJSON into a dictionary filled with properly-typed objects
                 if let jsonDict = try NSJSONSerialization.JSONObjectWithData(curbrampsData!, options: []) as? NSDictionary {
@@ -1081,10 +743,6 @@ class ViewController: UIViewController, UISearchBarDelegate, MGLMapViewDelegate,
                                             self.map.addAnnotation(line)
                                         })
                                     }
-                                    
-                                    
-                                    
-                                    
                                 }
                             }
                         }
@@ -1274,23 +932,9 @@ class ViewController: UIViewController, UISearchBarDelegate, MGLMapViewDelegate,
         })
     }
     
-    
-    
-    
-//    
-//    override func viewDidAppear(animated: Bool) {
-//        super.viewDidAppear(animated)
-//
-//    }
+
     
     func showLabel() {
-        /**let label = UILabel(frame: CGRectMake(0, 0, 200, 21))
-        label.center = CGPointMake(160, 284)
-        label.textAlignment = NSTextAlignment.Center
-        label.text = "I'am a test label"
-        self.view.addSubview(label)
-        */
-        
         let button = UIButton(type: UIButtonType.DetailDisclosure) as UIButton
         button.setTitle("Legend", forState: .Normal)
         button.backgroundColor = UIColor.whiteColor()
@@ -1309,135 +953,6 @@ class ViewController: UIViewController, UISearchBarDelegate, MGLMapViewDelegate,
         print("Preparing for popover presentation!")
     }
     
-//    func showLegend(sender: UIButton) {
-//        /**var alertView = UIAlertView(title: "showing legend",
-//            message: "start route!",
-//            delegate: nil,
-//            cancelButtonTitle: "Got it!")
-//        
-//        var imageView = UIImageView(frame: CGRectMake(10, 10, 40, 40))
-//        
-//        imageView.image = UIImage(named: "map_legend")
-//        alertView.addSubview(imageView)
-//        alertView.show()*/
-//        
-//        
-//        let image = UIImage(named: "map_legend.gif")!
-//        
-//        var imageView = UIImageView(frame: CGRectMake(80, 0, 200, 180))
-//        imageView.image = image
-//
-//        let alert = UIAlertController(title: "Legend", message: "\n\n\n\n\n\n\n\n", preferredStyle: .ActionSheet)
-//        alert.addAction(UIAlertAction(title: "Exit", style: UIAlertActionStyle.Cancel, handler: {(alertAction: UIAlertAction!) in alert.dismissViewControllerAnimated(true, completion: nil)
-//        }))
-//        alert.view.addSubview(imageView)
-//        //imageView.center = alert.view.center
-//        self.presentViewController(alert, animated: true, completion: nil)
-//
-//        /**
-//        let legendViewController = UIAlertController(title: "Legend",
-//            message: "show",
-//            preferredStyle: .Alert)
-//        legendViewController.view.addSubview(imageView)
-//        legendViewController.modalPresentationStyle = .Popover
-//        legendViewController.preferredContentSize = CGSizeMake(50, 100)
-//        
-//        presentViewController(
-//            legendViewController,
-//            animated: true,
-//            completion: nil)
-//        
-//        let popoverMenuViewController = legendViewController.popoverPresentationController
-//        popoverMenuViewController?.permittedArrowDirections = .Any
-//        popoverMenuViewController?.delegate = self
-//        popoverMenuViewController?.sourceView = sender
-//        print(sender.center.x)
-//        print(sender.center.y)
-//        popoverMenuViewController?.sourceRect = CGRect(
-//            x: sender.center.x,
-//            y: sender.center.y,
-//            width: 1,
-//            height: 1)
-//        */
-//    }
-    
-    
-//    func showLegend(sender: UIButton) {
-//        /**var alertView = UIAlertView(title: "showing legend",
-//            message: "start route!",
-//            delegate: nil,
-//            cancelButtonTitle: "Got it!")
-//        
-//        var imageView = UIImageView(frame: CGRectMake(10, 10, 40, 40))
-//        
-//        imageView.image = UIImage(named: "map_legend")
-//        alertView.addSubview(imageView)
-//        alertView.show()*/
-//        
-//        
-//        let image = UIImage(named: "Legend-01.png")!
-//        
-//        var imageView = UIImageView(frame: CGRectMake(25, 10, 300, 350))
-//        imageView.image = image
-//
-//        let alert = UIAlertController(title: "Legend", message: "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", preferredStyle: .ActionSheet)
-//        alert.addAction(UIAlertAction(title: "Exit", style: UIAlertActionStyle.Cancel, handler: {(alertAction: UIAlertAction!) in alert.dismissViewControllerAnimated(true, completion: nil)
-//        }))
-//        alert.view.addSubview(imageView)
-//        //imageView.center = alert.view.center
-//        self.presentViewController(alert, animated: true, completion: nil)
-//
-//        /**
-//        let legendViewController = UIAlertController(title: "Legend",
-//            message: "show",
-//            preferredStyle: .Alert)
-//        legendViewController.view.addSubview(imageView)
-//        legendViewController.modalPresentationStyle = .Popover
-//        legendViewController.preferredContentSize = CGSizeMake(50, 100)
-//        
-//        presentViewController(
-//            legendViewController,
-//            animated: true,
-//            completion: nil)
-//        
-//        let popoverMenuViewController = legendViewController.popoverPresentationController
-//        popoverMenuViewController?.permittedArrowDirections = .Any
-//        popoverMenuViewController?.delegate = self
-//        popoverMenuViewController?.sourceView = sender
-//        print(sender.center.x)
-//        print(sender.center.y)
-//        popoverMenuViewController?.sourceRect = CGRect(
-//            x: sender.center.x,
-//            y: sender.center.y,
-//            width: 1,
-//            height: 1)
-//        */
-//    }
-    
-    func changeStyle(longPress: UILongPressGestureRecognizer) {
-        if longPress.state == .Began {
-            let styleURLs = [
-                MGLStyle.streetsStyleURL(),
-                MGLStyle.emeraldStyleURL(),
-                MGLStyle.lightStyleURL(),
-                MGLStyle.darkStyleURL(),
-                MGLStyle.satelliteStyleURL(),
-                MGLStyle.hybridStyleURL()
-            ]
-            var index = 0
-            for styleURL in styleURLs {
-                if map.styleURL == styleURL {
-                    index = styleURLs.indexOf(styleURL)!
-                }
-            }
-            if index == styleURLs.endIndex - 1 {
-                index = styleURLs.startIndex
-            } else {
-                index = index.advancedBy(1)
-            }
-            map.styleURL = styleURLs[index]
-        }
-    }
     
     func startReport(sender: UITapGestureRecognizer) {
         if !inReportMode {
@@ -1520,19 +1035,11 @@ class ViewController: UIViewController, UISearchBarDelegate, MGLMapViewDelegate,
         print("Region changed")
 
         print("Zoom level = " + String(mapView.zoomLevel))
-        //self.mapView = mapView
-        if( firstTime ){
-//            mapView.userTrackingMode = .Follow
 
-//            self.map.setCenterCoordinate(mapView.centerCoordinate, zoomLevel: 16, animated: true)
+        if( firstTime ){
             firstTime = false
         }
 
-
-//        let start = CLLocationCoordinate2D(latitude: 47.663461, longitude: -122.320382)
-//        let end = CLLocationCoordinate2D(latitude: 47.7081095, longitude: -122.3209438)
-        
-//        drawRouting(start, endCoordinates: end)
         clearAnnotations()
         if (mapView.zoomLevel >= 14) {
             drawElevationData()
@@ -1552,20 +1059,6 @@ class ViewController: UIViewController, UISearchBarDelegate, MGLMapViewDelegate,
         return true
     }
     
-    
-    
-    
-//    func mapView(mapView: MGLMapView, imageForAnnotation annotation: MGLAnnotation) -> MGLAnnotationImage? {
-//        var annotationImage = mapView.dequeueReusableAnnotationImageWithIdentifier("Bluedot")
-//        
-//        if annotationImage == nil {
-//            // Leaning Tower of Pisa by Stefan Spieler from the Noun Project
-//            let image = UIImage(named: "Bluedot")
-//            annotationImage = MGLAnnotationImage(image: image!, reuseIdentifier: "Bluedot")
-//        }
-//        
-//        return annotationImage
-//    }
    
     func mapView(mapView: MGLMapView, imageForAnnotation annotation: MGLAnnotation) -> MGLAnnotationImage? {
         print("Getting image for annotation!")
@@ -1585,8 +1078,6 @@ class ViewController: UIViewController, UISearchBarDelegate, MGLMapViewDelegate,
         }
     
     }
-    
-    
     
 
     func mapView(mapView: MGLMapView, lineWidthForPolylineAnnotation annotation: MGLPolyline) -> CGFloat {
