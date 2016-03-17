@@ -8,18 +8,18 @@
 
 import UIKit
 import Mapbox
-
-//class ViewController: UIViewController, UIPopoverPresentationControllerDelegate, MGLMapViewDelegate {
-class ViewController: UIViewController, UISearchBarDelegate, MGLMapViewDelegate, UITextFieldDelegate, UIPopoverPresentationControllerDelegate, UITableViewDelegate, UITableViewDataSource, RoutingDelegate, OptionsDelegate, ReportingDelegate {
+// UITableViewDataSource
+class ViewController: UIViewController, UISearchBarDelegate, MGLMapViewDelegate, UITextFieldDelegate, UIPopoverPresentationControllerDelegate, UITableViewDelegate, RoutingDelegate, OptionsDelegate, ReportingDelegate {
     
     var manager:CLLocationManager!
     
     // Mark: properties
-    @IBOutlet weak var HereButton: UIButton!
+    //@IBOutlet weak var HereButton: UIButton!
 
     // store whether it is the first time to open the appliaciton
     var firstTime = true;
     
+    // store whether or not to show toggleable data
     var showCurbRamps = true;
     var showElevationData = true;
     var showBusStops = true;
@@ -31,24 +31,19 @@ class ViewController: UIViewController, UISearchBarDelegate, MGLMapViewDelegate,
     
     var endCoordinates : CLLocationCoordinate2D!
     
-    // store the elevations lines drawed on the screen
+    // store the bus stop, crossings, and elevation line annotations drawn on the screen
+    var busStops = [MGLPointAnnotation]()
+    var curbLines = [MGLPolyline]()
     var elevationLines = [MGLPolyline]()
     
-    // store the bus stops anotation
-    var busStops = [MGLPointAnnotation]()
-    
-    // store the curblines annotation
-    var curbLines = [MGLPolyline]()
-    
-    // store the start and end markers drawed on the screen
+    // store the start and end markers drawn on the screen
     var startEndMarkers = [MGLPointAnnotation]()
     
-    // store the routing lines drawed on the screen
+    // store the route lines drawn on the screen
     var routingLines = [MGLPolyline]()
     
+    // store the marker displayed when the user is reporting data (to allow removal of marker after user is done reporting)
     var reportMarker : MGLPointAnnotation!
-    
-    var elevationTileStyleURL = NSURL(string: "mapbox-raster-v8.json")
     
     var elevationStyleURL = NSURL(string: "mapbox://styles/wangx23/cilbmjh95000u9jm1jlg1wb26")
     
@@ -58,32 +53,21 @@ class ViewController: UIViewController, UISearchBarDelegate, MGLMapViewDelegate,
     
     @IBOutlet var map: MGLMapView!
     
+    // buttons displayed at base of map
     @IBOutlet weak var legend: UIButton!
-    
     @IBOutlet weak var here: UIButton!
-    
     @IBOutlet weak var route: UIButton!
     
     @IBOutlet weak var reportInstructionLabel: UILabel!
     
-    //@IBOutlet weak var backButton: UIButton!
-    
+    // text fields
     @IBOutlet weak var inputAddressTextField: UITextField!
-    
     @IBOutlet weak var startAddressTextField: UITextField!
-    
     @IBOutlet weak var endAddressTextField: UITextField!
-    
+    // labels displaying "from" and "to" in start/end address text fields
     @IBOutlet weak var fromLabel: UILabel!
-    
     @IBOutlet weak var toLabel: UILabel!
-    
-    @IBOutlet weak var wheelChairButton: UIButton!
-    
-    @IBOutlet weak var powerWheelChairButton: UIButton!
-    
-    @IBOutlet weak var pedestrianButton: UIButton!
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -94,19 +78,28 @@ class ViewController: UIViewController, UISearchBarDelegate, MGLMapViewDelegate,
         formatBaseButton(legend)
         formatBaseButton(route)
         
-        let lightBlueColor = UIColor.init(red: 89,
-            green: 171,
-            blue: 227,
-            alpha: 1)
         route.layer.borderColor = UIColor.clearColor().CGColor
-        
 
-        inputAddressTextField.borderStyle = UITextBorderStyle.RoundedRect
-        startAddressTextField.borderStyle = UITextBorderStyle.RoundedRect
-        endAddressTextField.borderStyle = UITextBorderStyle.RoundedRect
         inputAddressTextField.delegate = self
         startAddressTextField.delegate = self
         endAddressTextField.delegate = self
+        styleTextFields()
+        
+        reportInstructionLabel.hidden = true;
+        route.hidden = true;
+        
+        // hold to show change the map style
+        map.addGestureRecognizer(UILongPressGestureRecognizer(target: self,
+            action: "changeStyle:"))
+
+        map.addGestureRecognizer(UITapGestureRecognizer(target: self,
+            action: "startReport:"))
+    }
+    
+    func styleTextFields() {
+        inputAddressTextField.borderStyle = UITextBorderStyle.RoundedRect
+        startAddressTextField.borderStyle = UITextBorderStyle.RoundedRect
+        endAddressTextField.borderStyle = UITextBorderStyle.RoundedRect
         
         startAddressTextField.leftViewMode = UITextFieldViewMode.Always
         startAddressTextField.leftView = fromLabel
@@ -116,26 +109,9 @@ class ViewController: UIViewController, UISearchBarDelegate, MGLMapViewDelegate,
         
         startAddressTextField.hidden = true;
         endAddressTextField.hidden = true;
-        
-        //backButton.hidden = true;
         fromLabel.hidden = true;
         toLabel.hidden = true;
-        
-        reportInstructionLabel.hidden = true;
-        wheelChairButton.hidden = true;
-        powerWheelChairButton.hidden = true;
-        pedestrianButton.hidden = true;
-        route.hidden = true;
-        
-        // hold to show change the map style
-        map.addGestureRecognizer(UILongPressGestureRecognizer(target: self,
-            action: "changeStyle:"))
-
-        map.addGestureRecognizer(UITapGestureRecognizer(target: self,
-            action: "startReport:"))
-        
     }
-    
     
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
         print("called touchesBegan")
@@ -147,19 +123,16 @@ class ViewController: UIViewController, UISearchBarDelegate, MGLMapViewDelegate,
     
     func onChooseManualWheelchairOption() {
         print("onChooseManualWheelchairOption() called")
-        reverseChoiceButtonHidden()
         routeByAddress()
     }
 
     func onChoosePowerWheelchairOption() {
         print("onChoosePowerWheelchairOption() called")
-        reverseChoiceButtonHidden()
         routeByAddress()
     }
     
     func onChooseOtherMobilityAidOption() {
         print("onChooseOtherMobilityAidOption() called")
-        reverseChoiceButtonHidden()
         routeByAddress()
     }
     
@@ -190,11 +163,15 @@ class ViewController: UIViewController, UISearchBarDelegate, MGLMapViewDelegate,
         }
     }
     
+    // Dispatches report to developer (TODO; currently prints message to console) and 
+    // displays alert view notifying user that message has been sent
     func sendReport(message: String) {
         print("message is " + message)
         // Add code for sending message to a developer's email
         
-        let alertView = UIAlertController(title: "Sent!", message: "Your ressage:\n" + message + "\n\n has been sent to the AccessMap team for review. Thanks for contributing to our database!", preferredStyle: .Alert)
+        let alertView = UIAlertController(title: "Sent!",
+            message: "Your ressage:\n" + message + "\n\n has been sent to the AccessMap team for review. Thanks for contributing to our database!",
+            preferredStyle: .Alert)
         alertView.addAction(UIAlertAction(title: "Ok", style: .Default, handler: nil))
         self.presentViewController(alertView, animated: true, completion: self.removeReportAnnotation)
     }
@@ -202,20 +179,21 @@ class ViewController: UIViewController, UISearchBarDelegate, MGLMapViewDelegate,
     func removeReportAnnotation() {
         self.map.removeAnnotation(reportMarker)
     }
+    
     func cancelReport() {
         self.map.removeAnnotation(reportMarker)
     }
     
+    // enter reporting mode, so that user's next tap will display an annotation and textbox
     func enterReportMode() {
         print("entered Report mode")
         inReportMode = true
         reportInstructionLabel.hidden = false
     }
     
+    // style legend, here, and route buttons
     func formatBaseButton(button: UIButton) {
-        //button.backgroundColor = UIColor.whiteColor()
         button.layer.cornerRadius = 5
-        //button.titleEdgeInsets = UIEdgeInsets(top: 0.0, left: 5.0, bottom: 0.0, right: 0.0)
         button.layer.borderWidth = 1
         button.layer.borderColor = UIColor.whiteColor().CGColor
 
@@ -227,17 +205,6 @@ class ViewController: UIViewController, UISearchBarDelegate, MGLMapViewDelegate,
     
     
     // MARK: Actions
-    @IBAction func routeButtonAction(sender: AnyObject) {
-        print("routeCalled")
-        reverseChoiceButtonHidden()
-    }
-    
-    
-    func reverseChoiceButtonHidden() {
-        //wheelChairButton.hidden = !wheelChairButton.hidden
-        //powerWheelChairButton.hidden = !powerWheelChairButton.hidden
-        //pedestrianButton.hidden = !pedestrianButton.hidden
-    }
     
     func routeByAddress() {
         onShowRoutingMode()
@@ -269,21 +236,16 @@ class ViewController: UIViewController, UISearchBarDelegate, MGLMapViewDelegate,
                 self.map.setCenterCoordinate(center, zoomLevel: log(maxC) + 3, animated: true)
                 self.drawRouting(currentCoordinates, endCoordinates: self.endCoordinates)
                 clearAnnotations()
-                
-                print("annotation cleared!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
-
         }
     }
     
     @IBAction func powerWheelChairButtonAction(sender: AnyObject) {
         print("powerWheelChairButton called")
-        reverseChoiceButtonHidden()
         routeByAddress()
     }
 
     @IBAction func manualWheelchairButtonAction(sender: UIButton) {
         print("manualWheelchairButton called")
-        reverseChoiceButtonHidden()
         routeByAddress()
     }
     @IBOutlet weak var otherUserButton: UIButton!
@@ -291,13 +253,11 @@ class ViewController: UIViewController, UISearchBarDelegate, MGLMapViewDelegate,
     @IBOutlet weak var manualWheelchairButton: UIButton!
     @IBAction func pedestrianButtonAction(sender: AnyObject) {
         print("pedestrian button called")
-        reverseChoiceButtonHidden()
         routeByAddress()
     }
     
     @IBAction func wheelChairButtonAction(sender: AnyObject) {
         print("WheelChairButton called")
-        reverseChoiceButtonHidden()
         routeByAddress()
     }
     
@@ -307,7 +267,6 @@ class ViewController: UIViewController, UISearchBarDelegate, MGLMapViewDelegate,
             self.map.removeAnnotation(self.routingLines[i])
         }
     
-
         self.routingLines.removeAll()
         reverseTextFieldHideAndShow()
     }
@@ -435,26 +394,6 @@ class ViewController: UIViewController, UISearchBarDelegate, MGLMapViewDelegate,
         }
         return true
     }
-
-    
-    
-    
-    @IBAction func showLegend(sender: AnyObject) {
-        
-        let image = UIImage(named: "Legend-01.png")!
-        
-        let imageView = UIImageView(frame: CGRectMake(25, 10, 300, 350))
-        imageView.image = image
-        
-        let alert = UIAlertController(title: "Legend", message: "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", preferredStyle: .ActionSheet)
-        alert.addAction(UIAlertAction(title: "Exit", style: UIAlertActionStyle.Cancel, handler: {(alertAction: UIAlertAction!) in alert.dismissViewControllerAnimated(true, completion: nil)
-        }))
-        alert.view.addSubview(imageView)
-        //imageView.center = alert.view.center
-        self.presentViewController(alert, animated: true, completion: nil)
-        
-    }
-    
     
     /** get the current location of the user
      */
@@ -462,7 +401,7 @@ class ViewController: UIViewController, UISearchBarDelegate, MGLMapViewDelegate,
         map.userTrackingMode = .Follow
        
     }
-
+    /**
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 0
     }
@@ -473,7 +412,7 @@ class ViewController: UIViewController, UISearchBarDelegate, MGLMapViewDelegate,
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         
-    }
+    }*/
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         switch segue.identifier {
@@ -499,18 +438,15 @@ class ViewController: UIViewController, UISearchBarDelegate, MGLMapViewDelegate,
         }
     }
     
+    // Allows PopupPresentationViewControllers to be displayed as pop-up rather than alert
     func adaptivePresentationStyleForPresentationController(controller: UIPresentationController) -> UIModalPresentationStyle {
         return UIModalPresentationStyle.None
     }
     
-    @IBAction func showOptionsMenu(sender: UIBarButtonItem) {
-        
-    }
-    
+    // Action when back button is clicked, reverting app from "routing" to "map" mode
     @IBAction func returnToMapMode(sender: UIBarButtonItem) {
         onShowMapMode()
-        
-        print("back button clicked")
+
         for i in 0..<self.routingLines.count {
             self.map.removeAnnotation(self.routingLines[i])
         }
@@ -525,20 +461,25 @@ class ViewController: UIViewController, UISearchBarDelegate, MGLMapViewDelegate,
         onShowRoutingMode()
     }
     
+    // modify navbar on entering map mode, hiding back button and showing Map as the title
     func onShowMapMode() {
         self.navigationItem.title = "Map"
         hideAndDisableBackButton()
     }
 
+    // hide back button in top navbar
     func hideAndDisableBackButton (){
         self.navigationItem.leftBarButtonItem?.enabled = false
         self.navigationItem.leftBarButtonItem?.tintColor = UIColor.clearColor()
     }
     
+    // show back button in  top navbar
     func showAndEnableBackButton(){
         self.navigationItem.leftBarButtonItem?.enabled = true
         self.navigationItem.leftBarButtonItem?.tintColor = nil
     }
+
+    // modify navbar on entering routing mode, showing back button and showing Routing as the title
     func onShowRoutingMode() {
         var nav = self.navigationController?.navigationBar
         nav?.topItem!.title = "Routing"
@@ -690,7 +631,6 @@ class ViewController: UIViewController, UISearchBarDelegate, MGLMapViewDelegate,
         }
         
         clearCurbRamps()
-
         
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), {
             // try to get data for curb ramps
@@ -762,7 +702,7 @@ class ViewController: UIViewController, UISearchBarDelegate, MGLMapViewDelegate,
     }
     
 
-    
+    // draw bus stop icons at locations retrieved from OBA API
     func drawBusStops() {
         print("Called drawBusStops")
 
@@ -777,11 +717,9 @@ class ViewController: UIViewController, UISearchBarDelegate, MGLMapViewDelegate,
             let center = self.map.centerCoordinate
             
             let obaURL = "http://api.pugetsound.onebusaway.org/api/where/stops-for-location.json?key=" + OBA_KEY + "&lat=" + String(center.latitude) + "&lon=" + String(center.longitude) + "&latSpan=" + String(abs(bounds.ne.latitude - bounds.sw.latitude)) + "&lonSpan=" + String(abs(bounds.ne.longitude - bounds.sw.longitude))
-            print("apiURL = " + obaURL)
 
             let nsURL = NSURL(string: obaURL)
             let obaData = NSData(contentsOfURL: nsURL!)
-            //print("obaData = " + String(obaData))
             if(obaData == nil) {
                 print("error: can't get obaData")
                 return;
@@ -829,6 +767,7 @@ class ViewController: UIViewController, UISearchBarDelegate, MGLMapViewDelegate,
         })
     }
     
+    // Draw lines representing elevation of sidewalks retrieved from AccessMap API
     func drawElevationData() {
         print("Called drawElevationData")
         // Parsing GeoJSON can be CPU intensive, do it on a background thread
@@ -843,19 +782,10 @@ class ViewController: UIViewController, UISearchBarDelegate, MGLMapViewDelegate,
         self.elevationLines.removeAll()
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), {
             // Get the path for example.geojson in the app's bundle
-
-            //let jsonPath = NSBundle.mainBundle().pathForResource("example", ofType: "geojson")
-            //let jsonData = NSData(contentsOfFile: jsonPath!)
             
-            // url for data with Washington state as bounding box http://accessmap-api.azurewebsites.net/v2/sidewalks.geojson?bbox=-124.785717,45.548599,-116.915580,49.002431
             let bounds = self.map.visibleCoordinateBounds
             let apiURL = "http://accessmap-api.azurewebsites.net/v2/sidewalks.geojson?bbox=" + String(bounds.sw.longitude) + "," + String(bounds.sw.latitude) + "," + String(bounds.ne.longitude) + "," + String(bounds.ne.latitude)
-            print("apiURL = " + apiURL)
-            //let nsURL = NSURL(string: "-122.32893347740172%2C47.60685023396842%2C-122.32033967971802%2C47.61254994698394")
             let nsURL = NSURL(string: apiURL)
-            //let apiPath = NSBundle.mainBundle().pathForResource("sidewalks", ofType: "json")
-            
-            //let sidewalkData = NSData(contentsOfFile: apiPath!)
             let sidewalkData = NSData(contentsOfURL: nsURL!)
             if(sidewalkData == nil) {
                 print("error: can't get side walk data")
@@ -891,10 +821,7 @@ class ViewController: UIViewController, UISearchBarDelegate, MGLMapViewDelegate,
                                         numFeatures++
                                         let line = MGLPolyline(coordinates: &coordinates, count: UInt(coordinates.count))
                                         
-                                        // Optionally set the title of the polyline, which can be used for:
-                                        //  - Callout view
-                                        //  - Object identification
-                                        line.title = "Crema to Council Crest"
+                                        line.title = "elevation line"
                                         if let properties = feature["properties"] as? NSDictionary {
                                             let grade = properties["grade"] as? Double
                                             if grade >= high {
@@ -932,28 +859,12 @@ class ViewController: UIViewController, UISearchBarDelegate, MGLMapViewDelegate,
         })
     }
     
-
-    
-    func showLabel() {
-        let button = UIButton(type: UIButtonType.DetailDisclosure) as UIButton
-        button.setTitle("Legend", forState: .Normal)
-        button.backgroundColor = UIColor.whiteColor()
-        
-        button.layer.cornerRadius = 5
-        button.layer.borderWidth = 1
-        button.layer.borderColor = UIColor.blueColor().CGColor
-        
-        button.frame = CGRectMake(0, 620, 100, 50);
-        button.addTarget(self, action: "showLegend:", forControlEvents: UIControlEvents.TouchUpInside)
-        //button.setTitle(_, title: "Click me!", forState: UIControlState.Normal)
-        self.view.addSubview(button)
-    }
-    
     func prepareForPopoverPresentation(popoverPresentationController: UIPopoverPresentationController) {
         print("Preparing for popover presentation!")
     }
     
-    
+    // If user is in report mode, recognize the location of a tap and display marker there,
+    // showing a popup where user can enter text
     func startReport(sender: UITapGestureRecognizer) {
         if !inReportMode {
             return
@@ -992,21 +903,19 @@ class ViewController: UIViewController, UISearchBarDelegate, MGLMapViewDelegate,
                 animated: true,
                 completion: nil)
             
-            //self.presentViewController(reportPopupController, animated: true, completion: nil)
-            
-            
             inReportMode = false
         }
     }
     
     
-    
+    // clear elevation data, crossings, and bus stops from map
     func clearAnnotations() {
         clearElevationLines()
         clearCurbRamps()
         clearBusStops()
     }
     
+    // clear elevation annotations stored in elevationLines from map
     func clearElevationLines() {
         for i in 0..<self.elevationLines.count {
             self.map.removeAnnotation(self.elevationLines[i])
@@ -1015,6 +924,7 @@ class ViewController: UIViewController, UISearchBarDelegate, MGLMapViewDelegate,
         self.elevationLines.removeAll()
     }
     
+    // clear crossing annotations stored in curbLines from map
     func clearCurbRamps() {
         for i in 0..<self.curbLines.count {
             self.map.removeAnnotation(self.curbLines[i])
@@ -1023,6 +933,7 @@ class ViewController: UIViewController, UISearchBarDelegate, MGLMapViewDelegate,
         self.curbLines.removeAll()
     }
     
+    // clear bus stop annotations stored in busStops from map
     func clearBusStops() {
         for i in 0..<self.busStops.count {
             self.map.removeAnnotation(self.busStops[i])
@@ -1031,9 +942,9 @@ class ViewController: UIViewController, UISearchBarDelegate, MGLMapViewDelegate,
         self.busStops.removeAll()
     }
     
+    // update map whenever region is changed, by clearing/redrawing all annotations
     func mapView(mapView: MGLMapView, regionDidChangeAnimated animated: Bool) -> Void {
         print("Region changed")
-
         print("Zoom level = " + String(mapView.zoomLevel))
 
         if( firstTime ){
@@ -1046,12 +957,9 @@ class ViewController: UIViewController, UISearchBarDelegate, MGLMapViewDelegate,
             drawCurbramps()
 
             if (mapView.zoomLevel > 15) {
-                // Prevent bus stop icons from cluttering up map; make bus stop icon smaller?
+                // Draw bus stops only if zoomed in close enough to prevent bus stop icons from cluttering up map
                 drawBusStops()
             }
-            //map.styleURL = MGLStyle.streetsStyleURL()
-        } else {
-            //map.styleURL = elevationTileStyleURL
         }
     }
     
@@ -1059,16 +967,14 @@ class ViewController: UIViewController, UISearchBarDelegate, MGLMapViewDelegate,
         return true
     }
     
-   
+    // use bus stop image for annotations titled "busstop"; standard annotation otherwise
     func mapView(mapView: MGLMapView, imageForAnnotation annotation: MGLAnnotation) -> MGLAnnotationImage? {
-        print("Getting image for annotation!")
         if (annotation.title! == "busstop") {
             var annotationImage = mapView.dequeueReusableAnnotationImageWithIdentifier("busStop")
         
             if annotationImage == nil {
                 // bus stop image
                 var image = UIImage(named: "busstop5.png")!
-                //image = image.imageWithAlignmentRectInsets(UIEdgeInsetsMake(0, 0, image.size.height/2, 0))
                 annotationImage = MGLAnnotationImage(image: image, reuseIdentifier: "busStop")
             }
 
@@ -1101,15 +1007,13 @@ class ViewController: UIViewController, UISearchBarDelegate, MGLMapViewDelegate,
         
         if(annotation.title == "curbcut" && annotation is MGLPolyline) {
             return UIColor.blueColor()
-            
         }
         
         if(annotation.title == "route" && annotation is MGLPolyline) {
             return UIColor.blackColor()
-            
         }
         
-        if (annotation.title == "Crema to Council Crest" && annotation is MGLPolyline) {
+        if (annotation.title == "elevation line" && annotation is MGLPolyline) {
             if (annotation.subtitle == "high") {
                 return UIColor.redColor()
             } else {
@@ -1119,8 +1023,6 @@ class ViewController: UIViewController, UISearchBarDelegate, MGLMapViewDelegate,
                     return UIColor.greenColor()
                 }
             }
-                // Mapbox cyan
-            //return UIColor(red: 59/255, green: 178/255, blue: 208/255, alpha:1)
         } else {
             return UIColor.purpleColor()
         }
@@ -1129,7 +1031,5 @@ class ViewController: UIViewController, UISearchBarDelegate, MGLMapViewDelegate,
     func mapView(mapView: MGLMapView, fillColorForPolygonAnnotation annotation: MGLPolygon) -> UIColor {
         return UIColor.purpleColor()
     }
-
-
 }
 
