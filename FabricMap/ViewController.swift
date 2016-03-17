@@ -89,8 +89,8 @@ class ViewController: UIViewController, UISearchBarDelegate, MGLMapViewDelegate,
         route.hidden = true;
         
         // hold to show change the map style
-        map.addGestureRecognizer(UILongPressGestureRecognizer(target: self,
-            action: "changeStyle:"))
+        //map.addGestureRecognizer(UILongPressGestureRecognizer(target: self,
+            //action: "changeStyle:"))
 
         map.addGestureRecognizer(UITapGestureRecognizer(target: self,
             action: "startReport:"))
