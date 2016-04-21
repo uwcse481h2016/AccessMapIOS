@@ -15,7 +15,7 @@ protocol ReportingDelegate: class {
 
 // Manages the report pop-up that allows the user to send a report back to the developer
 class ReportViewController: UIViewController {
-
+    
     @IBOutlet weak var textField: UITextView!
     
     @IBOutlet weak var cancelButton: UIButton!
@@ -26,15 +26,15 @@ class ReportViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
     
-//    optional func popoverControllerDidDismissPopover(popoverController: UIPopoverController) {
-//        delegate!.cancelReport()
-//    }
+    //    optional func popoverControllerDidDismissPopover(popoverController: UIPopoverController) {
+    //        delegate!.cancelReport()
+    //    }
     
     // Notify main ViewController to cancel report, and dismiss this ViewController
     @IBAction func cancelReport(sender: UIButton) {
@@ -50,13 +50,13 @@ class ReportViewController: UIViewController {
     }
     
     /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
+     // MARK: - Navigation
+     
+     // In a storyboard-based application, you will often want to do a little preparation before navigation
+     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+     // Get the new view controller using segue.destinationViewController.
+     // Pass the selected object to the new view controller.
+     }
+     */
+    
 }

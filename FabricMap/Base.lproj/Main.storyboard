@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9532" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="ggd-6D-IPC">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="ggd-6D-IPC">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
         <!--Options-->
@@ -142,7 +143,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="1Nn-4D-w8g" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1046" y="29.25"/>
+            <point key="canvasLocation" x="1027" y="-95"/>
         </scene>
         <!--Report View Controller-->
         <scene sceneID="nc9-uw-p9P">
@@ -226,7 +227,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hio-kU-Q4y" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1071" y="240.75"/>
+            <point key="canvasLocation" x="1027" y="242"/>
         </scene>
         <!--Delegate-->
         <scene sceneID="tne-QT-ifu">
@@ -244,7 +245,7 @@
                                 <rect key="frame" x="-25" y="-30" width="97" height="30"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocorrectionType="no"/>
-                                <variation key="heightClass=regular" fixedFrame="YES">
+                                <variation key="heightClass=regular" misplaced="YES">
                                     <rect key="frame" x="45" y="94" width="285" height="35"/>
                                 </variation>
                             </textField>
@@ -333,6 +334,11 @@
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="saa-G8-neb" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="25" id="UMF-gn-JAl"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="saa-G8-neb" secondAttribute="trailing" constant="25" id="Udg-Vz-ggd"/>
+                            <constraint firstItem="saa-G8-neb" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="30" id="jRc-v9-i0D"/>
+                        </constraints>
                         <userDefinedRuntimeAttributes>
                             <userDefinedRuntimeAttribute type="number" keyPath="latitude">
                                 <real key="value" value="47.606200000000001"/>
@@ -356,6 +362,11 @@
                                 <exclude reference="6YZ-2k-hcb"/>
                                 <exclude reference="7T6-g8-4zD"/>
                             </mask>
+                            <mask key="constraints">
+                                <exclude reference="UMF-gn-JAl"/>
+                                <exclude reference="Udg-Vz-ggd"/>
+                                <exclude reference="jRc-v9-i0D"/>
+                            </mask>
                         </variation>
                         <variation key="heightClass=regular">
                             <mask key="subviews">
@@ -368,6 +379,11 @@
                                 <include reference="834-f0-dlj"/>
                                 <include reference="6YZ-2k-hcb"/>
                                 <include reference="7T6-g8-4zD"/>
+                            </mask>
+                            <mask key="constraints">
+                                <include reference="UMF-gn-JAl"/>
+                                <include reference="Udg-Vz-ggd"/>
+                                <include reference="jRc-v9-i0D"/>
                             </mask>
                         </variation>
                         <connections>
@@ -411,7 +427,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="616.5" y="88.875"/>
+            <point key="canvasLocation" x="544.5" y="44.5"/>
         </scene>
         <!--Legend View Controller-->
         <scene sceneID="3P1-FV-IW6">
@@ -451,7 +467,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Oce-Yg-s8c" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="527" y="567.75"/>
+            <point key="canvasLocation" x="482" y="682"/>
         </scene>
         <!--View Controller-->
         <scene sceneID="5B6-eQ-FTI">
@@ -462,6 +478,7 @@
                         <viewControllerLayoutGuide type="bottom" id="c5v-bU-oo0"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="EYL-3V-JP5">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="800"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="pcr-4l-SWu">
@@ -488,7 +505,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8I7-Cw-DC1" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="724" y="312"/>
+            <point key="canvasLocation" x="462" y="1268"/>
         </scene>
         <!--Routing View Controller-->
         <scene sceneID="jex-Ru-Zwg">
@@ -556,7 +573,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="lyY-Gx-Ekj" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1096" y="554.25"/>
+            <point key="canvasLocation" x="774" y="597"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="AyI-tT-t4k">

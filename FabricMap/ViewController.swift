@@ -15,7 +15,7 @@ class ViewController: UIViewController, UISearchBarDelegate, MGLMapViewDelegate,
     
     // Mark: properties
     //@IBOutlet weak var HereButton: UIButton!
-
+    
     // store whether it is the first time to open the appliaciton
     var firstTime = true;
     
@@ -49,7 +49,7 @@ class ViewController: UIViewController, UISearchBarDelegate, MGLMapViewDelegate,
     
     var start : UITextField!
     var end : UITextField!
-  
+    
     
     @IBOutlet var map: MGLMapView!
     
@@ -67,10 +67,10 @@ class ViewController: UIViewController, UISearchBarDelegate, MGLMapViewDelegate,
     // labels displaying "from" and "to" in start/end address text fields
     @IBOutlet weak var fromLabel: UILabel!
     @IBOutlet weak var toLabel: UILabel!
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         map.delegate = self
         map.styleURL = elevationStyleURL
         
@@ -79,7 +79,7 @@ class ViewController: UIViewController, UISearchBarDelegate, MGLMapViewDelegate,
         formatBaseButton(route)
         
         route.layer.borderColor = UIColor.clearColor().CGColor
-
+        
         inputAddressTextField.delegate = self
         startAddressTextField.delegate = self
         endAddressTextField.delegate = self
@@ -90,8 +90,8 @@ class ViewController: UIViewController, UISearchBarDelegate, MGLMapViewDelegate,
         
         // hold to show change the map style
         //map.addGestureRecognizer(UILongPressGestureRecognizer(target: self,
-            //action: "changeStyle:"))
-
+        //action: "changeStyle:"))
+        
         map.addGestureRecognizer(UITapGestureRecognizer(target: self,
             action: "startReport:"))
     }
@@ -125,7 +125,7 @@ class ViewController: UIViewController, UISearchBarDelegate, MGLMapViewDelegate,
         print("onChooseManualWheelchairOption() called")
         routeByAddress()
     }
-
+    
     func onChoosePowerWheelchairOption() {
         print("onChoosePowerWheelchairOption() called")
         routeByAddress()
@@ -163,15 +163,15 @@ class ViewController: UIViewController, UISearchBarDelegate, MGLMapViewDelegate,
         }
     }
     
-    // Dispatches report to developer (TODO; currently prints message to console) and 
+    // Dispatches report to developer (TODO; currently prints message to console) and
     // displays alert view notifying user that message has been sent
     func sendReport(message: String) {
         print("message is " + message)
         // Add code for sending message to a developer's email
         
         let alertView = UIAlertController(title: "Sent!",
-            message: "Your ressage:\n" + message + "\n\n has been sent to the AccessMap team for review. Thanks for contributing to our database!",
-            preferredStyle: .Alert)
+                                          message: "Your ressage:\n" + message + "\n\n has been sent to the AccessMap team for review. Thanks for contributing to our database!",
+                                          preferredStyle: .Alert)
         alertView.addAction(UIAlertAction(title: "Ok", style: .Default, handler: nil))
         self.presentViewController(alertView, animated: true, completion: self.removeReportAnnotation)
     }
@@ -196,7 +196,7 @@ class ViewController: UIViewController, UISearchBarDelegate, MGLMapViewDelegate,
         button.layer.cornerRadius = 5
         button.layer.borderWidth = 1
         button.layer.borderColor = UIColor.whiteColor().CGColor
-
+        
         button.layer.shadowColor = UIColor.grayColor().CGColor;
         button.layer.shadowOpacity = 0.8;
         button.layer.shadowRadius = 5;
@@ -217,25 +217,25 @@ class ViewController: UIViewController, UISearchBarDelegate, MGLMapViewDelegate,
         
         if( CLLocationManager.authorizationStatus() == CLAuthorizationStatus.AuthorizedWhenInUse ||
             CLLocationManager.authorizationStatus() == CLAuthorizationStatus.Authorized){
-                
-                let currentLocation = locManager.location
-                print("current location")
-                print(currentLocation!.coordinate.longitude)
-                print(currentLocation!.coordinate.latitude)
-                self.currentCoordinates = currentLocation!.coordinate
-                
-                let center = CLLocationCoordinate2DMake((currentCoordinates.latitude + endCoordinates.latitude) / 2, (currentCoordinates.longitude + self.endCoordinates.longitude) / 2)
-                let verticalDifference = 180 / (currentCoordinates.latitude - self.endCoordinates.latitude)
-                
-                let horizontalDifference = 360 / (currentCoordinates.longitude - endCoordinates.longitude)
-                let maxC = min(abs(verticalDifference), abs(horizontalDifference))
-                //
-                //                        // get the zoom level
-                print(log(maxC))
-                //                        // set the map position
-                self.map.setCenterCoordinate(center, zoomLevel: log(maxC) + 3, animated: true)
-                self.drawRouting(currentCoordinates, endCoordinates: self.endCoordinates)
-                clearAnnotations()
+            
+            let currentLocation = locManager.location
+            print("current location")
+            print(currentLocation!.coordinate.longitude)
+            print(currentLocation!.coordinate.latitude)
+            self.currentCoordinates = currentLocation!.coordinate
+            
+            let center = CLLocationCoordinate2DMake((currentCoordinates.latitude + endCoordinates.latitude) / 2, (currentCoordinates.longitude + self.endCoordinates.longitude) / 2)
+            let verticalDifference = 180 / (currentCoordinates.latitude - self.endCoordinates.latitude)
+            
+            let horizontalDifference = 360 / (currentCoordinates.longitude - endCoordinates.longitude)
+            let maxC = min(abs(verticalDifference), abs(horizontalDifference))
+            //
+            //                        // get the zoom level
+            print(log(maxC))
+            //                        // set the map position
+            self.map.setCenterCoordinate(center, zoomLevel: log(maxC) + 3, animated: true)
+            self.drawRouting(currentCoordinates, endCoordinates: self.endCoordinates)
+            clearAnnotations()
         }
     }
     
@@ -243,7 +243,7 @@ class ViewController: UIViewController, UISearchBarDelegate, MGLMapViewDelegate,
         print("powerWheelChairButton called")
         routeByAddress()
     }
-
+    
     @IBAction func manualWheelchairButtonAction(sender: UIButton) {
         print("manualWheelchairButton called")
         routeByAddress()
@@ -266,20 +266,20 @@ class ViewController: UIViewController, UISearchBarDelegate, MGLMapViewDelegate,
         for i in 0..<self.routingLines.count {
             self.map.removeAnnotation(self.routingLines[i])
         }
-    
+        
         self.routingLines.removeAll()
         reverseTextFieldHideAndShow()
     }
     
     
-    /** Callback function when the text finished edit. 
+    /** Callback function when the text finished edit.
      * It grab the address from the user and try to place marker or find route for the user
      */
     func textFieldShouldReturn(textField: UITextField) -> Bool {
         print("textFieldShouldReturn is on called")
         // Hide the keyboard.
         textField.resignFirstResponder()
-
+        
         if(!inputAddressTextField.hidden) {
             // when the destination address text field is showed
             let endAddress = inputAddressTextField.text
@@ -295,9 +295,9 @@ class ViewController: UIViewController, UISearchBarDelegate, MGLMapViewDelegate,
                     // when address is wrong, can't find the route;
                     print("Error", error)
                     let alertView = UIAlertView(title: "Not found",
-                                message: "Please enter a valid address.",
-                                delegate: nil,
-                                cancelButtonTitle: "Ok")
+                        message: "Please enter a valid address.",
+                        delegate: nil,
+                        cancelButtonTitle: "Ok")
                     alertView.show()
                     return;
                     
@@ -399,20 +399,20 @@ class ViewController: UIViewController, UISearchBarDelegate, MGLMapViewDelegate,
      */
     @IBAction func showHere(sender: AnyObject) {
         map.userTrackingMode = .Follow
-       
+        
     }
     /**
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 0
-    }
-    
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        return UITableViewCell()
-    }
-    
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        
-    }*/
+     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+     return 0
+     }
+     
+     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+     return UITableViewCell()
+     }
+     
+     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+     
+     }*/
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         switch segue.identifier {
@@ -432,7 +432,7 @@ class ViewController: UIViewController, UISearchBarDelegate, MGLMapViewDelegate,
             popoverViewController.delegate = self
             popoverViewController.modalPresentationStyle = UIModalPresentationStyle.Popover
             popoverViewController.popoverPresentationController!.delegate = self
-            //segue.destinationViewController.popoverPresentationController?.sourceRect = sender!.bounds
+        //segue.destinationViewController.popoverPresentationController?.sourceRect = sender!.bounds
         default:
             break
         }
@@ -446,7 +446,7 @@ class ViewController: UIViewController, UISearchBarDelegate, MGLMapViewDelegate,
     // Action when back button is clicked, reverting app from "routing" to "map" mode
     @IBAction func returnToMapMode(sender: UIBarButtonItem) {
         onShowMapMode()
-
+        
         for i in 0..<self.routingLines.count {
             self.map.removeAnnotation(self.routingLines[i])
         }
@@ -466,7 +466,7 @@ class ViewController: UIViewController, UISearchBarDelegate, MGLMapViewDelegate,
         self.navigationItem.title = "Map"
         hideAndDisableBackButton()
     }
-
+    
     // hide back button in top navbar
     func hideAndDisableBackButton (){
         self.navigationItem.leftBarButtonItem?.enabled = false
@@ -478,7 +478,7 @@ class ViewController: UIViewController, UISearchBarDelegate, MGLMapViewDelegate,
         self.navigationItem.leftBarButtonItem?.enabled = true
         self.navigationItem.leftBarButtonItem?.tintColor = nil
     }
-
+    
     // modify navbar on entering routing mode, showing back button and showing Routing as the title
     func onShowRoutingMode() {
         var nav = self.navigationController?.navigationBar
@@ -490,7 +490,7 @@ class ViewController: UIViewController, UISearchBarDelegate, MGLMapViewDelegate,
         onShowMapMode()
     }
     
-
+    
     /** reverse the text field to shown up on the map
      */
     func reverseTextFieldHideAndShow() {
@@ -508,10 +508,10 @@ class ViewController: UIViewController, UISearchBarDelegate, MGLMapViewDelegate,
      */
     func drawStartEndMarker(startCoordinnates: CLLocationCoordinate2D, endCoordinates:CLLocationCoordinate2D) {
         print("draw start and end markers")
-                for i in 0..<self.startEndMarkers.count {
+        for i in 0..<self.startEndMarkers.count {
             map.removeAnnotation(self.startEndMarkers[i])
         }
-    
+        
         let start = drawMarker(startCoordinnates, title: "")
         let end = drawMarker(endCoordinates, title: "")
         self.startEndMarkers.append(start);
@@ -534,7 +534,7 @@ class ViewController: UIViewController, UISearchBarDelegate, MGLMapViewDelegate,
         return marker
         
     }
-   
+    
     /**draw the routing between the start and end point
      * @param: startCordinates: the start of the route. endCoordinates: the end of the route
      *
@@ -544,7 +544,7 @@ class ViewController: UIViewController, UISearchBarDelegate, MGLMapViewDelegate,
         let apiURL = "http://dssg-db.cloudapp.net/api/routing/route.json?waypoints=[" + String(startCoordinates.latitude) + ",%20" + String(startCoordinates.longitude) + ",%20" + String(endCoordinates.latitude) + ",%20" + String(endCoordinates.longitude) + "]"
         
         let nsURL = NSURL(string: apiURL)
-
+        
         //let sidewalkData = NSData(contentsOfFile: apiPath!)
         let routingData = NSData(contentsOfURL: nsURL!)
         
@@ -552,13 +552,13 @@ class ViewController: UIViewController, UISearchBarDelegate, MGLMapViewDelegate,
         if(routingData == nil) {
             print("error: can't get routing data")
             let alertView = UIAlertView(title: "No Route",
-                message: "No accessible route from start to end location.",
-                delegate: nil,
-                cancelButtonTitle: "Ok")
+                                        message: "No accessible route from start to end location.",
+                                        delegate: nil,
+                                        cancelButtonTitle: "Ok")
             alertView.show()
             return;
         }
-    
+        
         
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), {
             // clean the previous route data drawn on the map
@@ -577,7 +577,7 @@ class ViewController: UIViewController, UISearchBarDelegate, MGLMapViewDelegate,
                             if let route = route as? NSDictionary {
                                 if let geometry = route["geometry"] as? NSDictionary {
                                     // Create an array to hold the formatted coordinates for our line
-
+                                    
                                     if let locations = geometry["coordinates"] as? NSArray {
                                         // Iterate over line coordinates, stored in GeoJSON as many lng, lat arrays
                                         for i in 1..<locations.count {
@@ -600,14 +600,14 @@ class ViewController: UIViewController, UISearchBarDelegate, MGLMapViewDelegate,
                                             self.routingLines.append(line)
                                             line.title = "route"
                                             line.subtitle = "route"
-                                            numFeatures++
+                                            numFeatures += 1
                                             // Add the annotation on the main thread
                                             dispatch_async(dispatch_get_main_queue(), {
                                                 // Unowned reference to self to prevent retain cycle
                                                 [unowned self] in
                                                 self.map.addAnnotation(line)
-                                            })
-
+                                                })
+                                            
                                         }
                                     }
                                 }
@@ -622,7 +622,7 @@ class ViewController: UIViewController, UISearchBarDelegate, MGLMapViewDelegate,
             }
         })
     }
-
+    
     /** draw the curbramps data for the map
      */
     func drawCurbramps() {
@@ -653,7 +653,7 @@ class ViewController: UIViewController, UISearchBarDelegate, MGLMapViewDelegate,
                         for feature in features {
                             if let feature = feature as? NSDictionary {
                                 if let geometry = feature["geometry"] as? NSDictionary {
-
+                                    
                                     
                                     if geometry["type"] as? String == "LineString" {
                                         // Create an array to hold the formatted coordinates for our line
@@ -669,11 +669,11 @@ class ViewController: UIViewController, UISearchBarDelegate, MGLMapViewDelegate,
                                                 coordinates.append(coordinate)
                                             }
                                         }
-                                        numFeatures++
+                                        numFeatures += 1
                                         let line = MGLPolyline(coordinates: &coordinates, count: UInt(coordinates.count))
                                         
                                         line.title = "curbcut"
-
+                                        
                                         self.curbLines.append(line)
                                         
                                         // Add the annotation on the main thread
@@ -681,7 +681,7 @@ class ViewController: UIViewController, UISearchBarDelegate, MGLMapViewDelegate,
                                             // Unowned reference to self to prevent retain cycle
                                             [unowned self] in
                                             self.map.addAnnotation(line)
-                                        })
+                                            })
                                     }
                                 }
                             }
@@ -689,23 +689,23 @@ class ViewController: UIViewController, UISearchBarDelegate, MGLMapViewDelegate,
                     }
                     
                     print("Number of features = " + String(numFeatures))
-
+                    
                 }
             }
             catch
             {
                 print("GeoJSON parsing failed")
             }
-
+            
         })
         
     }
     
-
+    
     // draw bus stop icons at locations retrieved from OBA API
     func drawBusStops() {
         print("Called drawBusStops")
-
+        
         if !showBusStops {
             return
         }
@@ -717,14 +717,14 @@ class ViewController: UIViewController, UISearchBarDelegate, MGLMapViewDelegate,
             let center = self.map.centerCoordinate
             
             let obaURL = "http://api.pugetsound.onebusaway.org/api/where/stops-for-location.json?key=" + OBA_KEY + "&lat=" + String(center.latitude) + "&lon=" + String(center.longitude) + "&latSpan=" + String(abs(bounds.ne.latitude - bounds.sw.latitude)) + "&lonSpan=" + String(abs(bounds.ne.longitude - bounds.sw.longitude))
-
+            
             let nsURL = NSURL(string: obaURL)
             let obaData = NSData(contentsOfURL: nsURL!)
             if(obaData == nil) {
                 print("error: can't get obaData")
                 return;
             }
-
+            
             do {
                 // Load and serialize the GeoJSON into a dictionary filled with properly-typed objects
                 if let jsonDict = try NSJSONSerialization.JSONObjectWithData(obaData!, options: []) as? NSDictionary {
@@ -738,8 +738,8 @@ class ViewController: UIViewController, UISearchBarDelegate, MGLMapViewDelegate,
                             for row in list {
                                 let coordinate = CLLocationCoordinate2DMake(row["lat"]!!.doubleValue, row["lon"]!!.doubleValue)
                                 print("coordinate = " + String(coordinate))
-                                numFeatures++
-
+                                numFeatures += 1
+                                
                                 let point = MGLPointAnnotation()
                                 point.title = "busstop"
                                 point.coordinate = coordinate
@@ -750,10 +750,10 @@ class ViewController: UIViewController, UISearchBarDelegate, MGLMapViewDelegate,
                                     // Unowned reference to self to prevent retain cycle
                                     [unowned self] in
                                     self.map.addAnnotation(point)
-                                })
-                            
+                                    })
+                                
                             }
-
+                            
                         }
                     }
                     print("Number of features = " + String(numFeatures))
@@ -794,7 +794,7 @@ class ViewController: UIViewController, UISearchBarDelegate, MGLMapViewDelegate,
             // Gradations (drawn from https://github.com/AccessMap/AccessMap-webapp/blob/master/static/js/elevation.js)
             let high = 0.0833
             let mid = 0.05
-
+            
             do {
                 // Load and serialize the GeoJSON into a dictionary filled with properly-typed objects
                 if let jsonDict = try NSJSONSerialization.JSONObjectWithData(sidewalkData!, options: []) as? NSDictionary {
@@ -818,7 +818,7 @@ class ViewController: UIViewController, UISearchBarDelegate, MGLMapViewDelegate,
                                                 coordinates.append(coordinate)
                                             }
                                         }
-                                        numFeatures++
+                                        numFeatures += 1
                                         let line = MGLPolyline(coordinates: &coordinates, count: UInt(coordinates.count))
                                         
                                         line.title = "elevation line"
@@ -826,12 +826,10 @@ class ViewController: UIViewController, UISearchBarDelegate, MGLMapViewDelegate,
                                             let grade = properties["grade"] as? Double
                                             if grade >= high {
                                                 line.subtitle = "high"
+                                            } else if grade > mid {
+                                                line.subtitle = "mid"
                                             } else {
-                                                if grade > mid {
-                                                    line.subtitle = "mid"
-                                                } else {
-                                                    line.subtitle = "low"
-                                                }
+                                                line.subtitle = "low"
                                             }
                                         }
                                         self.elevationLines.append(line)
@@ -841,7 +839,7 @@ class ViewController: UIViewController, UISearchBarDelegate, MGLMapViewDelegate,
                                             // Unowned reference to self to prevent retain cycle
                                             [unowned self] in
                                             self.map.addAnnotation(line)
-                                        })
+                                            })
                                     }
                                 }
                             }
@@ -880,7 +878,7 @@ class ViewController: UIViewController, UISearchBarDelegate, MGLMapViewDelegate,
             
             reportMarker = MGLPointAnnotation()
             reportMarker.coordinate = location
-
+            
             map.addAnnotation(reportMarker)
             map.selectAnnotation(reportMarker, animated: true)
             
@@ -910,9 +908,10 @@ class ViewController: UIViewController, UISearchBarDelegate, MGLMapViewDelegate,
     
     // clear elevation data, crossings, and bus stops from map
     func clearAnnotations() {
-        clearElevationLines()
-        clearCurbRamps()
-        clearBusStops()
+        // clearElevationLines()
+        // clearCurbRamps()
+        // clearBusStops()
+        return
     }
     
     // clear elevation annotations stored in elevationLines from map
@@ -946,16 +945,16 @@ class ViewController: UIViewController, UISearchBarDelegate, MGLMapViewDelegate,
     func mapView(mapView: MGLMapView, regionDidChangeAnimated animated: Bool) -> Void {
         print("Region changed")
         print("Zoom level = " + String(mapView.zoomLevel))
-
+        
         if( firstTime ){
             firstTime = false
         }
-
+        
         clearAnnotations()
         if (mapView.zoomLevel >= 14) {
             drawElevationData()
             drawCurbramps()
-
+            
             if (mapView.zoomLevel > 15) {
                 // Draw bus stops only if zoomed in close enough to prevent bus stop icons from cluttering up map
                 drawBusStops()
@@ -971,21 +970,21 @@ class ViewController: UIViewController, UISearchBarDelegate, MGLMapViewDelegate,
     func mapView(mapView: MGLMapView, imageForAnnotation annotation: MGLAnnotation) -> MGLAnnotationImage? {
         if (annotation.title! == "busstop") {
             var annotationImage = mapView.dequeueReusableAnnotationImageWithIdentifier("busStop")
-        
+            
             if annotationImage == nil {
                 // bus stop image
                 var image = UIImage(named: "busstop5.png")!
                 annotationImage = MGLAnnotationImage(image: image, reuseIdentifier: "busStop")
             }
-
+            
             return annotationImage
         } else {
             return nil
         }
-    
+        
     }
     
-
+    
     func mapView(mapView: MGLMapView, lineWidthForPolylineAnnotation annotation: MGLPolyline) -> CGFloat {
         // Set line width for polyline annotations
         if(annotation.title == "curbcut" && annotation is MGLPolyline) {
@@ -995,7 +994,7 @@ class ViewController: UIViewController, UISearchBarDelegate, MGLMapViewDelegate,
         if(annotation.title == "route" && annotation is MGLPolyline) {
             return 4;
         }
-
+        
         return 3.0
     }
     
