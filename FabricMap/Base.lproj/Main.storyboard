@@ -3,6 +3,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+        <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
@@ -160,7 +161,7 @@
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Brief description:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hNT-Gc-IVM">
                                 <rect key="frame" x="-42" y="-21" width="42" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                                 <variation key="heightClass=regular" fixedFrame="YES">
                                     <rect key="frame" x="26" y="14" width="131" height="21"/>
@@ -245,9 +246,6 @@
                                 <rect key="frame" x="-25" y="-30" width="97" height="30"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocorrectionType="no"/>
-                                <variation key="heightClass=regular" misplaced="YES">
-                                    <rect key="frame" x="45" y="94" width="285" height="35"/>
-                                </variation>
                             </textField>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="bezel" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="lc4-WQ-fOt">
                                 <rect key="frame" x="-25" y="-30" width="97" height="30"/>
@@ -278,7 +276,7 @@
                                 <rect key="frame" x="-42" y="-21" width="42" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
-                                <color key="highlightedColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <color key="highlightedColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <variation key="heightClass=regular" fixedFrame="YES">
                                     <rect key="frame" x="28" y="119" width="20" height="21"/>
                                 </variation>
@@ -287,7 +285,7 @@
                                 <rect key="frame" x="-42" y="-21" width="42" height="21"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                                 <variation key="heightClass=regular" fixedFrame="YES">
                                     <rect key="frame" x="45" y="155" width="285" height="30"/>
@@ -335,9 +333,9 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="saa-G8-neb" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="25" id="UMF-gn-JAl"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="saa-G8-neb" secondAttribute="trailing" constant="25" id="Udg-Vz-ggd"/>
+                            <constraint firstItem="saa-G8-neb" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="5" id="IQ9-tV-ALI"/>
                             <constraint firstItem="saa-G8-neb" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="30" id="jRc-v9-i0D"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="saa-G8-neb" secondAttribute="trailing" constant="5" id="xVP-NM-RNx"/>
                         </constraints>
                         <userDefinedRuntimeAttributes>
                             <userDefinedRuntimeAttribute type="number" keyPath="latitude">
@@ -363,9 +361,9 @@
                                 <exclude reference="7T6-g8-4zD"/>
                             </mask>
                             <mask key="constraints">
-                                <exclude reference="UMF-gn-JAl"/>
-                                <exclude reference="Udg-Vz-ggd"/>
+                                <exclude reference="IQ9-tV-ALI"/>
                                 <exclude reference="jRc-v9-i0D"/>
+                                <exclude reference="xVP-NM-RNx"/>
                             </mask>
                         </variation>
                         <variation key="heightClass=regular">
@@ -381,9 +379,9 @@
                                 <include reference="7T6-g8-4zD"/>
                             </mask>
                             <mask key="constraints">
-                                <include reference="UMF-gn-JAl"/>
-                                <include reference="Udg-Vz-ggd"/>
+                                <include reference="IQ9-tV-ALI"/>
                                 <include reference="jRc-v9-i0D"/>
+                                <include reference="xVP-NM-RNx"/>
                             </mask>
                         </variation>
                         <connections>
