@@ -1,11 +1,3 @@
-//
-//  ViewController.swift
-//  FabricMap
-//
-//  Created by Xiaobo Wang on 1/27/16.
-//  Copyright © 2016 Xiaobo Wang. All rights reserved.
-//
-
 import UIKit
 import Mapbox
 // UITableViewDataSource
@@ -388,7 +380,6 @@ class ViewController: UIViewController, UISearchBarDelegate, MGLMapViewDelegate,
                             self.drawRouting(startCoordinates, endCoordinates: endCoordinates)
                         }
                     })
-                    
                 }
             })
         }

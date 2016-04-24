@@ -1,11 +1,3 @@
-//
-//  LegendViewController.swift
-//  FabricMap
-//
-//  Created by studentuser on 3/7/16.
-//  Copyright © 2016 Xiaobo Wang. All rights reserved.
-//
-
 import UIKit
 
 protocol RoutingDelegate: class {

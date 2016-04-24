@@ -1,11 +1,3 @@
-//
-//  AppDelegate.swift
-//  FabricMap
-//
-//  Created by Xiaobo Wang on 1/27/16.
-//  Copyright © 2016 Xiaobo Wang. All rights reserved.
-//
-
 import UIKit
 import Fabric
 import Mapbox

@@ -1,11 +1,3 @@
-//
-//  OptionsViewController.swift
-//  FabricMap
-//
-//  Created by studentuser on 3/8/16.
-//  Copyright © 2016 Xiaobo Wang. All rights reserved.
-//
-
 import UIKit
 // Global variables to maintain the data toggle states between opening and closing
 // options menu

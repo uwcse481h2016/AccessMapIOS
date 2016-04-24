@@ -1,11 +1,3 @@
-//
-//  ReportViewController.swift
-//  FabricMap
-//
-//  Created by studentuser on 3/8/16.
-//  Copyright © 2016 Xiaobo Wang. All rights reserved.
-//
-
 import UIKit
 
 protocol ReportingDelegate: class {
