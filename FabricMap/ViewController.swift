@@ -84,8 +84,44 @@ class ViewController: UIViewController, UISearchBarDelegate, MGLMapViewDelegate,
         //map.addGestureRecognizer(UILongPressGestureRecognizer(target: self,
         //action: "changeStyle:"))
         
-        map.addGestureRecognizer(UITapGestureRecognizer(target: self,
-            action: "startReport:"))
+        map.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(ViewController.startReport(_:))))
+        
+        // delay single tap recognition until it is clearly not a double
+        let singleTap = UITapGestureRecognizer(target: self, action: #selector(ViewController.handleSingleTap(_:)))
+        // singleTap.requireGestureRecognizerToFail(doubleTap)
+        map.addGestureRecognizer(singleTap)
+    }
+    
+    func handleSingleTap(tap: UITapGestureRecognizer) {
+        // convert tap location (CGPoint)
+        // to geographic coordinates (CLLocationCoordinate2D)
+        let location: CLLocationCoordinate2D = map.convertPoint(tap.locationInView(map), toCoordinateFromView: map)
+        print("You tapped at: \(location.latitude), \(location.longitude)")
+        
+        let locManager = CLLocationManager()
+        locManager.requestWhenInUseAuthorization()
+        
+        if( CLLocationManager.authorizationStatus() == CLAuthorizationStatus.AuthorizedWhenInUse ||
+            CLLocationManager.authorizationStatus() == CLAuthorizationStatus.Authorized){
+            let currentLocation = locManager.location
+            print("current location")
+            print(currentLocation!.coordinate.longitude)
+            print(currentLocation!.coordinate.latitude)
+            self.currentCoordinates = currentLocation!.coordinate
+        
+            drawRouting (self.currentCoordinates, endCoordinates: location)
+        } else {
+            print("Location Service Unavaliable...")
+        }
+        // create an array of coordinates for our polyline
+        // var coordinates: [CLLocationCoordinate2D] = [map.centerCoordinate, location]
+        
+        // remove existing polyline from the map, (re)add polyline with coordinates
+        // if (map.annotations?.count != nil) {
+        //    map.removeAnnotations(map.annotations!)
+        // }
+        // let polyline = MGLPolyline(coordinates: &coordinates, count: UInt(coordinates.count))
+        // map.addAnnotation(polyline)
     }
     
     func styleTextFields() {
@@ -598,7 +634,6 @@ class ViewController: UIViewController, UISearchBarDelegate, MGLMapViewDelegate,
                                                 [unowned self] in
                                                 self.map.addAnnotation(line)
                                                 })
-                                            
                                         }
                                     }
                                 }
@@ -861,7 +896,7 @@ class ViewController: UIViewController, UISearchBarDelegate, MGLMapViewDelegate,
         reportInstructionLabel.hidden = true
         print("Entered startReport()")
         if sender.state == .Ended {
-            var location1 = sender.locationInView(map)
+            let location1 = sender.locationInView(map)
             print("location in View = " + String(location1))
             // handling code
             let location: CLLocationCoordinate2D = map.convertPoint(sender.locationInView(map), toCoordinateFromView: map)

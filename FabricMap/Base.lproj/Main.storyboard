@@ -483,7 +483,7 @@
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="pcr-4l-SWu">
                                 <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
                                 <variation key="heightClass=regular" fixedFrame="YES">
-                                    <rect key="frame" x="-81" y="153" width="681" height="656"/>
+                                    <rect key="frame" x="-81" y="144" width="681" height="656"/>
                                 </variation>
                             </imageView>
                         </subviews>
@@ -504,7 +504,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8I7-Cw-DC1" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="462" y="1268"/>
+            <point key="canvasLocation" x="462" y="1267.5"/>
         </scene>
         <!--Routing View Controller-->
         <scene sceneID="jex-Ru-Zwg">
