@@ -109,19 +109,11 @@ class ViewController: UIViewController, UISearchBarDelegate, MGLMapViewDelegate,
             print(currentLocation!.coordinate.latitude)
             self.currentCoordinates = currentLocation!.coordinate
         
+            drawStartEndMarker(self.currentCoordinates, endCoordinates: location)
             drawRouting (self.currentCoordinates, endCoordinates: location)
         } else {
             print("Location Service Unavaliable...")
         }
-        // create an array of coordinates for our polyline
-        // var coordinates: [CLLocationCoordinate2D] = [map.centerCoordinate, location]
-        
-        // remove existing polyline from the map, (re)add polyline with coordinates
-        // if (map.annotations?.count != nil) {
-        //    map.removeAnnotations(map.annotations!)
-        // }
-        // let polyline = MGLPolyline(coordinates: &coordinates, count: UInt(coordinates.count))
-        // map.addAnnotation(polyline)
     }
     
     func styleTextFields() {
