@@ -246,6 +246,9 @@
                                 <rect key="frame" x="-25" y="-30" width="97" height="30"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocorrectionType="no"/>
+                                <connections>
+                                    <segue destination="rZ5-Dx-AE7" kind="show" id="mFd-Pg-JDr"/>
+                                </connections>
                             </textField>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="bezel" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="lc4-WQ-fOt">
                                 <rect key="frame" x="-25" y="-30" width="97" height="30"/>
@@ -572,6 +575,106 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="lyY-Gx-Ekj" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="774" y="597"/>
+        </scene>
+        <!--Search Result-->
+        <scene sceneID="9jl-17-sIF">
+            <objects>
+                <viewController title="Search Result" id="rZ5-Dx-AE7" customClass="SearchViewController" customModule="FabricMap" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="vJL-mA-abj"/>
+                        <viewControllerLayoutGuide type="bottom" id="q43-aO-GKZ"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="DHV-AF-4ou">
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="BXD-aV-FRk">
+                                <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <connections>
+                                    <outlet property="dataSource" destination="rZ5-Dx-AE7" id="8Vq-Px-dfb"/>
+                                </connections>
+                            </tableView>
+                            <stackView opaque="NO" contentMode="scaleToFill" spacing="6" translatesAutoresizingMaskIntoConstraints="NO" id="TJX-8J-eP8">
+                                <rect key="frame" x="1" y="51" width="369" height="71"/>
+                                <subviews>
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="yc7-zB-dtA">
+                                        <rect key="frame" x="20" y="21" width="254" height="30"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                        <variation key="heightClass=regular" misplaced="YES">
+                                            <rect key="frame" x="0.0" y="0.0" width="287" height="30"/>
+                                        </variation>
+                                    </textField>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BZh-6i-uje">
+                                        <rect key="frame" x="301" y="20" width="48" height="30"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="48" id="4DX-11-l25"/>
+                                        </constraints>
+                                        <state key="normal" title="Search"/>
+                                        <variation key="default">
+                                            <mask key="constraints">
+                                                <exclude reference="4DX-11-l25"/>
+                                            </mask>
+                                        </variation>
+                                        <variation key="heightClass=regular">
+                                            <mask key="constraints">
+                                                <include reference="4DX-11-l25"/>
+                                            </mask>
+                                        </variation>
+                                        <connections>
+                                            <action selector="searchOnClick:" destination="rZ5-Dx-AE7" eventType="touchUpInside" id="ipd-fT-5ir"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                            </stackView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="BXD-aV-FRk" secondAttribute="trailing" id="2II-Nn-ThK"/>
+                            <constraint firstItem="TJX-8J-eP8" firstAttribute="top" secondItem="vJL-mA-abj" secondAttribute="bottom" constant="8" symbolic="YES" id="7Xa-Ft-SN7"/>
+                            <constraint firstItem="TJX-8J-eP8" firstAttribute="centerX" secondItem="BXD-aV-FRk" secondAttribute="centerX" id="BYq-Ee-tdq"/>
+                            <constraint firstItem="TJX-8J-eP8" firstAttribute="leading" secondItem="DHV-AF-4ou" secondAttribute="leadingMargin" constant="1" id="DoD-ot-ePS"/>
+                            <constraint firstItem="BXD-aV-FRk" firstAttribute="bottom" secondItem="q43-aO-GKZ" secondAttribute="top" id="HBp-TX-rbq"/>
+                            <constraint firstItem="BXD-aV-FRk" firstAttribute="leading" secondItem="DHV-AF-4ou" secondAttribute="leading" id="PPZ-gM-FFZ"/>
+                            <constraint firstItem="BXD-aV-FRk" firstAttribute="top" secondItem="TJX-8J-eP8" secondAttribute="bottom" constant="14" id="kvP-Xl-6Lr"/>
+                        </constraints>
+                        <variation key="default">
+                            <mask key="subviews">
+                                <exclude reference="BXD-aV-FRk"/>
+                            </mask>
+                            <mask key="constraints">
+                                <exclude reference="7Xa-Ft-SN7"/>
+                                <exclude reference="BYq-Ee-tdq"/>
+                                <exclude reference="DoD-ot-ePS"/>
+                                <exclude reference="2II-Nn-ThK"/>
+                                <exclude reference="HBp-TX-rbq"/>
+                                <exclude reference="PPZ-gM-FFZ"/>
+                                <exclude reference="kvP-Xl-6Lr"/>
+                            </mask>
+                        </variation>
+                        <variation key="heightClass=regular">
+                            <mask key="subviews">
+                                <include reference="BXD-aV-FRk"/>
+                            </mask>
+                            <mask key="constraints">
+                                <include reference="7Xa-Ft-SN7"/>
+                                <include reference="BYq-Ee-tdq"/>
+                                <include reference="DoD-ot-ePS"/>
+                                <include reference="2II-Nn-ThK"/>
+                                <include reference="HBp-TX-rbq"/>
+                                <include reference="PPZ-gM-FFZ"/>
+                                <include reference="kvP-Xl-6Lr"/>
+                            </mask>
+                        </variation>
+                    </view>
+                    <connections>
+                        <outlet property="resultTable" destination="BXD-aV-FRk" id="JSY-xj-t26"/>
+                        <outlet property="searchLocation" destination="yc7-zB-dtA" id="WL6-CL-Vb5"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="YwA-JR-J2o" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1201.5" y="640.875"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="AyI-tT-t4k">
