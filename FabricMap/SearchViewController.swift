@@ -33,16 +33,60 @@ class SearchViewController: UIViewController, UITableViewDataSource {
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = UITableViewCell()
+        // Use custom defined cell instead of default cell
+        print("mark1")
+        // let cellIdentifier = "LocationResultCell"
+        // let cell = LocationResultCell()
+        let cell = resultTable.dequeueReusableCellWithIdentifier("LocationResultCell", forIndexPath: indexPath) as! LocationResultCell
+        print("mark2")
         
-        if (globalPlaceMarks == nil) {
-            cell.textLabel?.text = "No Result"
-        } else {
-            // cell.textLabel?.text = "One of the Result"
+        if (globalPlaceMarks != nil) {
             if (!(globalPlaceMarks?.isEmpty)!) {
-                let one_psmk = globalPlaceMarks?.popLast()
-                cell.textLabel?.text = "\((one_psmk?.name)!), ZIP\((one_psmk?.postalCode)!)"
-                print("\((one_psmk?.name)!), ZIP\((one_psmk?.postalCode)!)")            }
+                // Get data to display
+                let one_psmk = globalPlaceMarks![indexPath.row]
+                let addName = one_psmk.name
+                var addAdm = ""
+                var addCon = ""
+                
+                if let unwarp2 = one_psmk.locality {
+                    addAdm += unwarp2
+                } else {
+                    addAdm += "(Unamed City)"
+                }
+                
+                if let unwarp3 = one_psmk.administrativeArea {
+                    addAdm += ", "
+                    addAdm += unwarp3
+                } else {
+                    addAdm += ", "
+                    addAdm += "(Unamed Adm. Area)"
+                }
+                
+                if let unwarp4 = one_psmk.postalCode {
+                    addAdm += ", "
+                    addAdm += unwarp4
+                } else {
+                    addAdm += ", "
+                    addAdm += "(No Zip Code)"
+                }
+                
+                if let unwarp5 = one_psmk.country {
+                    addCon += unwarp5
+                } else {
+                    addCon += "(Unamed Country)"
+                }
+                // cell.textLabel?.text = "\((one_psmk?.name)!), ZIP\((one_psmk?.postalCode)!)"
+                // print("\((one_psmk?.name)!), ZIP\((one_psmk?.postalCode)!)")
+                
+                // Load data into cell
+                cell.addressName.text = addName
+                cell.addressAdministrative.text = addAdm
+                cell.addressCountry.text = addCon
+            }
+        } else {
+            cell.addressName.text = "(Unknown Name)"
+            cell.addressAdministrative.text = "(Unamed City), (Unamed Adm. Area), (No Zip Code)"
+            cell.addressCountry.text = "(Unamed Country)"
         }
         
         return cell

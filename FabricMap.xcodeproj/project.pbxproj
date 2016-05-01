@@ -25,6 +25,7 @@
 		558AC96A1C59FBC2001A7ACD /* FabricMapTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 558AC9691C59FBC2001A7ACD /* FabricMapTests.swift */; };
 		558AC9751C59FBC2001A7ACD /* FabricMapUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 558AC9741C59FBC2001A7ACD /* FabricMapUITests.swift */; };
 		89C4CEFB1CD5825A009CB3B9 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89C4CEFA1CD5825A009CB3B9 /* SearchViewController.swift */; };
+		89C4CEFD1CD5E881009CB3B9 /* LocationResultCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89C4CEFC1CD5E881009CB3B9 /* LocationResultCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -69,6 +70,7 @@
 		558AC9741C59FBC2001A7ACD /* FabricMapUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FabricMapUITests.swift; sourceTree = "<group>"; };
 		558AC9761C59FBC2001A7ACD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		89C4CEFA1CD5825A009CB3B9 /* SearchViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
+		89C4CEFC1CD5E881009CB3B9 /* LocationResultCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LocationResultCell.swift; path = LocationSearch/LocationResultCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -131,6 +133,7 @@
 				495C095A1C8F165F00954F31 /* ReportViewController.swift */,
 				89C4CEFA1CD5825A009CB3B9 /* SearchViewController.swift */,
 				558AC9581C59FBC2001A7ACD /* Main.storyboard */,
+				89C4CEFC1CD5E881009CB3B9 /* LocationResultCell.swift */,
 				558AC95B1C59FBC2001A7ACD /* Assets.xcassets */,
 				558AC95D1C59FBC2001A7ACD /* LaunchScreen.storyboard */,
 				558AC9601C59FBC2001A7ACD /* Info.plist */,
@@ -318,6 +321,7 @@
 				558AC9571C59FBC2001A7ACD /* ViewController.swift in Sources */,
 				495C09591C8EDCA200954F31 /* OptionsViewController.swift in Sources */,
 				495C09571C8EA94500954F31 /* RoutingViewController.swift in Sources */,
+				89C4CEFD1CD5E881009CB3B9 /* LocationResultCell.swift in Sources */,
 				495C095B1C8F165F00954F31 /* ReportViewController.swift in Sources */,
 				558AC9551C59FBC2001A7ACD /* AppDelegate.swift in Sources */,
 			);
