@@ -246,8 +246,11 @@
                                 <rect key="frame" x="-25" y="-30" width="97" height="30"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocorrectionType="no"/>
+                                <variation key="heightClass=regular" misplaced="YES">
+                                    <rect key="frame" x="21" y="94" width="333" height="27"/>
+                                </variation>
                                 <connections>
-                                    <segue destination="rZ5-Dx-AE7" kind="show" id="mFd-Pg-JDr"/>
+                                    <segue destination="rZ5-Dx-AE7" kind="show" identifier="searchResultSegue" id="mFd-Pg-JDr"/>
                                 </connections>
                             </textField>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="bezel" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="lc4-WQ-fOt">
@@ -468,7 +471,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Oce-Yg-s8c" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="482" y="682"/>
+            <point key="canvasLocation" x="414" y="576"/>
         </scene>
         <!--View Controller-->
         <scene sceneID="5B6-eQ-FTI">
@@ -574,7 +577,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="lyY-Gx-Ekj" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="774" y="597"/>
+            <point key="canvasLocation" x="677" y="512.25"/>
         </scene>
         <!--Search Result-->
         <scene sceneID="9jl-17-sIF">
@@ -596,12 +599,13 @@
                                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="rbI-B6-0xL" id="1rE-Zc-DmQ">
+                                            <rect key="frame" x="0.0" y="0.0" width="240" height="89"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rml-5I-vjC">
                                                     <rect key="frame" x="-42" y="-21" width="42" height="21"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                     <variation key="heightClass=regular" fixedFrame="YES">
                                                         <rect key="frame" x="8" y="34" width="359" height="21"/>
@@ -610,7 +614,7 @@
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pRJ-bf-fcy">
                                                     <rect key="frame" x="-42" y="-21" width="42" height="21"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                     <variation key="heightClass=regular" fixedFrame="YES">
                                                         <rect key="frame" x="8" y="60" width="359" height="21"/>
@@ -619,7 +623,7 @@
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aBD-uQ-kNR">
                                                     <rect key="frame" x="-42" y="-21" width="42" height="21"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                     <variation key="heightClass=regular" fixedFrame="YES">
                                                         <rect key="frame" x="8" y="8" width="359" height="21"/>
@@ -655,12 +659,15 @@
                             <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" spacing="6" translatesAutoresizingMaskIntoConstraints="NO" id="TJX-8J-eP8">
                                 <rect key="frame" x="1" y="51" width="79" height="30"/>
                                 <subviews>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="yc7-zB-dtA">
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="yc7-zB-dtA">
                                         <rect key="frame" x="0.0" y="0.0" width="25" height="30"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits"/>
+                                        <connections>
+                                            <outlet property="delegate" destination="rZ5-Dx-AE7" id="r9k-CL-YWU"/>
+                                        </connections>
                                     </textField>
-                                    <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BZh-6i-uje">
+                                    <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BZh-6i-uje">
                                         <rect key="frame" x="31" y="0.0" width="48" height="30"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="48" id="4DX-11-l25"/>
@@ -698,13 +705,13 @@
                                 <exclude reference="BXD-aV-FRk"/>
                             </mask>
                             <mask key="constraints">
-                                <exclude reference="7Xa-Ft-SN7"/>
-                                <exclude reference="BYq-Ee-tdq"/>
-                                <exclude reference="DoD-ot-ePS"/>
                                 <exclude reference="2II-Nn-ThK"/>
                                 <exclude reference="HBp-TX-rbq"/>
                                 <exclude reference="PPZ-gM-FFZ"/>
                                 <exclude reference="kvP-Xl-6Lr"/>
+                                <exclude reference="7Xa-Ft-SN7"/>
+                                <exclude reference="BYq-Ee-tdq"/>
+                                <exclude reference="DoD-ot-ePS"/>
                             </mask>
                         </variation>
                         <variation key="heightClass=regular">
@@ -712,13 +719,13 @@
                                 <include reference="BXD-aV-FRk"/>
                             </mask>
                             <mask key="constraints">
-                                <include reference="7Xa-Ft-SN7"/>
-                                <include reference="BYq-Ee-tdq"/>
-                                <include reference="DoD-ot-ePS"/>
                                 <include reference="2II-Nn-ThK"/>
                                 <include reference="HBp-TX-rbq"/>
                                 <include reference="PPZ-gM-FFZ"/>
                                 <include reference="kvP-Xl-6Lr"/>
+                                <include reference="7Xa-Ft-SN7"/>
+                                <include reference="BYq-Ee-tdq"/>
+                                <include reference="DoD-ot-ePS"/>
                             </mask>
                         </variation>
                     </view>
@@ -729,7 +736,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="YwA-JR-J2o" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1201.5" y="640.875"/>
+            <point key="canvasLocation" x="1027.5" y="662.625"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="AyI-tT-t4k">

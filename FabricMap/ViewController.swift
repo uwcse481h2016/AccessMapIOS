@@ -116,6 +116,7 @@ class ViewController: UIViewController, UISearchBarDelegate, MGLMapViewDelegate,
         }
     }
     
+    
     func styleTextFields() {
         inputAddressTextField.borderStyle = UITextBorderStyle.RoundedRect
         startAddressTextField.borderStyle = UITextBorderStyle.RoundedRect
@@ -435,8 +436,13 @@ class ViewController: UIViewController, UISearchBarDelegate, MGLMapViewDelegate,
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         switch segue.identifier {
+        case "searchResultSegue"?:
+            let nextView = segue.destinationViewController as! SearchViewController
+            let textField = sender as! UITextField
+            // nextView.searchLocation.text = textField.text
+            nextView.getResult(textField.text!)
         case "legendSegue"?:
-            let popoverViewController = segue.destinationViewController as! UIViewController
+            let popoverViewController = segue.destinationViewController 
             popoverViewController.modalPresentationStyle = UIModalPresentationStyle.Popover
             popoverViewController.popoverPresentationController!.delegate = self
             segue.destinationViewController.popoverPresentationController?.sourceRect = sender!.bounds
