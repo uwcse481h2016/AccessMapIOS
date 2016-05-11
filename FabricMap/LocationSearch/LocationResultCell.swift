@@ -1,4 +1,5 @@
 import UIKit
+import Mapbox
 
 class LocationResultCell: UITableViewCell {
 
@@ -8,6 +9,8 @@ class LocationResultCell: UITableViewCell {
     @IBOutlet weak var addressAdministrative: UILabel!
     
     @IBOutlet weak var addressCountry: UILabel!
+    
+    var PlaceMark : CLPlacemark?
     
     override func awakeFromNib() {
         super.awakeFromNib()

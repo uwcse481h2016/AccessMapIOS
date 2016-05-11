@@ -1,7 +1,7 @@
 import UIKit
 import Mapbox
 
-class SearchViewController: UIViewController, UITableViewDataSource, UITextFieldDelegate {
+class SearchViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate {
     
     let geocoder = CLGeocoder()
     
@@ -78,6 +78,7 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITextField
                 cell.addressName.text = addName
                 cell.addressAdministrative.text = addAdm
                 cell.addressCountry.text = addCon
+                cell.PlaceMark = one_psmk
             }
         } else {
             // What to do when no place searched
@@ -125,6 +126,28 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITextField
         })
         
         return true
+    }
+    
+    // TODO: Figure out how to take actions after a cell in table view is selected
+    func tableView(tableView: UITableView, didDeselectRowAtIndexPath indexPath: NSIndexPath) {
+        tableView.deselectRowAtIndexPath(indexPath, animated: true)
+        
+        let row = indexPath.row
+        print("Row: \(row)")
+        
+        performSegueWithIdentifier("resultSelectedSegue", sender: indexPath)
+    }
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if  segue.identifier == "resultSelectedSegue",
+            let destination = segue.destinationViewController as? ViewController
+        {
+            let cell = sender as! LocationResultCell
+            let placeMark = cell.PlaceMark!
+            print("Cell: \(placeMark)")
+            // destination.inputAddressTextField.text = placeMark.name
+            destination.getBackFromSearch(placeMark)
+        }
     }
 
 }

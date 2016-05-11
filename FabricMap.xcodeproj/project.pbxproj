@@ -7,25 +7,22 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		495C09551C87CFFE00954F31 /* busstop5.png in Resources */ = {isa = PBXBuildFile; fileRef = 495C09541C87CFFE00954F31 /* busstop5.png */; };
 		495C09571C8EA94500954F31 /* RoutingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 495C09561C8EA94500954F31 /* RoutingViewController.swift */; };
 		495C09591C8EDCA200954F31 /* OptionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 495C09581C8EDCA200954F31 /* OptionsViewController.swift */; };
 		495C095B1C8F165F00954F31 /* ReportViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 495C095A1C8F165F00954F31 /* ReportViewController.swift */; };
-		49807D871C7591E800A321D6 /* Legend-01.png in Resources */ = {isa = PBXBuildFile; fileRef = 49807D861C7591E800A321D6 /* Legend-01.png */; };
 		551B6B541C59FD7D000DCDFE /* Fabric.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 551B6B501C59FD7D000DCDFE /* Fabric.framework */; };
 		551B6B551C59FD7D000DCDFE /* Mapbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 551B6B511C59FD7D000DCDFE /* Mapbox.framework */; };
 		551B6B561C59FD7D000DCDFE /* Mapbox.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 551B6B521C59FD7D000DCDFE /* Mapbox.bundle */; };
 		551B6B571C59FD7D000DCDFE /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 551B6B531C59FD7D000DCDFE /* Settings.bundle */; };
-		553414A71C72400A0051C0F7 /* Bluedot.png in Resources */ = {isa = PBXBuildFile; fileRef = 553414A61C72400A0051C0F7 /* Bluedot.png */; };
 		558AC9551C59FBC2001A7ACD /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 558AC9541C59FBC2001A7ACD /* AppDelegate.swift */; };
 		558AC9571C59FBC2001A7ACD /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 558AC9561C59FBC2001A7ACD /* ViewController.swift */; };
 		558AC95A1C59FBC2001A7ACD /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 558AC9581C59FBC2001A7ACD /* Main.storyboard */; };
-		558AC95C1C59FBC2001A7ACD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 558AC95B1C59FBC2001A7ACD /* Assets.xcassets */; };
 		558AC95F1C59FBC2001A7ACD /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 558AC95D1C59FBC2001A7ACD /* LaunchScreen.storyboard */; };
 		558AC96A1C59FBC2001A7ACD /* FabricMapTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 558AC9691C59FBC2001A7ACD /* FabricMapTests.swift */; };
 		558AC9751C59FBC2001A7ACD /* FabricMapUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 558AC9741C59FBC2001A7ACD /* FabricMapUITests.swift */; };
 		89C4CEFB1CD5825A009CB3B9 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89C4CEFA1CD5825A009CB3B9 /* SearchViewController.swift */; };
 		89C4CEFD1CD5E881009CB3B9 /* LocationResultCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89C4CEFC1CD5E881009CB3B9 /* LocationResultCell.swift */; };
+		89EABF4B1CE2F4E3001B0224 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 558AC95B1C59FBC2001A7ACD /* Assets.xcassets */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -46,16 +43,13 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		495C09541C87CFFE00954F31 /* busstop5.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = busstop5.png; sourceTree = "<group>"; };
 		495C09561C8EA94500954F31 /* RoutingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RoutingViewController.swift; sourceTree = "<group>"; };
 		495C09581C8EDCA200954F31 /* OptionsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OptionsViewController.swift; sourceTree = "<group>"; };
 		495C095A1C8F165F00954F31 /* ReportViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReportViewController.swift; sourceTree = "<group>"; };
-		49807D861C7591E800A321D6 /* Legend-01.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Legend-01.png"; sourceTree = "<group>"; };
 		551B6B501C59FD7D000DCDFE /* Fabric.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Fabric.framework; sourceTree = SOURCE_ROOT; };
 		551B6B511C59FD7D000DCDFE /* Mapbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Mapbox.framework; sourceTree = SOURCE_ROOT; };
 		551B6B521C59FD7D000DCDFE /* Mapbox.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = Mapbox.bundle; path = Mapbox.framework/Mapbox.bundle; sourceTree = SOURCE_ROOT; };
 		551B6B531C59FD7D000DCDFE /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = Settings.bundle; path = Mapbox.framework/Settings.bundle; sourceTree = SOURCE_ROOT; };
-		553414A61C72400A0051C0F7 /* Bluedot.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Bluedot.png; sourceTree = "<group>"; };
 		558AC9511C59FBC2001A7ACD /* FabricMap.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FabricMap.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		558AC9541C59FBC2001A7ACD /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		558AC9561C59FBC2001A7ACD /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -103,7 +97,6 @@
 		558AC9481C59FBC2001A7ACD = {
 			isa = PBXGroup;
 			children = (
-				553414A61C72400A0051C0F7 /* Bluedot.png */,
 				558AC9531C59FBC2001A7ACD /* FabricMap */,
 				558AC9681C59FBC2001A7ACD /* FabricMapTests */,
 				558AC9731C59FBC2001A7ACD /* FabricMapUITests */,
@@ -124,15 +117,9 @@
 		558AC9531C59FBC2001A7ACD /* FabricMap */ = {
 			isa = PBXGroup;
 			children = (
-				495C09541C87CFFE00954F31 /* busstop5.png */,
-				49807D861C7591E800A321D6 /* Legend-01.png */,
+				89EABF481CE2EA5A001B0224 /* MainScene */,
+				89EABF471CE2E9C6001B0224 /* GeocoderSearchScene */,
 				558AC9541C59FBC2001A7ACD /* AppDelegate.swift */,
-				558AC9561C59FBC2001A7ACD /* ViewController.swift */,
-				495C09561C8EA94500954F31 /* RoutingViewController.swift */,
-				495C095A1C8F165F00954F31 /* ReportViewController.swift */,
-				495C09581C8EDCA200954F31 /* OptionsViewController.swift */,
-				89C4CEFA1CD5825A009CB3B9 /* SearchViewController.swift */,
-				89C4CEFC1CD5E881009CB3B9 /* LocationResultCell.swift */,
 				558AC9581C59FBC2001A7ACD /* Main.storyboard */,
 				558AC95B1C59FBC2001A7ACD /* Assets.xcassets */,
 				558AC95D1C59FBC2001A7ACD /* LaunchScreen.storyboard */,
@@ -161,6 +148,26 @@
 				558AC9761C59FBC2001A7ACD /* Info.plist */,
 			);
 			path = FabricMapUITests;
+			sourceTree = "<group>";
+		};
+		89EABF471CE2E9C6001B0224 /* GeocoderSearchScene */ = {
+			isa = PBXGroup;
+			children = (
+				89C4CEFA1CD5825A009CB3B9 /* SearchViewController.swift */,
+				89C4CEFC1CD5E881009CB3B9 /* LocationResultCell.swift */,
+			);
+			name = GeocoderSearchScene;
+			sourceTree = "<group>";
+		};
+		89EABF481CE2EA5A001B0224 /* MainScene */ = {
+			isa = PBXGroup;
+			children = (
+				558AC9561C59FBC2001A7ACD /* ViewController.swift */,
+				495C09561C8EA94500954F31 /* RoutingViewController.swift */,
+				495C095A1C8F165F00954F31 /* ReportViewController.swift */,
+				495C09581C8EDCA200954F31 /* OptionsViewController.swift */,
+			);
+			name = MainScene;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -269,14 +276,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				553414A71C72400A0051C0F7 /* Bluedot.png in Resources */,
-				495C09551C87CFFE00954F31 /* busstop5.png in Resources */,
 				551B6B561C59FD7D000DCDFE /* Mapbox.bundle in Resources */,
 				558AC95F1C59FBC2001A7ACD /* LaunchScreen.storyboard in Resources */,
 				551B6B571C59FD7D000DCDFE /* Settings.bundle in Resources */,
-				49807D871C7591E800A321D6 /* Legend-01.png in Resources */,
-				558AC95C1C59FBC2001A7ACD /* Assets.xcassets in Resources */,
 				558AC95A1C59FBC2001A7ACD /* Main.storyboard in Resources */,
+				89EABF4B1CE2F4E3001B0224 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

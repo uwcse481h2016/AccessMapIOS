@@ -25,13 +25,13 @@
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                                 <variation key="heightClass=regular" fixedFrame="YES">
-                                    <rect key="frame" x="90" y="30" width="120" height="21"/>
+                                    <rect key="frame" x="90" y="20" width="120" height="21"/>
                                 </variation>
                             </label>
                             <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="0U8-7d-1zv">
                                 <rect key="frame" x="-25" y="-15" width="51" height="31"/>
                                 <variation key="heightClass=regular" fixedFrame="YES">
-                                    <rect key="frame" x="50" y="67" width="52" height="32"/>
+                                    <rect key="frame" x="59" y="49" width="52" height="32"/>
                                 </variation>
                                 <connections>
                                     <action selector="sendToggleCurbRampsAction:" destination="vt7-05-Vng" eventType="valueChanged" id="UeX-Xm-Bw7"/>
@@ -40,7 +40,7 @@
                             <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="j58-uW-Uk7">
                                 <rect key="frame" x="-25" y="-15" width="51" height="31"/>
                                 <variation key="heightClass=regular" fixedFrame="YES">
-                                    <rect key="frame" x="50" y="115" width="52" height="32"/>
+                                    <rect key="frame" x="59" y="97" width="52" height="32"/>
                                 </variation>
                                 <connections>
                                     <action selector="sendToggleElevationData:" destination="vt7-05-Vng" eventType="valueChanged" id="rMY-nN-XpZ"/>
@@ -49,7 +49,7 @@
                             <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Twz-du-0Id">
                                 <rect key="frame" x="-25" y="-15" width="51" height="31"/>
                                 <variation key="heightClass=regular" fixedFrame="YES">
-                                    <rect key="frame" x="50" y="167" width="52" height="32"/>
+                                    <rect key="frame" x="59" y="149" width="52" height="32"/>
                                 </variation>
                                 <connections>
                                     <action selector="sendToggleBusStops:" destination="vt7-05-Vng" eventType="valueChanged" id="jJe-oh-EwG"/>
@@ -61,7 +61,7 @@
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                                 <variation key="heightClass=regular" fixedFrame="YES">
-                                    <rect key="frame" x="130" y="72" width="90" height="21"/>
+                                    <rect key="frame" x="139" y="54" width="90" height="21"/>
                                 </variation>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sidewalk elevation" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9ah-d8-JOl">
@@ -70,7 +70,7 @@
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                                 <variation key="heightClass=regular" fixedFrame="YES">
-                                    <rect key="frame" x="130" y="120" width="141" height="21"/>
+                                    <rect key="frame" x="139" y="102" width="141" height="21"/>
                                 </variation>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Bus stops" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MIp-7M-ULX">
@@ -79,7 +79,7 @@
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                                 <variation key="heightClass=regular" fixedFrame="YES">
-                                    <rect key="frame" x="130" y="172" width="76" height="21"/>
+                                    <rect key="frame" x="139" y="154" width="76" height="21"/>
                                 </variation>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wVn-RH-ZPX">
@@ -87,7 +87,7 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <state key="normal" title="Report"/>
                                 <variation key="heightClass=regular" fixedFrame="YES">
-                                    <rect key="frame" x="75" y="214" width="150" height="34"/>
+                                    <rect key="frame" x="75" y="183" width="150" height="34"/>
                                 </variation>
                                 <connections>
                                     <action selector="sendReportMode:" destination="vt7-05-Vng" eventType="touchUpInside" id="kNf-ZN-PQ9"/>
@@ -98,7 +98,14 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <state key="normal" title="Login"/>
                                 <variation key="heightClass=regular" fixedFrame="YES">
-                                    <rect key="frame" x="75" y="256" width="150" height="30"/>
+                                    <rect key="frame" x="75" y="218" width="150" height="30"/>
+                                </variation>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Swr-Tn-5Ye">
+                                <rect key="frame" x="-23" y="-15" width="46" height="30"/>
+                                <state key="normal" title="Help"/>
+                                <variation key="heightClass=regular" fixedFrame="YES">
+                                    <rect key="frame" x="134" y="256" width="32" height="30"/>
                                 </variation>
                             </button>
                         </subviews>
@@ -114,6 +121,7 @@
                                 <exclude reference="MIp-7M-ULX"/>
                                 <exclude reference="wVn-RH-ZPX"/>
                                 <exclude reference="H0f-oL-XBF"/>
+                                <exclude reference="Swr-Tn-5Ye"/>
                             </mask>
                         </variation>
                         <variation key="heightClass=regular">
@@ -127,6 +135,7 @@
                                 <include reference="MIp-7M-ULX"/>
                                 <include reference="wVn-RH-ZPX"/>
                                 <include reference="H0f-oL-XBF"/>
+                                <include reference="Swr-Tn-5Ye"/>
                             </mask>
                         </variation>
                     </view>
@@ -246,9 +255,6 @@
                                 <rect key="frame" x="-25" y="-30" width="97" height="30"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocorrectionType="no"/>
-                                <variation key="heightClass=regular" misplaced="YES">
-                                    <rect key="frame" x="21" y="94" width="333" height="27"/>
-                                </variation>
                                 <connections>
                                     <segue destination="rZ5-Dx-AE7" kind="show" identifier="searchResultSegue" id="mFd-Pg-JDr"/>
                                 </connections>
@@ -445,7 +451,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="250" height="300"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" image="Legend-01.png" translatesAutoresizingMaskIntoConstraints="NO" id="3GI-Io-XYZ">
+                            <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" image="Legend_View" translatesAutoresizingMaskIntoConstraints="NO" id="3GI-Io-XYZ">
                                 <rect key="frame" x="0.0" y="-961" width="831" height="961"/>
                                 <variation key="heightClass=regular" fixedFrame="YES">
                                     <rect key="frame" x="0.0" y="0.0" width="250" height="300"/>
@@ -472,44 +478,6 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Oce-Yg-s8c" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="414" y="576"/>
-        </scene>
-        <!--View Controller-->
-        <scene sceneID="5B6-eQ-FTI">
-            <objects>
-                <viewController id="SkO-5x-vpC" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="uE0-JU-tD9"/>
-                        <viewControllerLayoutGuide type="bottom" id="c5v-bU-oo0"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="EYL-3V-JP5">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="800"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="pcr-4l-SWu">
-                                <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
-                                <variation key="heightClass=regular" fixedFrame="YES">
-                                    <rect key="frame" x="-81" y="144" width="681" height="656"/>
-                                </variation>
-                            </imageView>
-                        </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <variation key="default">
-                            <mask key="subviews">
-                                <exclude reference="pcr-4l-SWu"/>
-                            </mask>
-                        </variation>
-                        <variation key="heightClass=regular">
-                            <mask key="subviews">
-                                <include reference="pcr-4l-SWu"/>
-                            </mask>
-                        </variation>
-                    </view>
-                    <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
-                    <size key="freeformSize" width="600" height="800"/>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="8I7-Cw-DC1" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="462" y="1267.5"/>
         </scene>
         <!--Routing View Controller-->
         <scene sceneID="jex-Ru-Zwg">
@@ -654,6 +622,7 @@
                                 </prototypes>
                                 <connections>
                                     <outlet property="dataSource" destination="rZ5-Dx-AE7" id="8Vq-Px-dfb"/>
+                                    <outlet property="delegate" destination="rZ5-Dx-AE7" id="4xw-Ow-EPl"/>
                                 </connections>
                             </tableView>
                             <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" spacing="6" translatesAutoresizingMaskIntoConstraints="NO" id="TJX-8J-eP8">
@@ -736,7 +705,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="YwA-JR-J2o" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1027.5" y="662.625"/>
+            <point key="canvasLocation" x="1116.5" y="675.375"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="AyI-tT-t4k">
@@ -760,6 +729,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="Legend-01.png" width="831" height="961"/>
+        <image name="Legend_View" width="415" height="480"/>
     </resources>
 </document>

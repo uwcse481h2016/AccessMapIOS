@@ -292,6 +292,23 @@ class ViewController: UIViewController, UISearchBarDelegate, MGLMapViewDelegate,
         reverseTextFieldHideAndShow()
     }
     
+    func getBackFromSearch(destination: CLPlacemark) {
+        // show up the route button
+        self.route.hidden = false
+        // when maker is valid
+        self.endCoordinates = destination.location!.coordinate
+            
+        // remove the markers for start and end;
+        for i in 0..<self.startEndMarkers.count {
+            self.map.removeAnnotation(self.startEndMarkers[i])
+        }
+        // make the new end makers
+        let endMarkers = self.drawMarker(self.endCoordinates, title: "end")
+        // append to the startEndMarkers
+        self.startEndMarkers.append(endMarkers);
+        // set the center of the map to be the markers
+        self.map.setCenterCoordinate(self.endCoordinates, zoomLevel:15, animated: true)
+    }
     
     /** Callback function when the text finished edit.
      * It grab the address from the user and try to place marker or find route for the user
@@ -932,9 +949,9 @@ class ViewController: UIViewController, UISearchBarDelegate, MGLMapViewDelegate,
     
     // clear elevation data, crossings, and bus stops from map
     func clearAnnotations() {
-        // clearElevationLines()
-        // clearCurbRamps()
-        // clearBusStops()
+        clearElevationLines()
+        clearCurbRamps()
+        clearBusStops()
         return
     }
     
@@ -997,7 +1014,8 @@ class ViewController: UIViewController, UISearchBarDelegate, MGLMapViewDelegate,
             
             if annotationImage == nil {
                 // bus stop image
-                var image = UIImage(named: "busstop5.png")!
+                // var image = UIImage(named: "busstop5.png")!
+                let image = UIImage(named: "Bus_Stop")!
                 annotationImage = MGLAnnotationImage(image: image, reuseIdentifier: "busStop")
             }
             
