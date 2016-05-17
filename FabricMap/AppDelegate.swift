@@ -11,6 +11,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
         Fabric.with([MGLAccountManager.self])
+        
+        let PageController = UIPageControl.appearance()
+        PageController.pageIndicatorTintColor = UIColor.lightGrayColor()
+        PageController.currentPageIndicatorTintColor = UIColor.blackColor()
+        PageController.backgroundColor = UIColor.whiteColor()
+        
         return true
     }
 

@@ -20,9 +20,11 @@
 		558AC95F1C59FBC2001A7ACD /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 558AC95D1C59FBC2001A7ACD /* LaunchScreen.storyboard */; };
 		558AC96A1C59FBC2001A7ACD /* FabricMapTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 558AC9691C59FBC2001A7ACD /* FabricMapTests.swift */; };
 		558AC9751C59FBC2001A7ACD /* FabricMapUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 558AC9741C59FBC2001A7ACD /* FabricMapUITests.swift */; };
+		89706F341CEAF23D00FD6734 /* TutorialEntryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89706F331CEAF23D00FD6734 /* TutorialEntryViewController.swift */; };
 		89C4CEFB1CD5825A009CB3B9 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89C4CEFA1CD5825A009CB3B9 /* SearchViewController.swift */; };
 		89C4CEFD1CD5E881009CB3B9 /* LocationResultCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89C4CEFC1CD5E881009CB3B9 /* LocationResultCell.swift */; };
 		89EABF4B1CE2F4E3001B0224 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 558AC95B1C59FBC2001A7ACD /* Assets.xcassets */; };
+		89EABF4D1CE825FD001B0224 /* TutorialViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89EABF4C1CE825FD001B0224 /* TutorialViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -63,8 +65,10 @@
 		558AC9701C59FBC2001A7ACD /* FabricMapUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FabricMapUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		558AC9741C59FBC2001A7ACD /* FabricMapUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FabricMapUITests.swift; sourceTree = "<group>"; };
 		558AC9761C59FBC2001A7ACD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		89706F331CEAF23D00FD6734 /* TutorialEntryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TutorialEntryViewController.swift; sourceTree = "<group>"; };
 		89C4CEFA1CD5825A009CB3B9 /* SearchViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		89C4CEFC1CD5E881009CB3B9 /* LocationResultCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LocationResultCell.swift; path = LocationSearch/LocationResultCell.swift; sourceTree = "<group>"; };
+		89EABF4C1CE825FD001B0224 /* TutorialViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TutorialViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -117,13 +121,14 @@
 		558AC9531C59FBC2001A7ACD /* FabricMap */ = {
 			isa = PBXGroup;
 			children = (
-				89EABF481CE2EA5A001B0224 /* MainScene */,
-				89EABF471CE2E9C6001B0224 /* GeocoderSearchScene */,
+				558AC9601C59FBC2001A7ACD /* Info.plist */,
 				558AC9541C59FBC2001A7ACD /* AppDelegate.swift */,
-				558AC9581C59FBC2001A7ACD /* Main.storyboard */,
 				558AC95B1C59FBC2001A7ACD /* Assets.xcassets */,
 				558AC95D1C59FBC2001A7ACD /* LaunchScreen.storyboard */,
-				558AC9601C59FBC2001A7ACD /* Info.plist */,
+				558AC9581C59FBC2001A7ACD /* Main.storyboard */,
+				89EABF4E1CE82611001B0224 /* Tutorial */,
+				89EABF481CE2EA5A001B0224 /* MainScene */,
+				89EABF471CE2E9C6001B0224 /* GeocoderSearchScene */,
 				551B6B501C59FD7D000DCDFE /* Fabric.framework */,
 				551B6B511C59FD7D000DCDFE /* Mapbox.framework */,
 				551B6B521C59FD7D000DCDFE /* Mapbox.bundle */,
@@ -168,6 +173,15 @@
 				495C09581C8EDCA200954F31 /* OptionsViewController.swift */,
 			);
 			name = MainScene;
+			sourceTree = "<group>";
+		};
+		89EABF4E1CE82611001B0224 /* Tutorial */ = {
+			isa = PBXGroup;
+			children = (
+				89EABF4C1CE825FD001B0224 /* TutorialViewController.swift */,
+				89706F331CEAF23D00FD6734 /* TutorialEntryViewController.swift */,
+			);
+			name = Tutorial;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -323,10 +337,12 @@
 			files = (
 				89C4CEFB1CD5825A009CB3B9 /* SearchViewController.swift in Sources */,
 				558AC9571C59FBC2001A7ACD /* ViewController.swift in Sources */,
+				89EABF4D1CE825FD001B0224 /* TutorialViewController.swift in Sources */,
 				495C09591C8EDCA200954F31 /* OptionsViewController.swift in Sources */,
 				495C09571C8EA94500954F31 /* RoutingViewController.swift in Sources */,
 				89C4CEFD1CD5E881009CB3B9 /* LocationResultCell.swift in Sources */,
 				495C095B1C8F165F00954F31 /* ReportViewController.swift in Sources */,
+				89706F341CEAF23D00FD6734 /* TutorialEntryViewController.swift in Sources */,
 				558AC9551C59FBC2001A7ACD /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

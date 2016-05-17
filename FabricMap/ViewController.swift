@@ -37,6 +37,10 @@ class ViewController: UIViewController, UISearchBarDelegate, MGLMapViewDelegate,
     // store the marker displayed when the user is reporting data (to allow removal of marker after user is done reporting)
     var reportMarker : MGLPointAnnotation!
     
+    // Single tab gesture which enables in routing mode: User tap on a location, and it show a route from current location
+    // to that location
+    var singleTap : UITapGestureRecognizer!
+    
     var elevationStyleURL = NSURL(string: "mapbox://styles/wangx23/cilbmjh95000u9jm1jlg1wb26")
     
     var start : UITextField!
@@ -86,10 +90,13 @@ class ViewController: UIViewController, UISearchBarDelegate, MGLMapViewDelegate,
         
         map.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(ViewController.startReport(_:))))
         
+        singleTap = UITapGestureRecognizer(target: self, action: #selector(ViewController.handleSingleTap(_:)))
         // delay single tap recognition until it is clearly not a double
-        let singleTap = UITapGestureRecognizer(target: self, action: #selector(ViewController.handleSingleTap(_:)))
         // singleTap.requireGestureRecognizerToFail(doubleTap)
-        map.addGestureRecognizer(singleTap)
+    }
+    
+    @IBAction func activateTutorial(sender: UIButton) {
+        self.performSegueWithIdentifier("TutorialSegue", sender: nil)
     }
     
     func handleSingleTap(tap: UITapGestureRecognizer) {
@@ -486,6 +493,7 @@ class ViewController: UIViewController, UISearchBarDelegate, MGLMapViewDelegate,
     }
     
     // Action when back button is clicked, reverting app from "routing" to "map" mode
+    // And remove gesture
     @IBAction func returnToMapMode(sender: UIBarButtonItem) {
         onShowMapMode()
         
@@ -497,6 +505,7 @@ class ViewController: UIViewController, UISearchBarDelegate, MGLMapViewDelegate,
         self.map.setCenterCoordinate(self.endCoordinates, zoomLevel:15, animated: true)
         self.routingLines.removeAll()
         reverseTextFieldHideAndShow()
+        map.removeGestureRecognizer(singleTap)
     }
     
     @IBAction func enterRoutingMode(sender: UIButton) {
@@ -522,9 +531,11 @@ class ViewController: UIViewController, UISearchBarDelegate, MGLMapViewDelegate,
     }
     
     // modify navbar on entering routing mode, showing back button and showing Routing as the title
+    // And add the gesture
     func onShowRoutingMode() {
-        var nav = self.navigationController?.navigationBar
+        let nav = self.navigationController?.navigationBar
         nav?.topItem!.title = "Routing"
+        map.addGestureRecognizer(singleTap)
         showAndEnableBackButton()
     }
     

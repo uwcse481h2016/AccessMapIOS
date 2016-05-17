@@ -5,6 +5,8 @@ var showCurbramps = true
 var showElevation = true
 var showBusStops = true
 
+
+
 protocol OptionsDelegate: class {
     func toggleCurbRamps()
     func toggleElevationData()
@@ -78,5 +80,8 @@ class OptionsViewController: UIViewController {
      // Pass the selected object to the new view controller.
      }
      */
-    
+    // MARK: ACTION
+    @IBAction func startWalkthrough(sender: UIButton) {
+        
+    }
 }
