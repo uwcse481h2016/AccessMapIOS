@@ -25,10 +25,11 @@ class TutorialEntryViewController: UIViewController, UIPageViewControllerDataSou
     }
     
     @IBAction func restartAction(sender: UIButton) {
+        
         let startVC = self.viewControllerAtIndex(0) as TutorialViewController
         let viewControllers = NSArray(object: startVC) as! [TutorialViewController]
         
-        self.pageViewController.setViewControllers(viewControllers, direction: .Forward, animated: true, completion: nil)
+        self.pageViewController.setViewControllers(viewControllers, direction: .Reverse, animated: true, completion: nil)
     }
     
     func viewControllerAtIndex(index: Int) -> TutorialViewController {

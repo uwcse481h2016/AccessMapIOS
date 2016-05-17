@@ -339,13 +339,18 @@ class ViewController: UIViewController, UISearchBarDelegate, MGLMapViewDelegate,
                 if((error) != nil){
                     // when address is wrong, can't find the route;
                     print("Error", error)
-                    let alertView = UIAlertView(title: "Not found",
-                        message: "Please enter a valid address.",
-                        delegate: nil,
-                        cancelButtonTitle: "Ok")
-                    alertView.show()
-                    return;
                     
+                    let alertController = UIAlertController(title: "Invalid Location", message: "Please enter a valid address", preferredStyle: .Alert)
+                    let OKAction = UIAlertAction(title: "OK", style: .Default) { (action:UIAlertAction!) in
+                        print("Error Dismissed");
+                        return
+                        
+                    }
+                    alertController.addAction(OKAction)
+                    
+                    self.presentViewController(alertController, animated: true, completion:nil)
+                    
+                    return
                 }
                 
                 // show up the route button
@@ -382,12 +387,18 @@ class ViewController: UIViewController, UISearchBarDelegate, MGLMapViewDelegate,
                     //show alert when address is invaled
                     if((error) != nil){
                         print("Error", error)
-                        let alertView = UIAlertView(title: "Not found",
-                            message: "Please enter a valid address",
-                            delegate: nil,
-                            cancelButtonTitle: "Ok")
-                        alertView.show()
-                        return;
+                        
+                        let alertController = UIAlertController(title: "Invalid Location", message: "Please enter a valid address", preferredStyle: .Alert)
+                        let OKAction = UIAlertAction(title: "OK", style: .Default) { (action:UIAlertAction!) in
+                            print("Error Dismissed");
+                            return
+                            
+                        }
+                        alertController.addAction(OKAction)
+                        
+                        self.presentViewController(alertController, animated: true, completion:nil)
+                        
+                        return
                     }
                 }
                 
@@ -402,12 +413,18 @@ class ViewController: UIViewController, UISearchBarDelegate, MGLMapViewDelegate,
                         // pop up alert if the end coordintes is not valid
                         if((error) != nil){
                             print("Error", error)
-                            let alertView = UIAlertView(title: "Not found",
-                                message: "Please enter a valid address",
-                                delegate: nil,
-                                cancelButtonTitle: "Ok")
-                            alertView.show()
-                            return;
+                            
+                            let alertController = UIAlertController(title: "Invalid Location", message: "Please enter a valid address", preferredStyle: .Alert)
+                            let OKAction = UIAlertAction(title: "OK", style: .Default) { (action:UIAlertAction!) in
+                                print("Error Dismissed");
+                                return
+                                
+                            }
+                            alertController.addAction(OKAction)
+                            
+                            self.presentViewController(alertController, animated: true, completion:nil)
+                            
+                            return
                         }
                         
                         // when both start and end coordinates are valid
@@ -604,12 +621,18 @@ class ViewController: UIViewController, UISearchBarDelegate, MGLMapViewDelegate,
         //show alert when handdle there's no route
         if(routingData == nil) {
             print("error: can't get routing data")
-            let alertView = UIAlertView(title: "No Route",
-                                        message: "No accessible route from start to end location.",
-                                        delegate: nil,
-                                        cancelButtonTitle: "Ok")
-            alertView.show()
-            return;
+            
+            let alertController = UIAlertController(title: "No Route", message: "No accessible route from start to end location.", preferredStyle: .Alert)
+            let OKAction = UIAlertAction(title: "OK", style: .Default) { (action:UIAlertAction!) in
+                print("Error Dismissed");
+                return
+                
+            }
+            alertController.addAction(OKAction)
+            
+            self.presentViewController(alertController, animated: true, completion:nil)
+            
+            return
         }
         
         
@@ -1040,11 +1063,11 @@ class ViewController: UIViewController, UISearchBarDelegate, MGLMapViewDelegate,
     
     func mapView(mapView: MGLMapView, lineWidthForPolylineAnnotation annotation: MGLPolyline) -> CGFloat {
         // Set line width for polyline annotations
-        if(annotation.title == "curbcut" && annotation is MGLPolyline) {
+        if(annotation.title == "curbcut") {
             return 4;
         }
         
-        if(annotation.title == "route" && annotation is MGLPolyline) {
+        if(annotation.title == "route") {
             return 4;
         }
         
