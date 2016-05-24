@@ -1,7 +1,7 @@
 import UIKit
 import Mapbox
 // UITableViewDataSource
-class ViewController: UIViewController, UISearchBarDelegate, MGLMapViewDelegate, UITextFieldDelegate, UIPopoverPresentationControllerDelegate, UITableViewDelegate, RoutingDelegate, OptionsDelegate, ReportingDelegate {
+class ViewController: UIViewController, UISearchBarDelegate, MGLMapViewDelegate, UITextFieldDelegate, UIPopoverPresentationControllerDelegate, UITableViewDelegate, RoutingDelegate, OptionsDelegate, ReportingDelegate, SearchViewDelegate, UINavigationControllerDelegate {
     
     var manager:CLLocationManager!
     
@@ -41,6 +41,10 @@ class ViewController: UIViewController, UISearchBarDelegate, MGLMapViewDelegate,
     // to that location
     var singleTap : UITapGestureRecognizer!
     
+    // Define grade
+    let high_grade = 0.0833
+    let mid_grade = 0.05
+    
     var elevationStyleURL = NSURL(string: "mapbox://styles/wangx23/cilbmjh95000u9jm1jlg1wb26")
     
     var start : UITextField!
@@ -67,7 +71,11 @@ class ViewController: UIViewController, UISearchBarDelegate, MGLMapViewDelegate,
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        inputAddressTextField.tag = 100
+        
         map.delegate = self
+        map.autoresizingMask = [.FlexibleWidth, .FlexibleHeight]
+        map.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(ViewController.startReport(_:))))
         map.styleURL = elevationStyleURL
         
         formatBaseButton(here)
@@ -87,8 +95,6 @@ class ViewController: UIViewController, UISearchBarDelegate, MGLMapViewDelegate,
         // hold to show change the map style
         //map.addGestureRecognizer(UILongPressGestureRecognizer(target: self,
         //action: "changeStyle:"))
-        
-        map.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(ViewController.startReport(_:))))
         
         singleTap = UITapGestureRecognizer(target: self, action: #selector(ViewController.handleSingleTap(_:)))
         // delay single tap recognition until it is clearly not a double
@@ -300,6 +306,10 @@ class ViewController: UIViewController, UISearchBarDelegate, MGLMapViewDelegate,
     }
     
     func getBackFromSearch(destination: CLPlacemark) {
+        print("Get Back From Search Called")
+        
+        inputAddressTextField.text = destination.name
+        
         // show up the route button
         self.route.hidden = false
         // when maker is valid
@@ -325,7 +335,8 @@ class ViewController: UIViewController, UISearchBarDelegate, MGLMapViewDelegate,
         // Hide the keyboard.
         textField.resignFirstResponder()
         
-        if(!inputAddressTextField.hidden) {
+        // if(!inputAddressTextField.hidden) {
+        if(textField.tag == 100) {
             // when the destination address text field is showed
             let endAddress = inputAddressTextField.text
             if(inputAddressTextField.text == "") {
@@ -481,9 +492,11 @@ class ViewController: UIViewController, UISearchBarDelegate, MGLMapViewDelegate,
             let nextView = segue.destinationViewController as! SearchViewController
             let textField = sender as! UITextField
             // nextView.searchLocation.text = textField.text
+            nextView.delegate = self
+            // nextView.navigationController!.delegate = self
             nextView.getResult(textField.text!)
         case "legendSegue"?:
-            let popoverViewController = segue.destinationViewController 
+            let popoverViewController = segue.destinationViewController
             popoverViewController.modalPresentationStyle = UIModalPresentationStyle.Popover
             popoverViewController.popoverPresentationController!.delegate = self
             segue.destinationViewController.popoverPresentationController?.sourceRect = sender!.bounds
@@ -867,8 +880,6 @@ class ViewController: UIViewController, UISearchBarDelegate, MGLMapViewDelegate,
                 return;
             }
             // Gradations (drawn from https://github.com/AccessMap/AccessMap-webapp/blob/master/static/js/elevation.js)
-            let high = 0.0833
-            let mid = 0.05
             
             do {
                 // Load and serialize the GeoJSON into a dictionary filled with properly-typed objects
@@ -898,14 +909,13 @@ class ViewController: UIViewController, UISearchBarDelegate, MGLMapViewDelegate,
                                         
                                         line.title = "elevation line"
                                         if let properties = feature["properties"] as? NSDictionary {
-                                            let grade = properties["grade"] as? Double
-                                            if grade >= high {
-                                                line.subtitle = "high"
-                                            } else if grade > mid {
-                                                line.subtitle = "mid"
+                                            // let grade = properties["grade"] as? Double
+                                            if let grade = properties["grade"] as? Double {
+                                                line.subtitle = NSString(format: "%.3f", grade) as String
                                             } else {
-                                                line.subtitle = "low"
+                                                line.subtitle = "No grade info"
                                             }
+
                                         }
                                         self.elevationLines.append(line)
                                         
@@ -914,13 +924,20 @@ class ViewController: UIViewController, UISearchBarDelegate, MGLMapViewDelegate,
                                             // Unowned reference to self to prevent retain cycle
                                             [unowned self] in
                                             self.map.addAnnotation(line)
+                                            
                                             })
+                                        
+                                        if (numFeatures == 5) {
+                                            // pop-up the callout view
+                                            print("Annotation get taped!!")
+                                            self.map.selectAnnotation(line, animated: true)
+                                        }
+                                        
                                     }
                                 }
                             }
                         }
                     }
-                    
                     
                     print("Number of features = " + String(numFeatures))
                 }
@@ -1041,6 +1058,42 @@ class ViewController: UIViewController, UISearchBarDelegate, MGLMapViewDelegate,
         return true
     }
     
+    // Show information for elevation lines
+    func mapView(mapView: MGLMapView, leftCalloutAccessoryViewForAnnotation annotation: MGLAnnotation) -> UIView? {
+        
+        print("Annotation title: \(annotation.title!)")
+        print("Eval: \(annotation.title! == "elevation line")")
+        
+        if (annotation.title! == "elevation line") {
+            let label = UILabel(frame: CGRectMake(0, 0, 60, 50))
+            label.textAlignment = .Right
+            label.textColor = UIColor(red: 0.81, green: 0.71, blue: 0.23, alpha: 1)
+            // label.text = NSString(format: "Grade: %s", annotation.subtitle!!) as String
+            label.text = "HAHAHAHA"
+            
+            return label
+        }
+        
+        return nil
+    }
+    
+    func mapView(mapView: MGLMapView, tapOnCalloutForAnnotation annotation: MGLAnnotation) {
+        // pop-up the callout view
+        print("Annotation get taped!!")
+        mapView.selectAnnotation(annotation, animated: true)
+    }
+    
+    func mapView(mapView: MGLMapView, rightCalloutAccessoryViewForAnnotation annotation: MGLAnnotation) -> UIView? {
+        return UIButton(type: .DetailDisclosure)
+    }
+    
+    func mapView(mapView: MGLMapView, annotation: MGLAnnotation, calloutAccessoryControlTapped control: UIControl) {
+        // hide the callout view
+        mapView.deselectAnnotation(annotation, animated: false)
+        
+        UIAlertView(title: annotation.title!!, message: "More information goes here.", delegate: nil, cancelButtonTitle: nil, otherButtonTitles: "OK").show()
+    }
+    
     // use bus stop image for annotations titled "busstop"; standard annotation otherwise
     func mapView(mapView: MGLMapView, imageForAnnotation annotation: MGLAnnotation) -> MGLAnnotationImage? {
         if (annotation.title! == "busstop") {
@@ -1089,10 +1142,24 @@ class ViewController: UIViewController, UISearchBarDelegate, MGLMapViewDelegate,
         }
         
         if (annotation.title == "elevation line" && annotation is MGLPolyline) {
-            if (annotation.subtitle == "high") {
-                return UIColor.redColor()
+            // if (annotation.subtitle == "high") {
+            //     return UIColor.redColor()
+            // } else {
+            //     if (annotation.subtitle == "mid") {
+            //         return UIColor.yellowColor()
+            //     } else {
+            //         return UIColor.greenColor()
+            //     }
+            // }
+            
+            if (annotation.subtitle == "No grade info") {
+                return UIColor.blackColor()
             } else {
-                if (annotation.subtitle == "mid") {
+                let grade = (annotation.subtitle! as NSString).doubleValue
+                
+                if grade >= high_grade {
+                    return UIColor.redColor()
+                } else if grade > mid_grade {
                     return UIColor.yellowColor()
                 } else {
                     return UIColor.greenColor()
@@ -1106,5 +1173,6 @@ class ViewController: UIViewController, UISearchBarDelegate, MGLMapViewDelegate,
     func mapView(mapView: MGLMapView, fillColorForPolygonAnnotation annotation: MGLPolygon) -> UIColor {
         return UIColor.purpleColor()
     }
+    
 }
 

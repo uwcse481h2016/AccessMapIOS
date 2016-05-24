@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="ggd-6D-IPC">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10116" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="ggd-6D-IPC">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
@@ -216,7 +216,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="1Nn-4D-w8g" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1214" y="147.75"/>
+            <point key="canvasLocation" x="1219" y="180"/>
         </scene>
         <!--Tutorial Entry View Controller-->
         <scene sceneID="80u-oH-eFh">
@@ -266,7 +266,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="lQs-cp-0tH" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1711" y="-87.75"/>
+            <point key="canvasLocation" x="1702" y="-137.25"/>
         </scene>
         <!--Page View Controller-->
         <scene sceneID="wm6-4z-zHK">
@@ -279,7 +279,7 @@
                 </pageViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="shF-Zt-P0c" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2751" y="-142.5"/>
+            <point key="canvasLocation" x="2384" y="-216"/>
         </scene>
         <!--Tutorial View Controller-->
         <scene sceneID="MOI-4f-zFb">
@@ -333,7 +333,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="khp-gq-wW2" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2489" y="566.25"/>
+            <point key="canvasLocation" x="2384" y="439.5"/>
         </scene>
         <!--Report View Controller-->
         <scene sceneID="nc9-uw-p9P">
@@ -460,7 +460,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hio-kU-Q4y" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1348" y="384.75"/>
+            <point key="canvasLocation" x="638" y="638.25"/>
         </scene>
         <!--Delegate-->
         <scene sceneID="tne-QT-ifu">
@@ -690,24 +690,24 @@
                                 <exclude reference="bdb-8o-aI8"/>
                                 <exclude reference="dCg-Wu-kmh"/>
                                 <exclude reference="jok-K3-QdD"/>
-                                <exclude reference="yeJ-iv-rl3"/>
-                                <exclude reference="QIb-fK-TjE"/>
-                                <exclude reference="aML-He-aW3"/>
-                                <exclude reference="cMw-QS-GeC"/>
                                 <exclude reference="5xr-1L-0zc"/>
                                 <exclude reference="RbF-4S-Bmo"/>
                                 <exclude reference="gvI-fZ-2ow"/>
                                 <exclude reference="mBk-bR-SbH"/>
-                                <exclude reference="eL9-1M-kp7"/>
-                                <exclude reference="NAX-fF-bvR"/>
-                                <exclude reference="q5s-Wo-pb8"/>
-                                <exclude reference="wmC-s8-59F"/>
-                                <exclude reference="c5x-Dk-x21"/>
+                                <exclude reference="QIb-fK-TjE"/>
+                                <exclude reference="aML-He-aW3"/>
+                                <exclude reference="cMw-QS-GeC"/>
+                                <exclude reference="GfO-si-xVL"/>
                                 <exclude reference="0qh-bE-Jh6"/>
                                 <exclude reference="JqX-Do-Xay"/>
                                 <exclude reference="Kif-0c-S5K"/>
                                 <exclude reference="hWv-oI-SMq"/>
-                                <exclude reference="GfO-si-xVL"/>
+                                <exclude reference="c5x-Dk-x21"/>
+                                <exclude reference="yeJ-iv-rl3"/>
+                                <exclude reference="NAX-fF-bvR"/>
+                                <exclude reference="q5s-Wo-pb8"/>
+                                <exclude reference="wmC-s8-59F"/>
+                                <exclude reference="eL9-1M-kp7"/>
                             </mask>
                         </variation>
                         <variation key="heightClass=regular">
@@ -731,24 +731,24 @@
                                 <include reference="bdb-8o-aI8"/>
                                 <include reference="dCg-Wu-kmh"/>
                                 <include reference="jok-K3-QdD"/>
-                                <include reference="yeJ-iv-rl3"/>
-                                <include reference="QIb-fK-TjE"/>
-                                <include reference="aML-He-aW3"/>
-                                <include reference="cMw-QS-GeC"/>
                                 <include reference="5xr-1L-0zc"/>
                                 <include reference="RbF-4S-Bmo"/>
                                 <include reference="gvI-fZ-2ow"/>
                                 <include reference="mBk-bR-SbH"/>
-                                <include reference="eL9-1M-kp7"/>
-                                <include reference="NAX-fF-bvR"/>
-                                <include reference="q5s-Wo-pb8"/>
-                                <include reference="wmC-s8-59F"/>
-                                <include reference="c5x-Dk-x21"/>
+                                <include reference="QIb-fK-TjE"/>
+                                <include reference="aML-He-aW3"/>
+                                <include reference="cMw-QS-GeC"/>
+                                <include reference="GfO-si-xVL"/>
                                 <include reference="0qh-bE-Jh6"/>
                                 <include reference="JqX-Do-Xay"/>
                                 <include reference="Kif-0c-S5K"/>
                                 <include reference="hWv-oI-SMq"/>
-                                <include reference="GfO-si-xVL"/>
+                                <include reference="c5x-Dk-x21"/>
+                                <include reference="yeJ-iv-rl3"/>
+                                <include reference="NAX-fF-bvR"/>
+                                <include reference="q5s-Wo-pb8"/>
+                                <include reference="wmC-s8-59F"/>
+                                <include reference="eL9-1M-kp7"/>
                             </mask>
                         </variation>
                         <connections>
@@ -831,7 +831,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Oce-Yg-s8c" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="399" y="640.5"/>
+            <point key="canvasLocation" x="335" y="532.5"/>
         </scene>
         <!--Routing View Controller-->
         <scene sceneID="jex-Ru-Zwg">
@@ -952,7 +952,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="lyY-Gx-Ekj" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="694" y="631.5"/>
+            <point key="canvasLocation" x="638" y="468.75"/>
         </scene>
         <!--Search Result-->
         <scene sceneID="9jl-17-sIF">
@@ -1146,7 +1146,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="YwA-JR-J2o" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1135" y="806.25"/>
+            <point key="canvasLocation" x="1097" y="720"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="AyI-tT-t4k">
@@ -1164,7 +1164,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="OQ4-Cn-nPF" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-317" y="147.75"/>
+            <point key="canvasLocation" x="-196" y="115.5"/>
         </scene>
     </scenes>
     <resources>

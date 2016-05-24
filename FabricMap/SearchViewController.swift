@@ -1,11 +1,18 @@
 import UIKit
 import Mapbox
 
+protocol SearchViewDelegate: class {
+    func getBackFromSearch(destination: CLPlacemark)
+}
+
 class SearchViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate {
     
     let geocoder = CLGeocoder()
     
     var globalPlaceMarks : [CLPlacemark]?
+    
+    // delegate will be set to main ViewController in ViewController.swift
+    weak var delegate: SearchViewDelegate? = nil
     
     // Destination input text field
     @IBOutlet weak var searchLocation: UITextField!
@@ -135,7 +142,25 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
         let row = indexPath.row
         print("Row: \(row)")
         
-        performSegueWithIdentifier("resultSelectedSegue", sender: indexPath)
+        // performSegueWithIdentifier("resultSelectedSegue", sender: indexPath)
+        let place_mark = globalPlaceMarks![row]
+        delegate!.getBackFromSearch(place_mark)
+        self.dismissViewControllerAnimated(true, completion: {});
+    }
+    
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        tableView.deselectRowAtIndexPath(indexPath, animated: true)
+        
+        let row = indexPath.row
+        print("Row: \(row)")
+        
+        // performSegueWithIdentifier("resultSelectedSegue", sender: indexPath)
+        let place_mark = globalPlaceMarks![row]
+        delegate!.getBackFromSearch(place_mark)
+        if let navigationController = self.navigationController
+        {
+            navigationController.popViewControllerAnimated(true)
+        }
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
