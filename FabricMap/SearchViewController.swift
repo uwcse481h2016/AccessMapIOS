@@ -9,7 +9,9 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
     
     let geocoder = CLGeocoder()
     
-    var globalPlaceMarks : [CLPlacemark]?
+    var globalPlaceMarks: [CLPlacemark]?
+    
+    var LocationToSearch = ""
     
     // delegate will be set to main ViewController in ViewController.swift
     weak var delegate: SearchViewDelegate? = nil
@@ -22,6 +24,8 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        searchLocation.text = LocationToSearch
     }
     
     override func didReceiveMemoryWarning() {

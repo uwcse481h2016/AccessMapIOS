@@ -28,6 +28,7 @@ class ReportViewController: UIViewController {
     //        delegate!.cancelReport()
     //    }
     
+    
     // Notify main ViewController to cancel report, and dismiss this ViewController
     @IBAction func cancelReport(sender: UIButton) {
         delegate!.cancelReport()

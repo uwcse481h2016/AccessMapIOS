@@ -35,7 +35,7 @@ class ViewController: UIViewController, UISearchBarDelegate, MGLMapViewDelegate,
     var routingLines = [MGLPolyline]()
     
     // store the marker displayed when the user is reporting data (to allow removal of marker after user is done reporting)
-    var reportMarker : MGLPointAnnotation!
+    var reportMarker : MGLPointAnnotation! = nil
     
     // Single tab gesture which enables in routing mode: User tap on a location, and it show a route from current location
     // to that location
@@ -97,8 +97,6 @@ class ViewController: UIViewController, UISearchBarDelegate, MGLMapViewDelegate,
         //action: "changeStyle:"))
         
         singleTap = UITapGestureRecognizer(target: self, action: #selector(ViewController.handleSingleTap(_:)))
-        // delay single tap recognition until it is clearly not a double
-        // singleTap.requireGestureRecognizerToFail(doubleTap)
     }
     
     @IBAction func activateTutorial(sender: UIButton) {
@@ -215,7 +213,7 @@ class ViewController: UIViewController, UISearchBarDelegate, MGLMapViewDelegate,
     }
     
     func cancelReport() {
-        self.map.removeAnnotation(reportMarker)
+        removeReportAnnotation()
     }
     
     // enter reporting mode, so that user's next tap will display an annotation and textbox
@@ -336,53 +334,7 @@ class ViewController: UIViewController, UISearchBarDelegate, MGLMapViewDelegate,
         textField.resignFirstResponder()
         
         // if(!inputAddressTextField.hidden) {
-        if(textField.tag == 100) {
-            // when the destination address text field is showed
-            let endAddress = inputAddressTextField.text
-            if(inputAddressTextField.text == "") {
-                // when input text field is called
-                return false;
-            }
-            
-            let geocoder = CLGeocoder()
-            // get the coordinates of the input address
-            geocoder.geocodeAddressString(endAddress!, completionHandler: {(placemarks, error) -> Void in
-                if((error) != nil){
-                    // when address is wrong, can't find the route;
-                    print("Error", error)
-                    
-                    let alertController = UIAlertController(title: "Invalid Location", message: "Please enter a valid address", preferredStyle: .Alert)
-                    let OKAction = UIAlertAction(title: "OK", style: .Default) { (action:UIAlertAction!) in
-                        print("Error Dismissed");
-                        return
-                        
-                    }
-                    alertController.addAction(OKAction)
-                    
-                    self.presentViewController(alertController, animated: true, completion:nil)
-                    
-                    return
-                }
-                
-                // show up the route button
-                self.route.hidden = false
-                if let placemark = placemarks?.first {
-                    // when maker is valid
-                    self.endCoordinates = placemark.location!.coordinate
-                    
-                    // remove the markers for start and end;
-                    for i in 0..<self.startEndMarkers.count {
-                        self.map.removeAnnotation(self.startEndMarkers[i])
-                    }
-                    // make the new end makers
-                    let endMarkers = self.drawMarker(self.endCoordinates, title: "end")
-                    // append to the startEndMarkers
-                    self.startEndMarkers.append(endMarkers);
-                    // set the center of the map to be the markers
-                    self.map.setCenterCoordinate(self.endCoordinates, zoomLevel:15, animated: true)
-                }
-            })
-        } else {
+        if(textField.tag != 100) {
             // when it shows the from and to input text field
             let startAddress = startAddressTextField.text
             let endAddress = endAddressTextField.text
@@ -473,28 +425,17 @@ class ViewController: UIViewController, UISearchBarDelegate, MGLMapViewDelegate,
         map.userTrackingMode = .Follow
         
     }
-    /**
-     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-     return 0
-     }
-     
-     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-     return UITableViewCell()
-     }
-     
-     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-     
-     }*/
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         switch segue.identifier {
         case "searchResultSegue"?:
             let nextView = segue.destinationViewController as! SearchViewController
-            let textField = sender as! UITextField
-            // nextView.searchLocation.text = textField.text
             nextView.delegate = self
-            // nextView.navigationController!.delegate = self
-            nextView.getResult(textField.text!)
+            let textField = sender as! UITextField
+            if let destination = textField.text {
+                nextView.LocationToSearch = destination
+                nextView.getResult(destination)
+            }
         case "legendSegue"?:
             let popoverViewController = segue.destinationViewController
             popoverViewController.modalPresentationStyle = UIModalPresentationStyle.Popover
@@ -517,6 +458,14 @@ class ViewController: UIViewController, UISearchBarDelegate, MGLMapViewDelegate,
         }
     }
     
+    // Additional work when pop overs are dismissed
+    func popoverPresentationControllerDidDismissPopover(popoverPresentationController: UIPopoverPresentationController) {
+        if reportMarker != nil {
+            map.removeAnnotation(reportMarker)
+            reportMarker = nil
+        }
+    }
+    
     // Allows PopupPresentationViewControllers to be displayed as pop-up rather than alert
     func adaptivePresentationStyleForPresentationController(controller: UIPresentationController) -> UIModalPresentationStyle {
         return UIModalPresentationStyle.None
@@ -529,6 +478,10 @@ class ViewController: UIViewController, UISearchBarDelegate, MGLMapViewDelegate,
         
         for i in 0..<self.routingLines.count {
             self.map.removeAnnotation(self.routingLines[i])
+        }
+        
+        for i in 0..<self.startEndMarkers.count {
+            map.removeAnnotation(self.startEndMarkers[i])
         }
         
         print("set map to destination location")
@@ -926,13 +879,6 @@ class ViewController: UIViewController, UISearchBarDelegate, MGLMapViewDelegate,
                                             self.map.addAnnotation(line)
                                             
                                             })
-                                        
-                                        if (numFeatures == 5) {
-                                            // pop-up the callout view
-                                            print("Annotation get taped!!")
-                                            self.map.selectAnnotation(line, animated: true)
-                                        }
-                                        
                                     }
                                 }
                             }
@@ -1059,29 +1005,29 @@ class ViewController: UIViewController, UISearchBarDelegate, MGLMapViewDelegate,
     }
     
     // Show information for elevation lines
-    func mapView(mapView: MGLMapView, leftCalloutAccessoryViewForAnnotation annotation: MGLAnnotation) -> UIView? {
-        
-        print("Annotation title: \(annotation.title!)")
-        print("Eval: \(annotation.title! == "elevation line")")
-        
-        if (annotation.title! == "elevation line") {
-            let label = UILabel(frame: CGRectMake(0, 0, 60, 50))
-            label.textAlignment = .Right
-            label.textColor = UIColor(red: 0.81, green: 0.71, blue: 0.23, alpha: 1)
-            // label.text = NSString(format: "Grade: %s", annotation.subtitle!!) as String
-            label.text = "HAHAHAHA"
-            
-            return label
-        }
-        
-        return nil
-    }
+//    func mapView(mapView: MGLMapView, leftCalloutAccessoryViewForAnnotation annotation: MGLAnnotation) -> UIView? {
+//
+//        print("Annotation title: \(annotation.title!)")
+//        print("Eval: \(annotation.title! == "elevation line")")
+//
+//        if (annotation.title! == "elevation line") {
+//            let label = UILabel(frame: CGRectMake(0, 0, 60, 50))
+//            label.textAlignment = .Right
+//            label.textColor = UIColor(red: 0.81, green: 0.71, blue: 0.23, alpha: 1)
+//            // label.text = NSString(format: "Grade: %s", annotation.subtitle!!) as String
+//            label.text = "HAHAHAHA"
+//
+//            return label
+//        }
+//
+//        return nil
+//    }
     
-    func mapView(mapView: MGLMapView, tapOnCalloutForAnnotation annotation: MGLAnnotation) {
-        // pop-up the callout view
-        print("Annotation get taped!!")
-        mapView.selectAnnotation(annotation, animated: true)
-    }
+//    func mapView(mapView: MGLMapView, tapOnCalloutForAnnotation annotation: MGLAnnotation) {
+//        // pop-up the callout view
+//        print("Annotation get taped!!")
+//        mapView.selectAnnotation(annotation, animated: true)
+//    }
     
     func mapView(mapView: MGLMapView, rightCalloutAccessoryViewForAnnotation annotation: MGLAnnotation) -> UIView? {
         return UIButton(type: .DetailDisclosure)
@@ -1101,7 +1047,6 @@ class ViewController: UIViewController, UISearchBarDelegate, MGLMapViewDelegate,
             
             if annotationImage == nil {
                 // bus stop image
-                // var image = UIImage(named: "busstop5.png")!
                 let image = UIImage(named: "Bus_Stop")!
                 annotationImage = MGLAnnotationImage(image: image, reuseIdentifier: "busStop")
             }
@@ -1113,18 +1058,16 @@ class ViewController: UIViewController, UISearchBarDelegate, MGLMapViewDelegate,
         
     }
     
-    
     func mapView(mapView: MGLMapView, lineWidthForPolylineAnnotation annotation: MGLPolyline) -> CGFloat {
         // Set line width for polyline annotations
-        if(annotation.title == "curbcut") {
-            return 4;
+        let zoomLv = mapView.zoomLevel
+        if zoomLv > 17 {
+            return 6.0
+        } else if zoomLv > 15 {
+            return 4.0
+        } else {
+            return 2.5
         }
-        
-        if(annotation.title == "route") {
-            return 4;
-        }
-        
-        return 3.0
     }
     
     func mapView(mapView: MGLMapView, alphaForShapeAnnotation annotation: MGLShape) -> CGFloat {
@@ -1142,16 +1085,7 @@ class ViewController: UIViewController, UISearchBarDelegate, MGLMapViewDelegate,
         }
         
         if (annotation.title == "elevation line" && annotation is MGLPolyline) {
-            // if (annotation.subtitle == "high") {
-            //     return UIColor.redColor()
-            // } else {
-            //     if (annotation.subtitle == "mid") {
-            //         return UIColor.yellowColor()
-            //     } else {
-            //         return UIColor.greenColor()
-            //     }
-            // }
-            
+
             if (annotation.subtitle == "No grade info") {
                 return UIColor.blackColor()
             } else {
