@@ -12,6 +12,7 @@ protocol OptionsDelegate: class {
     func toggleElevationData()
     func toggleBusStops()
     func enterReportMode()
+    func activateTutorial()
 }
 
 // Manages the options pop-up (accessed by clicking "More" in the navigation bar)
@@ -81,7 +82,26 @@ class OptionsViewController: UIViewController {
      }
      */
     // MARK: ACTION
-    @IBAction func startWalkthrough(sender: UIButton) {
+    
+    @IBAction func startTutorial() {
+        self.dismissViewControllerAnimated(false, completion: {})
+        delegate?.activateTutorial()
+    }
+    
+    @IBAction func logIn(sender: UIButton) {
+        let alertController = UIAlertController(title: "Sorry...", message: "We have not yet support logging in", preferredStyle: .Alert)
         
+        let showTutorial = UIAlertAction(title: "Show Tutorial", style: .Default) { (action:UIAlertAction!) in
+            self.startTutorial()
+            return
+        }
+        let closeAct = UIAlertAction(title: "Close", style: .Default) { (action:UIAlertAction!) in
+            print("Dismissed")
+            return
+        }
+        alertController.addAction(showTutorial)
+        alertController.addAction(closeAct)
+        
+        self.presentViewController(alertController, animated: true, completion:nil)
     }
 }

@@ -249,7 +249,7 @@
 			attributes = {
 				LastSwiftUpdateCheck = 0720;
 				LastUpgradeCheck = 0720;
-				ORGANIZATIONNAME = "Xiaobo Wang";
+				ORGANIZATIONNAME = "Taskar Center for Accessible Technology";
 				TargetAttributes = {
 					558AC9501C59FBC2001A7ACD = {
 						CreatedOnToolsVersion = 7.2;
@@ -265,7 +265,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 558AC94C1C59FBC2001A7ACD /* Build configuration list for PBXProject "FabricMap" */;
+			buildConfigurationList = 558AC94C1C59FBC2001A7ACD /* Build configuration list for PBXProject "AccessMap" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -493,9 +493,10 @@
 				);
 				INFOPLIST_FILE = FabricMap/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = alnw.FabricMap;
+				PRODUCT_BUNDLE_IDENTIFIER = org.uwtcat.AccessMap;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -511,9 +512,10 @@
 				);
 				INFOPLIST_FILE = FabricMap/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = alnw.FabricMap;
+				PRODUCT_BUNDLE_IDENTIFIER = org.uwtcat.AccessMap;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
@@ -568,7 +570,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		558AC94C1C59FBC2001A7ACD /* Build configuration list for PBXProject "FabricMap" */ = {
+		558AC94C1C59FBC2001A7ACD /* Build configuration list for PBXProject "AccessMap" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				558AC9771C59FBC2001A7ACD /* Debug */,

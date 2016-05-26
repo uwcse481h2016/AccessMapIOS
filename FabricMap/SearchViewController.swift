@@ -3,6 +3,7 @@ import Mapbox
 
 protocol SearchViewDelegate: class {
     func getBackFromSearch(destination: CLPlacemark)
+    func activateTutorial()
 }
 
 class SearchViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate {
@@ -118,12 +119,22 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
                 print("Error", error)
                 
                 let alertController = UIAlertController(title: "Invalid Location", message: "Please enter a valid address", preferredStyle: .Alert)
-                let OKAction = UIAlertAction(title: "OK", style: .Default) { (action:UIAlertAction!) in
+                let showTutorial = UIAlertAction(title: "Show Tutorial", style: .Default) { (action:UIAlertAction!) in
+                    
+                    if let navigationController = self.navigationController
+                    {
+                        navigationController.popViewControllerAnimated(true)
+                    }
+                    
+                    self.delegate?.activateTutorial()
+                    return
+                }
+                let closeAction = UIAlertAction(title: "Close", style: .Default) { (action:UIAlertAction!) in
                     print("Error Dismissed");
                     return
-                    
                 }
-                alertController.addAction(OKAction)
+                alertController.addAction(showTutorial)
+                alertController.addAction(closeAction)
                 
                 self.presentViewController(alertController, animated: true, completion:nil)
                 

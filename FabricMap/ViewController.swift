@@ -99,7 +99,8 @@ class ViewController: UIViewController, UISearchBarDelegate, MGLMapViewDelegate,
         singleTap = UITapGestureRecognizer(target: self, action: #selector(ViewController.handleSingleTap(_:)))
     }
     
-    @IBAction func activateTutorial(sender: UIButton) {
+    // Call tutorial scene
+    func activateTutorial() {
         self.performSegueWithIdentifier("TutorialSegue", sender: nil)
     }
     
@@ -202,9 +203,9 @@ class ViewController: UIViewController, UISearchBarDelegate, MGLMapViewDelegate,
         // Add code for sending message to a developer's email
         
         let alertView = UIAlertController(title: "Sent!",
-                                          message: "Your ressage:\n" + message + "\n\n has been sent to the AccessMap team for review. Thanks for contributing to our database!",
+                                          message: "Your ressage:\n" + message + "\n\n report is not yet supported in current version, but we'll definitely add it in the future :)",
                                           preferredStyle: .Alert)
-        alertView.addAction(UIAlertAction(title: "Ok", style: .Default, handler: nil))
+        alertView.addAction(UIAlertAction(title: "OK", style: .Default, handler: nil))
         self.presentViewController(alertView, animated: true, completion: self.removeReportAnnotation)
     }
     
@@ -489,6 +490,7 @@ class ViewController: UIViewController, UISearchBarDelegate, MGLMapViewDelegate,
         self.routingLines.removeAll()
         reverseTextFieldHideAndShow()
         map.removeGestureRecognizer(singleTap)
+        route.hidden = true
     }
     
     @IBAction func enterRoutingMode(sender: UIButton) {
