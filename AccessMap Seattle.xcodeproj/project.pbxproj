@@ -265,7 +265,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 558AC94C1C59FBC2001A7ACD /* Build configuration list for PBXProject "AccessMap" */;
+			buildConfigurationList = 558AC94C1C59FBC2001A7ACD /* Build configuration list for PBXProject "AccessMap Seattle" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -485,6 +485,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
@@ -504,6 +505,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
@@ -570,7 +572,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		558AC94C1C59FBC2001A7ACD /* Build configuration list for PBXProject "AccessMap" */ = {
+		558AC94C1C59FBC2001A7ACD /* Build configuration list for PBXProject "AccessMap Seattle" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				558AC9771C59FBC2001A7ACD /* Debug */,

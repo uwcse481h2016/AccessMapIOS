@@ -7,6 +7,8 @@ class ViewController: UIViewController, UISearchBarDelegate, MGLMapViewDelegate,
     
     // Mark: properties
     //@IBOutlet weak var HereButton: UIButton!
+    // Enable verbal debug: output debug info to the console
+    let enableDebugMode = true
     
     // store whether it is the first time to open the appliaciton
     var firstTime = true;
@@ -98,17 +100,17 @@ class ViewController: UIViewController, UISearchBarDelegate, MGLMapViewDelegate,
         
         singleTap = UITapGestureRecognizer(target: self, action: #selector(ViewController.handleSingleTap(_:)))
     }
-    
+
     // Call tutorial scene
     func activateTutorial() {
         self.performSegueWithIdentifier("TutorialSegue", sender: nil)
     }
-    
+
+    // In routing mode, tap on a destination on map to get the route from current location to the destination
     func handleSingleTap(tap: UITapGestureRecognizer) {
         // convert tap location (CGPoint)
         // to geographic coordinates (CLLocationCoordinate2D)
         let location: CLLocationCoordinate2D = map.convertPoint(tap.locationInView(map), toCoordinateFromView: map)
-        print("You tapped at: \(location.latitude), \(location.longitude)")
         
         let locManager = CLLocationManager()
         locManager.requestWhenInUseAuthorization()
@@ -116,7 +118,11 @@ class ViewController: UIViewController, UISearchBarDelegate, MGLMapViewDelegate,
         if( CLLocationManager.authorizationStatus() == CLAuthorizationStatus.AuthorizedWhenInUse ||
             CLLocationManager.authorizationStatus() == CLAuthorizationStatus.Authorized){
             let currentLocation = locManager.location
-            print("current location")
+
+            if enableDebugMode {
+                print("current location")
+            }
+
             print(currentLocation!.coordinate.longitude)
             print(currentLocation!.coordinate.latitude)
             self.currentCoordinates = currentLocation!.coordinate
@@ -147,7 +153,11 @@ class ViewController: UIViewController, UISearchBarDelegate, MGLMapViewDelegate,
     }
     
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
-        print("called touchesBegan")
+        if enableDebugMode {
+            print("called touchesBegan")
+        }
+
+
         if let touch = touches.first {
             let position = touch.locationInView(view)
             print(position)
@@ -155,17 +165,26 @@ class ViewController: UIViewController, UISearchBarDelegate, MGLMapViewDelegate,
     }
     
     func onChooseManualWheelchairOption() {
-        print("onChooseManualWheelchairOption() called")
+        if enableDebugMode {
+            print("onChooseManualWheelchairOption() called")
+        }
+
         routeByAddress()
     }
     
     func onChoosePowerWheelchairOption() {
-        print("onChoosePowerWheelchairOption() called")
+        if enableDebugMode {
+            print("onChoosePowerWheelchairOption() called")
+        }
+
         routeByAddress()
     }
     
     func onChooseOtherMobilityAidOption() {
-        print("onChooseOtherMobilityAidOption() called")
+        if enableDebugMode {
+            print("onChooseOtherMobilityAidOption() called")
+        }
+
         routeByAddress()
     }
     
@@ -219,7 +238,10 @@ class ViewController: UIViewController, UISearchBarDelegate, MGLMapViewDelegate,
     
     // enter reporting mode, so that user's next tap will display an annotation and textbox
     func enterReportMode() {
-        print("entered Report mode")
+        if enableDebugMode {
+            print("entered Report mode")
+        }
+
         inReportMode = true
         reportInstructionLabel.hidden = false
     }
@@ -230,10 +252,10 @@ class ViewController: UIViewController, UISearchBarDelegate, MGLMapViewDelegate,
         button.layer.borderWidth = 1
         button.layer.borderColor = UIColor.whiteColor().CGColor
         
-        button.layer.shadowColor = UIColor.grayColor().CGColor;
-        button.layer.shadowOpacity = 0.8;
-        button.layer.shadowRadius = 5;
-        button.layer.shadowOffset = CGSizeMake(5, 5);
+        button.layer.shadowColor = UIColor.grayColor().CGColor
+        button.layer.shadowOpacity = 0.8
+        button.layer.shadowRadius = 5
+        button.layer.shadowOffset = CGSizeMake(5, 5)
     }
     
     
@@ -243,7 +265,7 @@ class ViewController: UIViewController, UISearchBarDelegate, MGLMapViewDelegate,
         onShowRoutingMode()
         reverseTextFieldHideAndShow()
         map.userTrackingMode = .Follow
-        startAddressTextField.text = "current location"
+        startAddressTextField.text = "Current Location"
         endAddressTextField.text = inputAddressTextField.text
         let locManager = CLLocationManager()
         locManager.requestWhenInUseAuthorization()
@@ -252,7 +274,10 @@ class ViewController: UIViewController, UISearchBarDelegate, MGLMapViewDelegate,
             CLLocationManager.authorizationStatus() == CLAuthorizationStatus.Authorized){
             
             let currentLocation = locManager.location
-            print("current location")
+            if enableDebugMode {
+                print("current location")
+            }
+
             print(currentLocation!.coordinate.longitude)
             print(currentLocation!.coordinate.latitude)
             self.currentCoordinates = currentLocation!.coordinate
@@ -264,7 +289,10 @@ class ViewController: UIViewController, UISearchBarDelegate, MGLMapViewDelegate,
             let maxC = min(abs(verticalDifference), abs(horizontalDifference))
             //
             //                        // get the zoom level
-            print(log(maxC))
+            if (enableDebugMode) {
+                print(log(maxC))
+            }
+
             //                        // set the map position
             self.map.setCenterCoordinate(center, zoomLevel: log(maxC) + 3, animated: true)
             self.drawRouting(currentCoordinates, endCoordinates: self.endCoordinates)
@@ -273,12 +301,18 @@ class ViewController: UIViewController, UISearchBarDelegate, MGLMapViewDelegate,
     }
     
     @IBAction func powerWheelChairButtonAction(sender: AnyObject) {
-        print("powerWheelChairButton called")
+        if enableDebugMode {
+            print("powerWheelChairButton called")
+        }
+
         routeByAddress()
     }
     
     @IBAction func manualWheelchairButtonAction(sender: UIButton) {
-        print("manualWheelchairButton called")
+        if enableDebugMode {
+            print("manualWheelchairButton called")
+        }
+
         routeByAddress()
     }
     @IBOutlet weak var otherUserButton: UIButton!
@@ -545,7 +579,10 @@ class ViewController: UIViewController, UISearchBarDelegate, MGLMapViewDelegate,
      * @param: startCoordinnates: start coordinates, endCoordinates: end coordinates
      */
     func drawStartEndMarker(startCoordinnates: CLLocationCoordinate2D, endCoordinates:CLLocationCoordinate2D) {
-        print("draw start and end markers")
+        if enableDebugMode {
+            print("draw start and end markers")
+        }
+
         for i in 0..<self.startEndMarkers.count {
             map.removeAnnotation(self.startEndMarkers[i])
         }

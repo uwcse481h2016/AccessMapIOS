@@ -5,10 +5,46 @@ class TutorialEntryViewController: UIViewController, UIPageViewControllerDataSou
     var pageViewController: UIPageViewController!
     var pageImages: NSArray!
     
+    var nav: UINavigationBar?
+
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        
+        // 2
+        // nav?.barStyle = UIBarStyle.Black
+        // nav?.tintColor = UIColor.yellowColor()
+        // 3
+        // let imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 40, height: 40))
+        // imageView.contentMode = .ScaleAspectFit
+        // 4
+        // let image = UIImage(named: "Apple_Swift_Logo")
+        // imageView.image = image
+        // 5
+        // navigationItem.titleView = imageView
+        
+        //nav?.setBackgroundImage(UIImage(), forBarMetrics: UIBarMetrics.Default)
+        //nav?.shadowImage = UIImage()
+        //nav?.backgroundColor = UIColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 0.0)
+    }
+    
+    override func viewWillDisappear(animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        nav?.setBackgroundImage(nil, forBarMetrics: UIBarMetrics.Default)
+        nav?.shadowImage = nil
+        nav?.backgroundColor = nil
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.pageImages = NSArray(objects: "Tutorial-1", "Tutorial-2", "Tutorial-3")
+        nav = self.navigationController?.navigationBar
+        nav?.setBackgroundImage(UIImage(), forBarMetrics: UIBarMetrics.Default)
+        nav?.shadowImage = UIImage()
+        nav?.backgroundColor = UIColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 0.0)
+        
+        self.pageImages = NSArray(objects: "Tutorial-1", "Tutorial-2", "Tutorial-3", "Tutorial-4", "Tutorial-5")
         
         self.pageViewController = self.storyboard?.instantiateViewControllerWithIdentifier("TutorialPageViewController") as! UIPageViewController
         
@@ -18,7 +54,7 @@ class TutorialEntryViewController: UIViewController, UIPageViewControllerDataSou
         
         self.pageViewController.setViewControllers(viewControllers, direction: .Forward, animated: true, completion: nil)
         
-        self.pageViewController.view.frame = CGRectMake(0, 30, self.view.frame.width, self.view.frame.size.height - 80)
+        self.pageViewController.view.frame = CGRectMake(0, 25, self.view.frame.width, self.view.frame.size.height - 30)
         self.addChildViewController(self.pageViewController)
         self.view.addSubview(self.pageViewController.view)
         self.pageViewController.didMoveToParentViewController(self)
