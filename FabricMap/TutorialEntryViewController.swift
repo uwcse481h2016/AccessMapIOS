@@ -6,27 +6,6 @@ class TutorialEntryViewController: UIViewController, UIPageViewControllerDataSou
     var pageImages: NSArray!
     
     var nav: UINavigationBar?
-
-    override func viewDidAppear(animated: Bool) {
-        super.viewDidAppear(animated)
-        
-        
-        // 2
-        // nav?.barStyle = UIBarStyle.Black
-        // nav?.tintColor = UIColor.yellowColor()
-        // 3
-        // let imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 40, height: 40))
-        // imageView.contentMode = .ScaleAspectFit
-        // 4
-        // let image = UIImage(named: "Apple_Swift_Logo")
-        // imageView.image = image
-        // 5
-        // navigationItem.titleView = imageView
-        
-        //nav?.setBackgroundImage(UIImage(), forBarMetrics: UIBarMetrics.Default)
-        //nav?.shadowImage = UIImage()
-        //nav?.backgroundColor = UIColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 0.0)
-    }
     
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
@@ -44,7 +23,7 @@ class TutorialEntryViewController: UIViewController, UIPageViewControllerDataSou
         nav?.shadowImage = UIImage()
         nav?.backgroundColor = UIColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 0.0)
         
-        self.pageImages = NSArray(objects: "Tutorial-1", "Tutorial-2", "Tutorial-3", "Tutorial-4", "Tutorial-5")
+        self.pageImages = NSArray(objects: "Tutorial-1", "Tutorial-2", "Tutorial-3", "Tutorial-4", "Tutorial-5", "Tutorial-6")
         
         self.pageViewController = self.storyboard?.instantiateViewControllerWithIdentifier("TutorialPageViewController") as! UIPageViewController
         

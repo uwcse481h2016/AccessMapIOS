@@ -536,9 +536,9 @@ class ViewController: UIViewController, UISearchBarDelegate, MGLMapViewDelegate,
         endCoordinates = nil
         startAddressTextField.text = ""
         endAddressTextField.text = ""
+        inputAddressTextField.text = ""
         
         onShowMapMode()
-        // route.hidden = true
     }
     
     // modify navbar on entering map mode, hiding back button and showing Map as the title
