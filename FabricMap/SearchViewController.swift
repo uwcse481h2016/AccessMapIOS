@@ -170,12 +170,13 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
         print("Row: \(row)")
         
         // performSegueWithIdentifier("resultSelectedSegue", sender: indexPath)
-        let place_mark = globalPlaceMarks![row]
-        delegate!.getBackFromSearch(place_mark)
         if let navigationController = self.navigationController
         {
             navigationController.popViewControllerAnimated(true)
         }
+        
+        let place_mark = globalPlaceMarks![row]
+        delegate!.getBackFromSearch(place_mark)
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
