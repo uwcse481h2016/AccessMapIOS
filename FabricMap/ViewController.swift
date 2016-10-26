@@ -581,6 +581,7 @@ class ViewController: UIViewController, UISearchBarDelegate, MGLMapViewDelegate,
     }
     
     /** draw the start and end markers of the routes
+     *
      * @param: startCoordinnates: start coordinates, endCoordinates: end coordinates
      */
     func drawStartEndMarker(startCoordinnates: CLLocationCoordinate2D, endCoordinates:CLLocationCoordinate2D) {
@@ -600,6 +601,7 @@ class ViewController: UIViewController, UISearchBarDelegate, MGLMapViewDelegate,
     }
     
     /** draw the marker on the map
+     *
      * @param: coordinate: for what coordinates the marker should be put. Title: the tittle for the markers
      */
     func drawMarker(coordinate: CLLocationCoordinate2D, title: String) -> MGLPointAnnotation{
@@ -621,7 +623,7 @@ class ViewController: UIViewController, UISearchBarDelegate, MGLMapViewDelegate,
      */
     func drawRouting (startCoordinates: CLLocationCoordinate2D, endCoordinates:CLLocationCoordinate2D) {
         // set up the route api
-        let apiURL = "http://dssg-db.cloudapp.net/api/routing/route.json?waypoints=[" + String(startCoordinates.latitude) + ",%20" + String(startCoordinates.longitude) + ",%20" + String(endCoordinates.latitude) + ",%20" + String(endCoordinates.longitude) + "]"
+        let apiURL = "https://accessmapseattle.com/api/v2/route.json?waypoints=[" + String(startCoordinates.latitude) + "," + String(startCoordinates.longitude) + "," + String(endCoordinates.latitude) + "," + String(endCoordinates.longitude) + "]"
         
         let nsURL = NSURL(string: apiURL)
         

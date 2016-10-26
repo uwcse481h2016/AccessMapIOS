@@ -101,7 +101,7 @@
 		558AC9481C59FBC2001A7ACD = {
 			isa = PBXGroup;
 			children = (
-				558AC9531C59FBC2001A7ACD /* FabricMap */,
+				558AC9531C59FBC2001A7ACD /* AccessMap */,
 				558AC9681C59FBC2001A7ACD /* FabricMapTests */,
 				558AC9731C59FBC2001A7ACD /* FabricMapUITests */,
 				558AC9521C59FBC2001A7ACD /* Products */,
@@ -118,7 +118,7 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		558AC9531C59FBC2001A7ACD /* FabricMap */ = {
+		558AC9531C59FBC2001A7ACD /* AccessMap */ = {
 			isa = PBXGroup;
 			children = (
 				558AC9601C59FBC2001A7ACD /* Info.plist */,
@@ -134,6 +134,7 @@
 				551B6B521C59FD7D000DCDFE /* Mapbox.bundle */,
 				551B6B531C59FD7D000DCDFE /* Settings.bundle */,
 			);
+			name = AccessMap;
 			path = FabricMap;
 			sourceTree = "<group>";
 		};
@@ -253,19 +254,22 @@
 				TargetAttributes = {
 					558AC9501C59FBC2001A7ACD = {
 						CreatedOnToolsVersion = 7.2;
-						DevelopmentTeam = 9EXNH455MB;
+						DevelopmentTeam = G8MQVE5WWW;
+						LastSwiftMigration = 0800;
 					};
 					558AC9641C59FBC2001A7ACD = {
 						CreatedOnToolsVersion = 7.2;
+						LastSwiftMigration = 0800;
 						TestTargetID = 558AC9501C59FBC2001A7ACD;
 					};
 					558AC96F1C59FBC2001A7ACD = {
 						CreatedOnToolsVersion = 7.2;
+						LastSwiftMigration = 0800;
 						TestTargetID = 558AC9501C59FBC2001A7ACD;
 					};
 				};
 			};
-			buildConfigurationList = 558AC94C1C59FBC2001A7ACD /* Build configuration list for PBXProject "AccessMap Seattle" */;
+			buildConfigurationList = 558AC94C1C59FBC2001A7ACD /* Build configuration list for PBXProject "AccessMap" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -493,10 +497,12 @@
 					"$(PROJECT_DIR)",
 				);
 				INFOPLIST_FILE = FabricMap/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = org.uwtcat.AccessMap;
+				PRODUCT_BUNDLE_IDENTIFIER = org.uwtcat.AccessMapGlobal;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
+				SWIFT_VERSION = 2.3;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
@@ -513,10 +519,12 @@
 					"$(PROJECT_DIR)",
 				);
 				INFOPLIST_FILE = FabricMap/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = org.uwtcat.AccessMap;
+				PRODUCT_BUNDLE_IDENTIFIER = org.uwtcat.AccessMapGlobal;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
+				SWIFT_VERSION = 2.3;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
@@ -529,6 +537,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = alnw.FabricMapTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 2.3;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/FabricMap.app/FabricMap";
 			};
 			name = Debug;
@@ -541,6 +550,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = alnw.FabricMapTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 2.3;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/FabricMap.app/FabricMap";
 			};
 			name = Release;
@@ -552,6 +562,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = alnw.FabricMapUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 2.3;
 				TEST_TARGET_NAME = FabricMap;
 				USES_XCTRUNNER = YES;
 			};
@@ -564,6 +575,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = alnw.FabricMapUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 2.3;
 				TEST_TARGET_NAME = FabricMap;
 				USES_XCTRUNNER = YES;
 			};
@@ -572,7 +584,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		558AC94C1C59FBC2001A7ACD /* Build configuration list for PBXProject "AccessMap Seattle" */ = {
+		558AC94C1C59FBC2001A7ACD /* Build configuration list for PBXProject "AccessMap" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				558AC9771C59FBC2001A7ACD /* Debug */,
